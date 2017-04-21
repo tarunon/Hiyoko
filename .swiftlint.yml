@@ -1,0 +1,8 @@
+disabled_rules:
+- trailing_whitespace
+- function_body_length
+- line_length
+
+excluded:
+- Carthage
+- Pods
