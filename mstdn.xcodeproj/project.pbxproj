@@ -65,6 +65,19 @@
 		D2E995B01EAAF94400771413 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
 		D2E995B41EAAFAEE00771413 /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E995B31EAAFAEE00771413 /* Pagination.swift */; };
 		D2E995B61EAAFC1A00771413 /* AnyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E995B51EAAFC1A00771413 /* AnyRequest.swift */; };
+		D2EFD5C61EAB26910013CD80 /* Persistents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; };
+		D2EFD5CD1EAB26910013CD80 /* PersistentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EFD5CC1EAB26910013CD80 /* PersistentsTests.swift */; };
+		D2EFD5CF1EAB26910013CD80 /* Persistents.h in Headers */ = {isa = PBXBuildFile; fileRef = D2EFD5BF1EAB26910013CD80 /* Persistents.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D2EFD5D21EAB26910013CD80 /* Persistents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; };
+		D2EFD5D31EAB26910013CD80 /* Persistents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2EFD5DE1EAB28160013CD80 /* PersistentValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EFD5DD1EAB28160013CD80 /* PersistentValueProtocol.swift */; };
+		D2EFD5DF1EAB2EDD0013CD80 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; };
+		D2EFD5E01EAB2EDD0013CD80 /* Illuso.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4561EAA64AF004B13D7 /* Illuso.framework */; };
+		D2EFD5E51EAB321E0013CD80 /* PersistentStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EFD5E41EAB321E0013CD80 /* PersistentStoreProtocol.swift */; };
+		D2EFD5E71EAB40910013CD80 /* UserDefaultsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EFD5E61EAB40910013CD80 /* UserDefaultsStore.swift */; };
+		D2EFD5E91EAB47340013CD80 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EFD5E81EAB47340013CD80 /* KeychainStore.swift */; };
+		D2EFD5EB1EAB5FC50013CD80 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */; };
+		D2EFD5EC1EAB5FD50013CD80 /* KeychainAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +144,27 @@
 			remoteGlobalIDString = D2E9955A1EAAF59900771413;
 			remoteInfo = Base;
 		};
+		D2EFD5C71EAB26910013CD80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD5BC1EAB26910013CD80;
+			remoteInfo = Persistents;
+		};
+		D2EFD5C91EAB26910013CD80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D21A9A5C1EAA5B220010AE3F;
+			remoteInfo = mstdn;
+		};
+		D2EFD5D01EAB26910013CD80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD5BC1EAB26910013CD80;
+			remoteInfo = Persistents;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -155,6 +189,7 @@
 				D24EC47C1EAA64BE004B13D7 /* RxCocoa.framework in Embed Frameworks */,
 				D24EC47D1EAA64BE004B13D7 /* RxDataSources.framework in Embed Frameworks */,
 				D24EC47E1EAA64BE004B13D7 /* RxRealm.framework in Embed Frameworks */,
+				D2EFD5D31EAB26910013CD80 /* Persistents.framework in Embed Frameworks */,
 				D24EC47F1EAA64BE004B13D7 /* RxSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -213,6 +248,17 @@
 		D2E995AA1EAAF8BA00771413 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2E995B31EAAFAEE00771413 /* Pagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		D2E995B51EAAFC1A00771413 /* AnyRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyRequest.swift; sourceTree = "<group>"; };
+		D2EFD5BD1EAB26910013CD80 /* Persistents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Persistents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2EFD5BF1EAB26910013CD80 /* Persistents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Persistents.h; sourceTree = "<group>"; };
+		D2EFD5C01EAB26910013CD80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2EFD5C51EAB26910013CD80 /* PersistentsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersistentsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2EFD5CC1EAB26910013CD80 /* PersistentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentsTests.swift; sourceTree = "<group>"; };
+		D2EFD5CE1EAB26910013CD80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2EFD5DD1EAB28160013CD80 /* PersistentValueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentValueProtocol.swift; sourceTree = "<group>"; };
+		D2EFD5E41EAB321E0013CD80 /* PersistentStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStoreProtocol.swift; sourceTree = "<group>"; };
+		D2EFD5E61EAB40910013CD80 /* UserDefaultsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStore.swift; sourceTree = "<group>"; };
+		D2EFD5E81EAB47340013CD80 /* KeychainStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KeychainAccess.framework; path = Carthage/Build/iOS/KeychainAccess.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D24EC4691EAA64AF004B13D7 /* Realm.framework in Frameworks */,
+				D2EFD5EB1EAB5FC50013CD80 /* KeychainAccess.framework in Frameworks */,
 				D24EC46B1EAA64AF004B13D7 /* Result.framework in Frameworks */,
 				D24EC46D1EAA64AF004B13D7 /* RxCocoa.framework in Frameworks */,
 				D24EC46E1EAA64AF004B13D7 /* RxDataSources.framework in Frameworks */,
@@ -233,6 +280,7 @@
 				3E1C259406A56019C03BC7B7 /* libPods-mstdn.a in Frameworks */,
 				D2E995951EAAF85D00771413 /* APIClient.framework in Frameworks */,
 				D24EC46A1EAA64AF004B13D7 /* RealmSwift.framework in Frameworks */,
+				D2EFD5D21EAB26910013CD80 /* Persistents.framework in Frameworks */,
 				D24EC46F1EAA64AF004B13D7 /* RxRealm.framework in Frameworks */,
 				D24EC4671EAA64AF004B13D7 /* Instantiate.framework in Frameworks */,
 				D24EC4681EAA64AF004B13D7 /* InstantiateStandard.framework in Frameworks */,
@@ -288,6 +336,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2EFD5B91EAB26910013CD80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2EFD5DF1EAB2EDD0013CD80 /* Himotoki.framework in Frameworks */,
+				D2EFD5E01EAB2EDD0013CD80 /* Illuso.framework in Frameworks */,
+				D2EFD5EC1EAB5FD50013CD80 /* KeychainAccess.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2EFD5C21EAB26910013CD80 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2EFD5C61EAB26910013CD80 /* Persistents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -310,6 +376,7 @@
 				D24EC4561EAA64AF004B13D7 /* Illuso.framework */,
 				D24EC4571EAA64AF004B13D7 /* Instantiate.framework */,
 				D24EC4581EAA64AF004B13D7 /* InstantiateStandard.framework */,
+				D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */,
 				D24EC4591EAA64AF004B13D7 /* Realm.framework */,
 				D24EC45A1EAA64AF004B13D7 /* RealmSwift.framework */,
 				D24EC45B1EAA64AF004B13D7 /* Result.framework */,
@@ -332,6 +399,7 @@
 				D21A9A7F1EAA5B230010AE3F /* mstdnUITests */,
 				D2E9955C1EAAF59900771413 /* Base */,
 				D2E995811EAAF85C00771413 /* APIClient */,
+				D2EFD5BE1EAB26910013CD80 /* Persistents */,
 				D21A9A5E1EAA5B220010AE3F /* Products */,
 				4E3DBBD2640A2AFACFD26A5D /* Pods */,
 				A175C251592594B59418BB27 /* Frameworks */,
@@ -348,6 +416,8 @@
 				D2E995631EAAF59900771413 /* BaseTests.xctest */,
 				D2E995801EAAF85C00771413 /* APIClient.framework */,
 				D2E995881EAAF85C00771413 /* APIClientTests.xctest */,
+				D2EFD5BD1EAB26910013CD80 /* Persistents.framework */,
+				D2EFD5C51EAB26910013CD80 /* PersistentsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -444,6 +514,38 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		D2EFD5BE1EAB26910013CD80 /* Persistents */ = {
+			isa = PBXGroup;
+			children = (
+				D2EFD5DC1EAB26E20013CD80 /* Sources */,
+				D2EFD5CB1EAB26910013CD80 /* Tests */,
+			);
+			path = Persistents;
+			sourceTree = "<group>";
+		};
+		D2EFD5CB1EAB26910013CD80 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D2EFD5CC1EAB26910013CD80 /* PersistentsTests.swift */,
+				D2EFD5CE1EAB26910013CD80 /* Info.plist */,
+			);
+			name = Tests;
+			path = Persistents/Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		D2EFD5DC1EAB26E20013CD80 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D2EFD5BF1EAB26910013CD80 /* Persistents.h */,
+				D2EFD5DD1EAB28160013CD80 /* PersistentValueProtocol.swift */,
+				D2EFD5E41EAB321E0013CD80 /* PersistentStoreProtocol.swift */,
+				D2EFD5E61EAB40910013CD80 /* UserDefaultsStore.swift */,
+				D2EFD5E81EAB47340013CD80 /* KeychainStore.swift */,
+				D2EFD5C01EAB26910013CD80 /* Info.plist */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -460,6 +562,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2E995A41EAAF8AC00771413 /* APIClient.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2EFD5BA1EAB26910013CD80 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2EFD5CF1EAB26910013CD80 /* Persistents.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +594,7 @@
 			dependencies = (
 				D2E9956F1EAAF59900771413 /* PBXTargetDependency */,
 				D2E995941EAAF85D00771413 /* PBXTargetDependency */,
+				D2EFD5D11EAB26910013CD80 /* PBXTargetDependency */,
 			);
 			name = mstdn;
 			productName = mstdn;
@@ -601,6 +712,43 @@
 			productReference = D2E995881EAAF85C00771413 /* APIClientTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D2EFD5BC1EAB26910013CD80 /* Persistents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2EFD5D81EAB26910013CD80 /* Build configuration list for PBXNativeTarget "Persistents" */;
+			buildPhases = (
+				D2EFD5B81EAB26910013CD80 /* Sources */,
+				D2EFD5B91EAB26910013CD80 /* Frameworks */,
+				D2EFD5BA1EAB26910013CD80 /* Headers */,
+				D2EFD5BB1EAB26910013CD80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Persistents;
+			productName = Persistents;
+			productReference = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D2EFD5C41EAB26910013CD80 /* PersistentsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2EFD5D91EAB26910013CD80 /* Build configuration list for PBXNativeTarget "PersistentsTests" */;
+			buildPhases = (
+				D2EFD5C11EAB26910013CD80 /* Sources */,
+				D2EFD5C21EAB26910013CD80 /* Frameworks */,
+				D2EFD5C31EAB26910013CD80 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2EFD5C81EAB26910013CD80 /* PBXTargetDependency */,
+				D2EFD5CA1EAB26910013CD80 /* PBXTargetDependency */,
+			);
+			name = PersistentsTests;
+			productName = PersistentsTests;
+			productReference = D2EFD5C51EAB26910013CD80 /* PersistentsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -646,6 +794,16 @@
 						ProvisioningStyle = Automatic;
 						TestTargetID = D21A9A5C1EAA5B220010AE3F;
 					};
+					D2EFD5BC1EAB26910013CD80 = {
+						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Automatic;
+					};
+					D2EFD5C41EAB26910013CD80 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D21A9A5C1EAA5B220010AE3F;
+					};
 				};
 			};
 			buildConfigurationList = D21A9A581EAA5B220010AE3F /* Build configuration list for PBXProject "mstdn" */;
@@ -668,6 +826,8 @@
 				D2E995621EAAF59900771413 /* BaseTests */,
 				D2E9957F1EAAF85C00771413 /* APIClient */,
 				D2E995871EAAF85C00771413 /* APIClientTests */,
+				D2EFD5BC1EAB26910013CD80 /* Persistents */,
+				D2EFD5C41EAB26910013CD80 /* PersistentsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -724,6 +884,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2E995AC1EAAF8BA00771413 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2EFD5BB1EAB26910013CD80 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2EFD5C31EAB26910013CD80 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +1027,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2EFD5B81EAB26910013CD80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2EFD5DE1EAB28160013CD80 /* PersistentValueProtocol.swift in Sources */,
+				D2EFD5E51EAB321E0013CD80 /* PersistentStoreProtocol.swift in Sources */,
+				D2EFD5E71EAB40910013CD80 /* UserDefaultsStore.swift in Sources */,
+				D2EFD5E91EAB47340013CD80 /* KeychainStore.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2EFD5C11EAB26910013CD80 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2EFD5CD1EAB26910013CD80 /* PersistentsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -900,6 +1093,21 @@
 			isa = PBXTargetDependency;
 			target = D2E9955A1EAAF59900771413 /* Base */;
 			targetProxy = D2E995B11EAAF94B00771413 /* PBXContainerItemProxy */;
+		};
+		D2EFD5C81EAB26910013CD80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD5BC1EAB26910013CD80 /* Persistents */;
+			targetProxy = D2EFD5C71EAB26910013CD80 /* PBXContainerItemProxy */;
+		};
+		D2EFD5CA1EAB26910013CD80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D21A9A5C1EAA5B220010AE3F /* mstdn */;
+			targetProxy = D2EFD5C91EAB26910013CD80 /* PBXContainerItemProxy */;
+		};
+		D2EFD5D11EAB26910013CD80 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD5BC1EAB26910013CD80 /* Persistents */;
+			targetProxy = D2EFD5D01EAB26910013CD80 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1265,6 +1473,87 @@
 			};
 			name = Release;
 		};
+		D2EFD5D41EAB26910013CD80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Persistents/Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Persistents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D2EFD5D51EAB26910013CD80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = Persistents/Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Persistents;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D2EFD5D61EAB26910013CD80 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = Persistents/Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.PersistentsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mstdn.app/mstdn";
+			};
+			name = Debug;
+		};
+		D2EFD5D71EAB26910013CD80 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = Persistents/Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.PersistentsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mstdn.app/mstdn";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1329,6 +1618,7 @@
 				D2E995981EAAF85D00771413 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D2E9959C1EAAF85D00771413 /* Build configuration list for PBXNativeTarget "APIClientTests" */ = {
 			isa = XCConfigurationList;
@@ -1337,6 +1627,25 @@
 				D2E9959A1EAAF85D00771413 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2EFD5D81EAB26910013CD80 /* Build configuration list for PBXNativeTarget "Persistents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2EFD5D41EAB26910013CD80 /* Debug */,
+				D2EFD5D51EAB26910013CD80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2EFD5D91EAB26910013CD80 /* Build configuration list for PBXNativeTarget "PersistentsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2EFD5D61EAB26910013CD80 /* Debug */,
+				D2EFD5D71EAB26910013CD80 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
