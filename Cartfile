@@ -1,5 +1,6 @@
 github "ishkawa/APIKit"
 github "ikesyo/Himotoki"
+github "kishikawakatsumi/KeychainAccess"
 github "realm/realm-cocoa"
 github "ReactiveX/RxSwift"
 github "RxSwiftCommunity/RxDataSources"
