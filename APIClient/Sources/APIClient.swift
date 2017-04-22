@@ -10,16 +10,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-struct APIClientRequestProxy<Base: Request>: RequestProxy {
-    let base: Base
-    let clientURL: URL
-    
-    var baseURL: URL {
-        return clientURL
-    }
-}
 
 open class APIClient {
+    struct _RequestProxy<Base: Request>: RequestProxy {
+        let base: Base
+        let clientURL: URL
+        
+        var baseURL: URL {
+            return clientURL
+        }
+    }
+    
     let baseURL: URL
     let session: URLSession
     public init(baseURL: URL, session: URLSession = URLSession.shared) {
@@ -30,7 +31,7 @@ open class APIClient {
     open func request<R: Request>(request: @autoclosure @escaping () throws -> R) -> Observable<R.Response> {
         return Observable<() throws -> R>.just(request)
             .map { try $0() }
-            .map { APIClientRequestProxy(base: $0, clientURL: self.baseURL) }
+            .map { _RequestProxy(base: $0, clientURL: self.baseURL) }
             .flatMap { (request) in
                 return try self.session.rx.response(request: request.buildURLRequest())
                     .map { (response, data) in
