@@ -19,7 +19,7 @@ public class NavigationController<V: UIViewController>: UINavigationController {
         }
     }
     
-    public let rootViewController: V
+    public private(set) var rootViewController: V!
     var interactivePopGestureRecognizerDelegate: InteractivePopGestureRecognizerDelegate?
     
     public init(rootViewController: V) {
@@ -30,6 +30,11 @@ public class NavigationController<V: UIViewController>: UINavigationController {
         self.interactivePopGestureRecognizer?.delegate = interactivePopGestureRecognizerDelegate
         self.modalPresentationStyle = rootViewController.modalPresentationStyle
         self.modalTransitionStyle = rootViewController.modalTransitionStyle
+    }
+    
+    @available(*, unavailable)
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     @available(*, unavailable)
