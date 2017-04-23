@@ -67,6 +67,7 @@
 		D2CECAE51EAC95F500C3B8BA /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */; };
 		D2CECAE71EAC968700C3B8BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */; };
 		D2CECAEB1EACACA500C3B8BA /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */; };
+		D2CECAEE1EACB33200C3B8BA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAED1EACB33200C3B8BA /* Colors.swift */; };
 		D2E995641EAAF59900771413 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D2E9956B1EAAF59900771413 /* BaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E9956A1EAAF59900771413 /* BaseTests.swift */; };
 		D2E9956D1EAAF59900771413 /* Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E9955D1EAAF59900771413 /* Base.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -353,6 +354,7 @@
 		D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
+		D2CECAED1EACB33200C3B8BA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D2E9955B1EAAF59900771413 /* Base.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E9955D1EAAF59900771413 /* Base.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		D2E9955E1EAAF59900771413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -713,6 +715,7 @@
 			isa = PBXGroup;
 			children = (
 				D21A9A671EAA5B230010AE3F /* Assets.xcassets */,
+				D2CECAED1EACB33200C3B8BA /* Colors.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -932,6 +935,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D21A9A851EAA5B230010AE3F /* Build configuration list for PBXNativeTarget "mstdn" */;
 			buildPhases = (
+				D2CECAEC1EACB15A00C3B8BA /* SwiftGen */,
 				DC03983F7E6249C8516590A5 /* [CP] Check Pods Manifest.lock */,
 				D21A9A591EAA5B220010AE3F /* Sources */,
 				D21A9A5A1EAA5B220010AE3F /* Frameworks */,
@@ -1493,6 +1497,20 @@
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint";
 		};
+		D2CECAEC1EACB15A00C3B8BA /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftGen/bin/swiftgen colors ${PROJECT_DIR}/mstdn/Resources/Mstdn.clr > ${PROJECT_DIR}/mstdn/Resources/Colors.swift";
+		};
 		DC03983F7E6249C8516590A5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1516,6 +1534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2CECAE71EAC968700C3B8BA /* LoginViewController.swift in Sources */,
+				D2CECAEE1EACB33200C3B8BA /* Colors.swift in Sources */,
 				D21A9A631EAA5B220010AE3F /* ViewController.swift in Sources */,
 				D21A9A611EAA5B220010AE3F /* AppDelegate.swift in Sources */,
 			);
