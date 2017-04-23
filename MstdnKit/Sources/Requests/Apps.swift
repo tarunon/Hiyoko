@@ -11,8 +11,9 @@ import APIClient
 import APIKit
 
 public extension Requests {
-    public struct Apps: APIClient.Request {
+    public struct Apps: RequestBase {
         public typealias Response = Client
+        public typealias Error = MstdnError
         public var method: HTTPMethod = .post
         public var path: String = "/api/v1/apps"
         
@@ -23,8 +24,9 @@ public extension Requests {
         }
     }
     
-    public struct Oauth: APIClient.Request {
+    public struct Oauth: RequestBase {
         public typealias Response = Token
+        public typealias Error = MstdnError
         public var method: HTTPMethod = .post
         public var path: String = "/oauth/token"
         

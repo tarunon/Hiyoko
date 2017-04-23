@@ -113,17 +113,20 @@ public extension Reactive where Base: UIViewController {
                     return Disposables.create()
                 }
                 let viewModel = viewModel(viewController)
+                observer.onNext((viewController, viewModel))
                 base.present(viewController, animated: animated, completion: { _ in
-                    observer.onNext((viewController, viewModel))
                     observer.onCompleted()
                 })
                 return Disposables.create()
             }
             .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                let dismiss = viewController.rx.dismiss(animated: animated)
                 return viewModel.result
+                    .catchError { (error) in
+                        dismiss.map { throw error }
+                    }
                     .concat(
-                        viewController.rx.dismiss(animated: animated)
-                            .flatMap { Observable.empty() }
+                        dismiss.flatMap { Observable.empty() }
                     )
                     .takeUntil(viewController.rx.deallocated)
             }
@@ -137,16 +140,19 @@ public extension Reactive where Base: UIViewController {
                     return Disposables.create()
                 }
                 let viewModel = viewModel(viewController)
-                navigationController.pushViewController(viewController, animated: animated)
                 observer.onNext((viewController, viewModel))
+                navigationController.pushViewController(viewController, animated: animated)
                 observer.onCompleted()
                 return Disposables.create()
             }
             .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                let pop = viewController.rx.pop(animated: animated)
                 return viewModel.result
+                    .catchError { (error) in
+                        pop.map { throw error }
+                    }
                     .concat(
-                        viewController.rx.pop(animated: animated)
-                            .flatMap { Observable.empty() }
+                        pop.flatMap { Observable.empty() }
                     )
                     .takeUntil(viewController.rx.deallocated)
         }
@@ -167,10 +173,13 @@ public extension Reactive where Base: UIViewController {
                 return Disposables.create()
             }
             .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                let dismiss = viewController.rx.dismiss(animated: true)
                 return viewModel.result
+                    .catchError { (error) in
+                        dismiss.map { throw error }
+                    }
                     .concat(
-                        viewController.rx.dismiss(animated: true)
-                            .flatMap { Observable.empty() }
+                        dismiss.flatMap { Observable.empty() }
                     )
                     .takeUntil(viewController.rx.deallocated)
         }
@@ -190,10 +199,13 @@ public extension Reactive where Base: UIViewController {
                 return Disposables.create()
             }
             .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                let pop = viewController.rx.pop(animated: true)
                 return viewModel.result
+                    .catchError { (error) in
+                        pop.map { throw error }
+                    }
                     .concat(
-                        viewController.rx.pop(animated: true)
-                            .flatMap { Observable.empty() }
+                        pop.flatMap { Observable.empty() }
                     )
                     .takeUntil(viewController.rx.deallocated)
         }
