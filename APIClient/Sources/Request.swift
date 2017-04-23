@@ -12,12 +12,36 @@ import Himotoki
 import Base
 
 public protocol Request: APIKit.Request {
-    
+    associatedtype Error: Swift.Error
+    var errorParser: DataParser { get }
+    func error(from object: Any, urlResponse: HTTPURLResponse) throws -> Error
+}
+
+public enum ResponseError: Error {
+    case parseSuccess(Error)
+    case parseFail(responseParseFailure: Error, errorParseFailure: Error, statusCode: Int)
 }
 
 public extension Request {
     public var baseURL: URL {
         return URL(string: "http://localhost:8080/")!
+    }
+    
+    @available(*, unavailable)
+    public func intercept(object: Any, urlResponse: HTTPURLResponse) throws -> Any {
+        fatalError()
+    }
+    
+    public func parse(data: Data, urlResponse: HTTPURLResponse) throws -> Response {
+        do {
+            return try self.response(from: dataParser.parse(data: data), urlResponse: urlResponse)
+        } catch (let err) {
+            do {
+                throw ResponseError.parseSuccess(try self.error(from: errorParser.parse(data: data), urlResponse: urlResponse))
+            } catch (let err2) {
+                throw ResponseError.parseFail(responseParseFailure: err, errorParseFailure: err2, statusCode: urlResponse.statusCode)
+            }
+        }
     }
 }
 

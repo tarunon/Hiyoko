@@ -12,6 +12,7 @@ import APIKit
 public protocol RequestProxy: Request {
     associatedtype Base: Request
     associatedtype Response = Base.Response
+    associatedtype Error = Base.Error
     
     var base: Base { get }
 }
@@ -44,6 +45,10 @@ public extension RequestProxy {
     public var dataParser: DataParser {
         return base.dataParser
     }
+    
+    public var errorParser: DataParser {
+        return base.errorParser
+    }
 
     public func intercept(urlRequest: URLRequest) throws -> URLRequest {
         return try base.intercept(urlRequest: urlRequest)
@@ -57,5 +62,11 @@ public extension RequestProxy {
 public extension RequestProxy where Response == Base.Response {
     public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Self.Response {
         return try base.response(from: object, urlResponse: urlResponse)
+    }
+}
+
+public extension RequestProxy where Error == Base.Error {
+    public func error(from object: Any, urlResponse: HTTPURLResponse) throws -> Self.Error {
+        return try base.error(from: object, urlResponse: urlResponse)
     }
 }
