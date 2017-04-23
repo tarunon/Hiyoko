@@ -81,6 +81,16 @@ extension Request where Response: Decodable {
     }
 }
 
+extension Request where Response: RangeReplaceableCollection, Response.Iterator.Element: Decodable {
+    public var dataParser: DataParser {
+        return JSONDataParser(readingOptions: .allowFragments)
+    }
+    
+    public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+        return try Response(decodeArray(object))
+    }
+}
+
 extension Request where Error: Decodable {
     public var errorParser: DataParser {
         return JSONDataParser(readingOptions: .allowFragments)

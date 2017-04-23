@@ -10,10 +10,10 @@ import Foundation
 import Himotoki
 
 public struct Token {
-    var accessToken: String
-    var tokenType: String
-    var scope: String
-    var created: Date
+    public var accessToken: String
+    public var tokenType: String
+    public var scope: String
+    public var created: Date
 }
 
 extension Token: Decodable {
