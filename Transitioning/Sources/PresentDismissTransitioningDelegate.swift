@@ -45,8 +45,8 @@ public extension NSObjectProtocol where Self: UIViewController {
         }
     }
     
-    public func present<V: UIViewController>(_ viewController: V, presentAnimation: AnimatingTransitioning<Self, V>? = nil, dismissAnimation: AnimatingTransitioning<V, Self>? = nil) {
+    public func present<V: UIViewController>(_ viewController: V, presentAnimation: AnimatingTransitioning<Self, V>? = nil, dismissAnimation: AnimatingTransitioning<V, Self>? = nil, completion: ((Void) -> ())?=nil) {
         viewController._transitioningDelegate = PresentDismissTransitioningDelegate(present: presentAnimation, dismiss: dismissAnimation)
-        self.present(viewController, animated: true)
+        self.present(viewController, animated: true, completion: completion)
     }
 }

@@ -50,6 +50,8 @@
 		D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA121EABA60A0082CA72 /* NavigationController.swift */; };
 		D2AA89E31EAC424200B938F1 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA89E21EAC424200B938F1 /* UIViewController+Rx.swift */; };
 		D2AA89E61EAC47B500B938F1 /* KeychainAccess.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2AA89EA1EAC4EDE00B938F1 /* RxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA89E91EAC4EDE00B938F1 /* RxViewModel.swift */; };
+		D2AA89EE1EAC5C5700B938F1 /* UIAlertController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AA89ED1EAC5C5700B938F1 /* UIAlertController+Rx.swift */; };
 		D2E995641EAAF59900771413 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D2E9956B1EAAF59900771413 /* BaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E9956A1EAAF59900771413 /* BaseTests.swift */; };
 		D2E9956D1EAAF59900771413 /* Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E9955D1EAAF59900771413 /* Base.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -297,6 +299,8 @@
 		D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPopTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA121EABA60A0082CA72 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		D2AA89E21EAC424200B938F1 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Rx.swift"; sourceTree = "<group>"; };
+		D2AA89E91EAC4EDE00B938F1 /* RxViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxViewModel.swift; sourceTree = "<group>"; };
+		D2AA89ED1EAC5C5700B938F1 /* UIAlertController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Rx.swift"; sourceTree = "<group>"; };
 		D2E9955B1EAAF59900771413 /* Base.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E9955D1EAAF59900771413 /* Base.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		D2E9955E1EAAF59900771413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -691,6 +695,8 @@
 				D2EFD5F41EAB6D850013CD80 /* UIKitExtensions.h */,
 				D29CCA121EABA60A0082CA72 /* NavigationController.swift */,
 				D2AA89E21EAC424200B938F1 /* UIViewController+Rx.swift */,
+				D2AA89E91EAC4EDE00B938F1 /* RxViewModel.swift */,
+				D2AA89ED1EAC5C5700B938F1 /* UIAlertController+Rx.swift */,
 				D2EFD5F51EAB6D850013CD80 /* Info.plist */,
 			);
 			path = Sources;
@@ -1376,6 +1382,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2AA89E31EAC424200B938F1 /* UIViewController+Rx.swift in Sources */,
+				D2AA89EA1EAC4EDE00B938F1 /* RxViewModel.swift in Sources */,
+				D2AA89EE1EAC5C5700B938F1 /* UIAlertController+Rx.swift in Sources */,
 				D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Transitioning
 
 public extension UIViewController {
     public enum State {
@@ -71,5 +72,130 @@ public extension Reactive where Base: UIViewController {
                 return UIViewController.State.merge(state, parentState)
             }
         return ControlEvent(events: source)
+    }
+}
+
+public extension Reactive where Base: UIViewController {
+    func dismiss(animated: Bool) -> Observable<Void> {
+        return Observable
+            .create { [weak base=base] (observer) -> Disposable in
+                guard let base = base else {
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                base.dismiss(animated: animated, completion: { 
+                    observer.onNext()
+                    observer.onCompleted()
+                })
+                return Disposables.create()
+            }
+    }
+    
+    func pop(animated: Bool) -> Observable<Void> {
+        return Observable
+            .create { [weak base=base] (observer) -> Disposable in
+                guard let base = base, let navigationController = base.navigationController else {
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                navigationController.popViewController(animated: animated)
+                observer.onNext()
+                observer.onCompleted()
+                return Disposables.create()
+            }
+    }
+    
+    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModel: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> where M.Owner == V {
+        return Observable<(V, M)>
+            .create { [weak base=base] (observer) -> Disposable in
+                guard let base=base else {
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                let viewModel = viewModel(viewController)
+                base.present(viewController, animated: animated, completion: { _ in
+                    observer.onNext((viewController, viewModel))
+                    observer.onCompleted()
+                })
+                return Disposables.create()
+            }
+            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                return viewModel.result
+                    .concat(
+                        viewController.rx.dismiss(animated: animated)
+                            .flatMap { Observable.empty() }
+                    )
+                    .takeUntil(viewController.rx.deallocated)
+            }
+    }
+    
+    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModel: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> where M.Owner == V {
+        return Observable<(V, M)>
+            .create { [weak base=base] (observer) -> Disposable in
+                guard let base=base, let navigationController = base.navigationController else {
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                let viewModel = viewModel(viewController)
+                navigationController.pushViewController(viewController, animated: animated)
+                observer.onNext((viewController, viewModel))
+                observer.onCompleted()
+                return Disposables.create()
+            }
+            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                return viewModel.result
+                    .concat(
+                        viewController.rx.pop(animated: animated)
+                            .flatMap { Observable.empty() }
+                    )
+                    .takeUntil(viewController.rx.deallocated)
+        }
+    }
+    
+    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: @escaping (V) -> M) -> Observable<M.Result> where M.Owner == V {
+        return Observable<(V, M)>
+            .create { [weak base=base] (observer) -> Disposable in
+                guard let base=base else {
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                let viewModel = viewModel(viewController)
+                base.present(viewController, presentAnimation: presentAnimation, dismissAnimation: dismissAnimation, completion: { _ in
+                    observer.onNext((viewController, viewModel))
+                    observer.onCompleted()
+                })
+                return Disposables.create()
+            }
+            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                return viewModel.result
+                    .concat(
+                        viewController.rx.dismiss(animated: true)
+                            .flatMap { Observable.empty() }
+                    )
+                    .takeUntil(viewController.rx.deallocated)
+        }
+    }
+    
+    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: @escaping (V) -> M) -> Observable<M.Result> where M.Owner == V {
+        return Observable<(V, M)>
+            .create { [weak base=base] (observer) -> Disposable in
+                guard let base=base, base.navigationController != nil else {
+                    observer.onCompleted()
+                    return Disposables.create()
+                }
+                let viewModel = viewModel(viewController)
+                base.push(viewController, pushAnimation: pushAnimation, popAnimation: popAnimation)
+                observer.onNext((viewController, viewModel))
+                observer.onCompleted()
+                return Disposables.create()
+            }
+            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
+                return viewModel.result
+                    .concat(
+                        viewController.rx.pop(animated: true)
+                            .flatMap { Observable.empty() }
+                    )
+                    .takeUntil(viewController.rx.deallocated)
+        }
     }
 }
