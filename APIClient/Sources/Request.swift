@@ -36,11 +36,13 @@ public extension Request {
         do {
             return try self.response(from: dataParser.parse(data: data), urlResponse: urlResponse)
         } catch (let err) {
+            let error: ResponseError
             do {
-                throw ResponseError.parseSuccess(try self.error(from: errorParser.parse(data: data), urlResponse: urlResponse))
+                error = .parseSuccess(try self.error(from: errorParser.parse(data: data), urlResponse: urlResponse))
             } catch (let err2) {
-                throw ResponseError.parseFail(responseParseFailure: err, errorParseFailure: err2, statusCode: urlResponse.statusCode)
+                error = .parseFail(responseParseFailure: err, errorParseFailure: err2, statusCode: urlResponse.statusCode)
             }
+            throw error
         }
     }
 }
@@ -75,6 +77,16 @@ extension Request where Response: Decodable {
     }
     
     public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> Response {
+        return try decodeValue(object)
+    }
+}
+
+extension Request where Error: Decodable {
+    public var errorParser: DataParser {
+        return JSONDataParser(readingOptions: .allowFragments)
+    }
+    
+    public func error(from object: Any, urlResponse: HTTPURLResponse) throws -> Error {
         return try decodeValue(object)
     }
 }
