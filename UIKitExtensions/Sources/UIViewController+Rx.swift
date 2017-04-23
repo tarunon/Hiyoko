@@ -113,8 +113,8 @@ public extension Reactive where Base: UIViewController {
                     return Disposables.create()
                 }
                 let viewModel = viewModel(viewController)
+                observer.onNext((viewController, viewModel))
                 base.present(viewController, animated: animated, completion: { _ in
-                    observer.onNext((viewController, viewModel))
                     observer.onCompleted()
                 })
                 return Disposables.create()
@@ -140,8 +140,8 @@ public extension Reactive where Base: UIViewController {
                     return Disposables.create()
                 }
                 let viewModel = viewModel(viewController)
-                navigationController.pushViewController(viewController, animated: animated)
                 observer.onNext((viewController, viewModel))
+                navigationController.pushViewController(viewController, animated: animated)
                 observer.onCompleted()
                 return Disposables.create()
             }
