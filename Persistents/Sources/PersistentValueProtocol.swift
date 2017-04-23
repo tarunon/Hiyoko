@@ -18,7 +18,7 @@ public protocol PersistentValueProtocol {
 
 public extension PersistentValueProtocol {
     public func encode() throws -> Data {
-        return try NSKeyedArchiver.archivedData(withRootObject: Illuso.encode(self))
+        return try NSKeyedArchiver.archivedData(withRootObject: Illuso.encode(self).asObject())
     }
 }
 

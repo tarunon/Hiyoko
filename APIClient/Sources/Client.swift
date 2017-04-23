@@ -1,5 +1,5 @@
 //
-//  APIClient.swift
+//  Client.swift
 //  mstdn
 //
 //  Created by tarunon on 2017/04/22.
@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 
-open class APIClient {
+open class Client {
     struct _RequestProxy<Base: Request>: RequestProxy {
         let base: Base
         let clientURL: URL
