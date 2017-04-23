@@ -68,6 +68,7 @@
 		D2CECAE71EAC968700C3B8BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */; };
 		D2CECAEB1EACACA500C3B8BA /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */; };
 		D2CECAEE1EACB33200C3B8BA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAED1EACB33200C3B8BA /* Colors.swift */; };
+		D2DE6D051EACCA9E00898889 /* Cell+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DE6D041EACCA9E00898889 /* Cell+Rx.swift */; };
 		D2E995641EAAF59900771413 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D2E9956B1EAAF59900771413 /* BaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E9956A1EAAF59900771413 /* BaseTests.swift */; };
 		D2E9956D1EAAF59900771413 /* Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E9955D1EAAF59900771413 /* Base.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -355,6 +356,7 @@
 		D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		D2CECAED1EACB33200C3B8BA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		D2DE6D041EACCA9E00898889 /* Cell+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cell+Rx.swift"; sourceTree = "<group>"; };
 		D2E9955B1EAAF59900771413 /* Base.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E9955D1EAAF59900771413 /* Base.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		D2E9955E1EAAF59900771413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 				D2AA89E91EAC4EDE00B938F1 /* RxViewModel.swift */,
 				D2AA89ED1EAC5C5700B938F1 /* UIAlertController+Rx.swift */,
 				D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */,
+				D2DE6D041EACCA9E00898889 /* Cell+Rx.swift */,
 				D2EFD5F51EAB6D850013CD80 /* Info.plist */,
 			);
 			path = Sources;
@@ -1637,6 +1640,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2AA89E31EAC424200B938F1 /* UIViewController+Rx.swift in Sources */,
+				D2DE6D051EACCA9E00898889 /* Cell+Rx.swift in Sources */,
 				D2AA89EA1EAC4EDE00B938F1 /* RxViewModel.swift in Sources */,
 				D2AA89EE1EAC5C5700B938F1 /* UIAlertController+Rx.swift in Sources */,
 				D2CECAEB1EACACA500C3B8BA /* UITextField+Rx.swift in Sources */,
