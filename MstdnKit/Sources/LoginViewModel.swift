@@ -17,6 +17,7 @@ public protocol LoginViewModelOwner {
     var hostName: Observable<String> { get }
     var email: Observable<String> { get }
     var password: Observable<String> { get }
+    var cancelButtonTapped: Observable<Void> { get }
     var loginButtonTapped: Observable<Void> { get }
     
     func apiClient(hostName: String) -> APIClient.Client
@@ -31,7 +32,10 @@ public class LoginViewModel<O: LoginViewModelOwner>: RxViewModel {
     public init(owner: O) {
         result = owner.loginButtonTapped
             .withLatestFrom(owner.hostName)
-            .flatMapFirst { (hostName) -> Observable<Token> in
+            .withLatestFrom(owner.email) { ($0, $1) }
+            .withLatestFrom(owner.password) { ($0.0, $0.1, $1) }
+            .filter { !($0.isEmpty || $1.isEmpty || $2.isEmpty) }
+            .flatMapFirst { (hostName, email, password) -> Observable<Token> in
                 let persisntent = owner.clientPersistent(hostName: hostName)
                 let apiClient = owner.apiClient(hostName: hostName)
                 return Observable
@@ -41,12 +45,15 @@ public class LoginViewModel<O: LoginViewModelOwner>: RxViewModel {
                         apiClient.request(request: try Requests.Apps(Client.Form()))
                             .do(onNext: persisntent.store)
                     }
-                    .withLatestFrom(owner.email) { ($0, $1) }
-                    .withLatestFrom(owner.password) { ($0.0, $0.1, $1) }
-                    .flatMapFirst { (client, email, password) in
+                    .flatMapFirst { (client) in
                         apiClient.request(request: Requests.Oauth(client, email: email, password: password))
-                    }
+                }
             }
             .take(1)
+            .amb(
+                owner.cancelButtonTapped
+                    .take(1)
+                    .flatMap { _ in Observable.empty() }
+            )
     }
 }

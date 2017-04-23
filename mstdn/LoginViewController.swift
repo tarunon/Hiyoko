@@ -16,10 +16,35 @@ import APIClient
 import Persistents
 
 final class LoginViewController: UIViewController {
-    @IBOutlet weak var hostNameField: UITextField!
+    let disposeBag = DisposeBag()
+    @IBOutlet weak var hostNameField: UITextField! 
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()        
+        hostNameField.rx.didEndEditing
+            .subscribe(
+                onNext: { [unowned emailField=self.emailField as UITextField] in
+                    emailField.becomeFirstResponder()
+                }
+            )
+            .addDisposableTo(disposeBag)
+        
+        emailField.rx.didEndEditing
+            .subscribe(
+                onNext: { [unowned passwordField=self.passwordField as UITextField] in
+                    passwordField.becomeFirstResponder()
+                }
+            )
+            .addDisposableTo(disposeBag)
+    }
 }
 
 extension LoginViewController: LoginViewModelOwner {
@@ -39,12 +64,21 @@ extension LoginViewController: LoginViewModelOwner {
     }
     
     var loginButtonTapped: Observable<Void> {
-        return loginButton.rx.tap
+        return Observable
+            .of(
+                loginButton.rx.tap,
+                passwordField.rx.didEndEditing
+            )
+            .merge()
+    }
+    
+    var cancelButtonTapped: Observable<Void> {
+        return cancelButton.rx.tap
             .asObservable()
     }
     
     func apiClient(hostName: String) -> APIClient.Client {
-        return APIClient.Client(baseURL: URL(string: hostName)!)
+        return APIClient.Client(baseURL: URL(string: "https://" + hostName + "/")!)
     }
     
     func clientPersistent(hostName: String) -> PersistentStore<MstdnKit.Client> {

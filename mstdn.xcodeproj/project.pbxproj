@@ -66,6 +66,7 @@
 		D2CECAE31EAC8F3400C3B8BA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAE21EAC8F3400C3B8BA /* LoginViewModel.swift */; };
 		D2CECAE51EAC95F500C3B8BA /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */; };
 		D2CECAE71EAC968700C3B8BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */; };
+		D2CECAEB1EACACA500C3B8BA /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */; };
 		D2E995641EAAF59900771413 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D2E9956B1EAAF59900771413 /* BaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E9956A1EAAF59900771413 /* BaseTests.swift */; };
 		D2E9956D1EAAF59900771413 /* Base.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E9955D1EAAF59900771413 /* Base.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -351,6 +352,7 @@
 		D2CECAE21EAC8F3400C3B8BA /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+Rx.swift"; sourceTree = "<group>"; };
 		D2E9955B1EAAF59900771413 /* Base.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Base.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2E9955D1EAAF59900771413 /* Base.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		D2E9955E1EAAF59900771413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -633,7 +635,7 @@
 				D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */,
 				D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */,
 				D21A9A641EAA5B230010AE3F /* Main.storyboard */,
-				D21A9A671EAA5B230010AE3F /* Assets.xcassets */,
+				D2CECAE81EACA65100C3B8BA /* Resources */,
 				D21A9A691EAA5B230010AE3F /* LaunchScreen.storyboard */,
 				D21A9A6C1EAA5B230010AE3F /* Info.plist */,
 			);
@@ -705,6 +707,14 @@
 				D2CECAE21EAC8F3400C3B8BA /* LoginViewModel.swift */,
 			);
 			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		D2CECAE81EACA65100C3B8BA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D21A9A671EAA5B230010AE3F /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D2E9955C1EAAF59900771413 /* Base */ = {
@@ -827,6 +837,7 @@
 				D2AA89E21EAC424200B938F1 /* UIViewController+Rx.swift */,
 				D2AA89E91EAC4EDE00B938F1 /* RxViewModel.swift */,
 				D2AA89ED1EAC5C5700B938F1 /* UIAlertController+Rx.swift */,
+				D2CECAEA1EACACA500C3B8BA /* UITextField+Rx.swift */,
 				D2EFD5F51EAB6D850013CD80 /* Info.plist */,
 			);
 			path = Sources;
@@ -1609,6 +1620,7 @@
 				D2AA89E31EAC424200B938F1 /* UIViewController+Rx.swift in Sources */,
 				D2AA89EA1EAC4EDE00B938F1 /* RxViewModel.swift in Sources */,
 				D2AA89EE1EAC5C5700B938F1 /* UIAlertController+Rx.swift in Sources */,
+				D2CECAEB1EACACA500C3B8BA /* UITextField+Rx.swift in Sources */,
 				D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

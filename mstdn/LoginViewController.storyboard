@@ -21,8 +21,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="hostname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sah-Cg-IaC">
-                                <rect key="frame" x="16" y="28" width="343" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="example.mstdn.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sah-Cg-IaC">
+                                <rect key="frame" x="16" y="93" width="343" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2cI-jK-RfI"/>
                                 </constraints>
@@ -31,7 +31,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pnt-EX-CvQ">
-                                <rect key="frame" x="16" y="66" width="343" height="30"/>
+                                <rect key="frame" x="16" y="131" width="343" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="mPc-jC-O6a"/>
                                 </constraints>
@@ -40,7 +40,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aBQ-hs-Rbi">
-                                <rect key="frame" x="16" y="104" width="343" height="30"/>
+                                <rect key="frame" x="16" y="169" width="343" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="4vS-i0-9jv"/>
                                 </constraints>
@@ -48,30 +48,56 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1c-z0-uf8">
-                                <rect key="frame" x="168" y="199" width="38" height="30"/>
-                                <state key="normal" title="Login"/>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AM6-4B-u3R">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P4f-8q-pkd">
+                                        <rect key="frame" x="8" y="27" width="48" height="30"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="1" green="0.99998784065246582" blue="0.99999213218688965" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKZ-dV-cyb">
+                                        <rect key="frame" x="329" y="27" width="38" height="30"/>
+                                        <state key="normal" title="Login">
+                                            <color key="titleColor" red="0.26466888189315796" green="0.51363122463226318" blue="0.77653181552886963" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" red="0.16099168360233307" green="0.17214761674404144" blue="0.21187655627727509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.19630293548107147" green="0.20727510750293732" blue="0.25893023610115051" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="P4f-8q-pkd" firstAttribute="centerY" secondItem="AM6-4B-u3R" secondAttribute="centerY" constant="10" id="3gW-Ke-Kc4"/>
+                                    <constraint firstItem="rKZ-dV-cyb" firstAttribute="centerY" secondItem="AM6-4B-u3R" secondAttribute="centerY" constant="10" id="5r5-2h-7bh"/>
+                                    <constraint firstAttribute="trailing" secondItem="rKZ-dV-cyb" secondAttribute="trailing" constant="8" id="6Uu-Bj-xPS"/>
+                                    <constraint firstAttribute="height" constant="64" id="Pre-qV-sqD"/>
+                                    <constraint firstItem="P4f-8q-pkd" firstAttribute="leading" secondItem="AM6-4B-u3R" secondAttribute="leading" constant="8" id="zhg-sM-7ea"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.16099168360233307" green="0.17214761674404144" blue="0.21187655627727509" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="Sah-Cg-IaC" firstAttribute="top" secondItem="6Ff-sQ-nVl" secondAttribute="bottom" constant="8" id="ByN-AO-rhe"/>
+                            <constraint firstAttribute="trailing" secondItem="AM6-4B-u3R" secondAttribute="trailing" id="LJP-av-BhV"/>
                             <constraint firstItem="pnt-EX-CvQ" firstAttribute="leading" secondItem="6Jb-TE-emF" secondAttribute="leading" constant="16" id="MkF-PJ-PK4"/>
                             <constraint firstItem="aBQ-hs-Rbi" firstAttribute="leading" secondItem="6Jb-TE-emF" secondAttribute="leading" constant="16" id="Mmk-sC-dJf"/>
                             <constraint firstItem="pnt-EX-CvQ" firstAttribute="top" secondItem="Sah-Cg-IaC" secondAttribute="bottom" constant="8" id="Niw-I1-PMG"/>
-                            <constraint firstItem="a1c-z0-uf8" firstAttribute="centerX" secondItem="6Jb-TE-emF" secondAttribute="centerX" id="Q08-lg-lBd"/>
+                            <constraint firstItem="Sah-Cg-IaC" firstAttribute="top" secondItem="AM6-4B-u3R" secondAttribute="bottom" constant="29" id="NtJ-MP-lZg"/>
+                            <constraint firstItem="AM6-4B-u3R" firstAttribute="top" secondItem="6Jb-TE-emF" secondAttribute="top" id="dI8-pu-Y1j"/>
+                            <constraint firstItem="AM6-4B-u3R" firstAttribute="leading" secondItem="6Jb-TE-emF" secondAttribute="leading" id="iiL-iy-dBk"/>
                             <constraint firstItem="Sah-Cg-IaC" firstAttribute="leading" secondItem="6Jb-TE-emF" secondAttribute="leading" constant="16" id="kqA-e3-Eay"/>
                             <constraint firstAttribute="trailing" secondItem="aBQ-hs-Rbi" secondAttribute="trailing" constant="16" id="mKC-kh-eNx"/>
                             <constraint firstAttribute="trailing" secondItem="pnt-EX-CvQ" secondAttribute="trailing" constant="16" id="rT1-Ov-r7w"/>
                             <constraint firstItem="aBQ-hs-Rbi" firstAttribute="top" secondItem="pnt-EX-CvQ" secondAttribute="bottom" constant="8" id="rxm-sV-sHu"/>
-                            <constraint firstItem="a1c-z0-uf8" firstAttribute="top" secondItem="aBQ-hs-Rbi" secondAttribute="bottom" constant="65" id="u7S-Ic-Pp6"/>
                             <constraint firstAttribute="trailing" secondItem="Sah-Cg-IaC" secondAttribute="trailing" constant="16" id="vQg-CO-iGM"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="P4f-8q-pkd" id="3Uk-VK-Leg"/>
                         <outlet property="emailField" destination="pnt-EX-CvQ" id="XuG-ny-Rq3"/>
                         <outlet property="hostNameField" destination="Sah-Cg-IaC" id="oGR-gQ-KQS"/>
-                        <outlet property="loginButton" destination="a1c-z0-uf8" id="nWG-Cp-TUx"/>
+                        <outlet property="loginButton" destination="rKZ-dV-cyb" id="f3f-AK-wUr"/>
                         <outlet property="passwordField" destination="aBQ-hs-Rbi" id="vc5-FK-ETL"/>
                     </connections>
                 </viewController>
