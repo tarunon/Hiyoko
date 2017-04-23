@@ -49,7 +49,7 @@ public protocol Storable {
 }
 
 public extension Storable {
-    public func typed<P: PersistentValueProtocol>(_ type: P.Type=P.self, _ key: String) -> PersistentStore<PersistentValueProtocol> {
+    public func typed<P: PersistentValueProtocol>(type: P.Type=P.self, _ key: String) -> PersistentStore<P> {
         return data(key).converted(translation: P.decode, retranslation: { try $0.encode() })
     }
 }

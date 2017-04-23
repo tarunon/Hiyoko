@@ -7,8 +7,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import UIKitExtensions
+import MstdnKit
 
 class ViewController: UIViewController {
+    
+    let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,5 +24,18 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBOutlet weak var button: UIButton! {
+        didSet {
+            button.rx.tap
+                .flatMapFirst { [unowned self] in
+                    self.rx.present(LoginViewController.instantiate(), viewModel: LoginViewModel.init, animated: true)
+                }
+                .subscribe { (event) in
+                    print(event)
+                }
+                .addDisposableTo(disposeBag)
+        }
     }
 }
