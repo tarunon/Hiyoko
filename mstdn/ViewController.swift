@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import UIKitExtensions
+import RxExtensions
 import MstdnKit
 import APIClient
 

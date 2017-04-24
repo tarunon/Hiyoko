@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import UIKitExtensions
 import RxSwift
 import RxCocoa
+import RxExtensions
 import Persistents
 import APIClient
 
