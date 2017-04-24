@@ -79,7 +79,6 @@
 		D2E995961EAAF85D00771413 /* APIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2E995801EAAF85C00771413 /* APIClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2E995A41EAAF8AC00771413 /* APIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E9959F1EAAF8AC00771413 /* APIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2E995A51EAAF8AC00771413 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E995A01EAAF8AC00771413 /* Client.swift */; };
-		D2E995A61EAAF8AC00771413 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D2E995A11EAAF8AC00771413 /* Info.plist */; };
 		D2E995A71EAAF8AC00771413 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E995A21EAAF8AC00771413 /* Request.swift */; };
 		D2E995A81EAAF8AC00771413 /* RequestProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E995A31EAAF8AC00771413 /* RequestProxy.swift */; };
 		D2E995AB1EAAF8BA00771413 /* APIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E995A91EAAF8BA00771413 /* APIClientTests.swift */; };
@@ -1468,7 +1467,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2E995A61EAAF8AC00771413 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

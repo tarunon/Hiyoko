@@ -9,7 +9,6 @@
 import Foundation
 import Himotoki
 
-
 public indirect enum PaginatedResponse<Base, Error: Swift.Error> {
     case hasNext(response: Base, next: AnyRequest<PaginatedResponse, Error>)
     case tail(response: Base)
