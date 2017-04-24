@@ -448,7 +448,6 @@
 		D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+Rx.swift"; path = "RxExtensions/Sources/UIAlertController+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITextField+Rx.swift"; path = "RxExtensions/Sources/UITextField+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Rx.swift"; path = "RxExtensions/Sources/UIViewController+Rx.swift"; sourceTree = SOURCE_ROOT; };
-		D27306081EAE3C6A0020C710 /* mstdn.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = mstdn.xcodeproj; sourceTree = "<group>"; };
 		D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentDismissTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPopTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA121EABA60A0082CA72 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -684,7 +683,6 @@
 		A175C251592594B59418BB27 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D27306081EAE3C6A0020C710 /* mstdn.xcodeproj */,
 				D24EC4521EAA64AF004B13D7 /* APIKit.framework */,
 				D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */,
 				D24EC4541EAA64AF004B13D7 /* Barrel.framework */,
@@ -719,16 +717,8 @@
 		D21A9A541EAA5B220010AE3F = {
 			isa = PBXGroup;
 			children = (
-				D21A9A5F1EAA5B220010AE3F /* mstdn */,
-				D21A9A741EAA5B230010AE3F /* mstdnTests */,
-				D21A9A7F1EAA5B230010AE3F /* mstdnUITests */,
-				D2AA89F51EAC855700B938F1 /* MstdnKit */,
-				D2E9955C1EAAF59900771413 /* Base */,
-				D2E995811EAAF85C00771413 /* APIClient */,
-				D2EFD5BE1EAB26910013CD80 /* Persistents */,
-				D2EFD5F31EAB6D850013CD80 /* UIKitExtensions */,
-				D2EFD6161EAB6E920013CD80 /* Transitioning */,
-				D27305DB1EAE3BB10020C710 /* RxExtensions */,
+				D273060D1EAE3D240020C710 /* App */,
+				D273060B1EAE3D140020C710 /* Libraries */,
 				D21A9A5E1EAA5B220010AE3F /* Products */,
 				4E3DBBD2640A2AFACFD26A5D /* Pods */,
 				A175C251592594B59418BB27 /* Frameworks */,
@@ -795,8 +785,8 @@
 		D27305DB1EAE3BB10020C710 /* RxExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				D27305E81EAE3BB10020C710 /* Tests */,
 				D27305F71EAE3BDD0020C710 /* Sources */,
+				D27305E81EAE3BB10020C710 /* Tests */,
 			);
 			path = RxExtensions;
 			sourceTree = "<group>";
@@ -805,10 +795,6 @@
 			isa = PBXGroup;
 			children = (
 				D27305E91EAE3BB10020C710 /* RxExtensionsTests.swift */,
-				D27305F81EAE3C170020C710 /* RxViewModel.swift */,
-				D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */,
-				D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */,
-				D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */,
 				D27305EB1EAE3BB10020C710 /* Info.plist */,
 			);
 			name = Tests;
@@ -819,14 +805,37 @@
 			isa = PBXGroup;
 			children = (
 				D27305DC1EAE3BB10020C710 /* RxExtensions.h */,
+				D27305F81EAE3C170020C710 /* RxViewModel.swift */,
+				D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */,
+				D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */,
+				D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */,
 				D27305DD1EAE3BB10020C710 /* Info.plist */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		D27306091EAE3C6A0020C710 /* Products */ = {
+		D273060B1EAE3D140020C710 /* Libraries */ = {
 			isa = PBXGroup;
-			name = Products;
+			children = (
+				D2AA89F51EAC855700B938F1 /* MstdnKit */,
+				D2E9955C1EAAF59900771413 /* Base */,
+				D2E995811EAAF85C00771413 /* APIClient */,
+				D2EFD5BE1EAB26910013CD80 /* Persistents */,
+				D2EFD5F31EAB6D850013CD80 /* UIKitExtensions */,
+				D2EFD6161EAB6E920013CD80 /* Transitioning */,
+				D27305DB1EAE3BB10020C710 /* RxExtensions */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		D273060D1EAE3D240020C710 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D21A9A5F1EAA5B220010AE3F /* mstdn */,
+				D21A9A741EAA5B230010AE3F /* mstdnTests */,
+				D21A9A7F1EAA5B230010AE3F /* mstdnUITests */,
+			);
+			name = App;
 			sourceTree = "<group>";
 		};
 		D2AA89F51EAC855700B938F1 /* MstdnKit */ = {
@@ -1547,12 +1556,6 @@
 			mainGroup = D21A9A541EAA5B220010AE3F;
 			productRefGroup = D21A9A5E1EAA5B220010AE3F /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D27306091EAE3C6A0020C710 /* Products */;
-					ProjectRef = D27306081EAE3C6A0020C710 /* mstdn.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D21A9A5C1EAA5B220010AE3F /* mstdn */,
