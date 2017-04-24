@@ -12,6 +12,5 @@ import RxCocoa
 
 public protocol RxViewModel {
     associatedtype Result
-    associatedtype Owner
     var result: Observable<Result> { get }
 }

@@ -31,14 +31,19 @@ class ViewController: UIViewController {
         didSet {
             button.rx.tap
                 .flatMapFirst { [unowned self] in
-                    self.rx.present(LoginViewController.instantiate(), viewModel: LoginViewModel.init, animated: true)
+                    self.rx
+                        .present(
+                            LoginViewController.instantiate(),
+                            viewModelFactory: LoginViewModel.init,
+                            animated: true
+                        )
                         .catchError { error in
                             switch error {
                             case ResponseError.parseSuccess(let error as Requests.MstdnError):
                                 return self.rx
                                     .present(
                                         UIAlertController(title: "Error", message: error.error, preferredStyle: .alert),
-                                        viewModel: Alert.buttonTitle("OK"),
+                                        viewModelFactory: AlertViewModel.factory("OK"),
                                         animated: true
                                     )
                                     .flatMap { Observable.empty() }
