@@ -9,8 +9,8 @@
 import Foundation
 
 /// https://gist.github.com/tarunon/6e63b708140392564418eb80ac64e899
-public func undefined<T>(file: String = #file, function: String = #function, line: Int = #line) -> T {
-    fatalError("undefined \(T.self), File: \(file) function: \(function) line: \(line)")
+public func undefined<T>(file: String = #file, function: String = #function, line: Int = #line, message: String?=nil) -> T {
+    fatalError((message ?? "") + "[undefined \(T.self), File: \(file) function: \(function) line: \(line)]")
 }
 
 /// https://gist.github.com/erica/5a26d523f3d6ffb74e34d179740596f7

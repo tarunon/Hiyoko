@@ -57,6 +57,7 @@
 		D27305FF1EAE3C170020C710 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */; };
 		D27306061EAE3C6A0020C710 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; };
 		D27306071EAE3C6A0020C710 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
+		D273060F1EAE42560020C710 /* Cell+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D273060E1EAE42560020C710 /* Cell+Rx.swift */; };
 		D29CCA0B1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */; };
 		D29CCA0D1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */; };
 		D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA121EABA60A0082CA72 /* NavigationController.swift */; };
@@ -448,6 +449,7 @@
 		D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+Rx.swift"; path = "RxExtensions/Sources/UIAlertController+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITextField+Rx.swift"; path = "RxExtensions/Sources/UITextField+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Rx.swift"; path = "RxExtensions/Sources/UIViewController+Rx.swift"; sourceTree = SOURCE_ROOT; };
+		D273060E1EAE42560020C710 /* Cell+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cell+Rx.swift"; sourceTree = "<group>"; };
 		D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentDismissTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPopTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA121EABA60A0082CA72 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -809,6 +811,7 @@
 				D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */,
 				D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */,
 				D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */,
+				D273060E1EAE42560020C710 /* Cell+Rx.swift */,
 				D27305DD1EAE3BB10020C710 /* Info.plist */,
 			);
 			path = Sources;
@@ -1115,8 +1118,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D21A9A851EAA5B230010AE3F /* Build configuration list for PBXNativeTarget "mstdn" */;
 			buildPhases = (
-				D2CECAEC1EACB15A00C3B8BA /* SwiftGen */,
 				DC03983F7E6249C8516590A5 /* [CP] Check Pods Manifest.lock */,
+				D2CECAEC1EACB15A00C3B8BA /* SwiftGen */,
 				D21A9A591EAA5B220010AE3F /* Sources */,
 				D21A9A5A1EAA5B220010AE3F /* Frameworks */,
 				D21A9A5B1EAA5B220010AE3F /* Resources */,
@@ -1777,7 +1780,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1817,6 +1820,7 @@
 				D27305FD1EAE3C170020C710 /* UIAlertController+Rx.swift in Sources */,
 				D27305FE1EAE3C170020C710 /* UITextField+Rx.swift in Sources */,
 				D27305FF1EAE3C170020C710 /* UIViewController+Rx.swift in Sources */,
+				D273060F1EAE42560020C710 /* Cell+Rx.swift in Sources */,
 				D27305FC1EAE3C170020C710 /* RxViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2932,6 +2936,7 @@
 				D27305F31EAE3BB10020C710 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D27305F41EAE3BB10020C710 /* Build configuration list for PBXNativeTarget "RxExtensionsTests" */ = {
 			isa = XCConfigurationList;
@@ -2940,6 +2945,7 @@
 				D27305F61EAE3BB10020C710 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D2AA8A0B1EAC855700B938F1 /* Build configuration list for PBXNativeTarget "MstdnKit" */ = {
 			isa = XCConfigurationList;
