@@ -5,7 +5,10 @@ disabled_rules:
 - force_cast
 - type_name
 - variable_name
+- weak_delegate
+- large_tuple
 
 excluded:
 - Carthage
 - Pods
+- mstdn/Resources

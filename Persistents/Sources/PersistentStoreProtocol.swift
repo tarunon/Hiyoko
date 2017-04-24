@@ -11,9 +11,9 @@ import Base
 
 public class PersistentStore<T> {
     let _restore: () throws -> T
-    let _store: (T) throws -> ()
+    let _store: (T) throws -> Void
     
-    public init(restore: @escaping () throws -> T, store: @escaping (T) throws -> ()) {
+    public init(restore: @escaping () throws -> T, store: @escaping (T) throws -> Void) {
         self._restore = restore
         self._store = store
     }

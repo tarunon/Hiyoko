@@ -34,10 +34,10 @@ public class TableViewCellPresenter {
         self.tableView = tableView
     }
     
-    public func present<C: UITableViewCell, M: RxViewModel>(dequeue: (_ tableView: UITableView) -> C, viewModel: @escaping (C) -> M) -> Observable<M.Result> {
+    public func present<C: UITableViewCell, M: RxViewModel>(dequeue: (_ tableView: UITableView) -> C, viewModelFactory: @escaping (C) -> M) -> Observable<M.Result> {
         let cell = dequeue(tableView)
         self.cell = cell
-        return viewModel(cell).result
+        return viewModelFactory(cell).result
             .takeUntil(cell.rx.reused)
     }
     
@@ -106,10 +106,10 @@ public class CollectionViewCellPresenter {
         self.collectionView = collectionView
     }
     
-    public func present<C: UICollectionViewCell, M: RxViewModel>(dequeue: (_ collectionView: UICollectionView) -> C, viewModel: @escaping (C) -> M) -> Observable<M.Result> {
+    public func present<C: UICollectionViewCell, M: RxViewModel>(dequeue: (_ collectionView: UICollectionView) -> C, viewModelFactory: @escaping (C) -> M) -> Observable<M.Result> {
         let cell = dequeue(collectionView)
         self.cell = cell
-        return viewModel(cell).result
+        return viewModelFactory(cell).result
             .takeUntil(cell.rx.reused)
     }
     

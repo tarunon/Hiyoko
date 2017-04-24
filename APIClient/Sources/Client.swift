@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
 open class Client {
     struct _RequestProxy<Base: Request>: RequestProxy {
         let base: Base
