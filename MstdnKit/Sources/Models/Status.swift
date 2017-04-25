@@ -8,41 +8,72 @@
 
 import Foundation
 import Himotoki
-import Base
+import RealmSwift
 
-public struct Status {
-    public var id: Int
-    public var uri: String
-    public var url: URL
-    public var account: Account
-    public var inReplyToId: Int?
-    public var inReplyToAccountId: Int?
-    public var reblog: Box<Status?>
-    public var content: String
-    public var created: Date
-    public var reblogsCount: Int
-    public var favouritesCount: Int
-    public var reblogged: Bool
-    public var favourited: Bool
-    public var sensitive: Bool
-    public var spoilerText: String?
-    public var visibility: String
-    public var mediaAttachments: [Attachment]
-    public var mentions: [Mention]
-    public var tags: [Tag]
-    public var application: Application
+public final class Status: Object {
+    public dynamic var id: Int = 0
+    public dynamic var uri: String = ""
+    public dynamic var url: URL = URL(fileURLWithPath: "/")
+    public dynamic var account: Account?
+    public let inReplyToId: RealmOptional<Int> = RealmOptional()
+    public let inReplyToAccountId: RealmOptional<Int> = RealmOptional()
+    public dynamic var reblog: Status?
+    public dynamic var content: String = ""
+    public dynamic var created: Date = Date()
+    public dynamic var reblogsCount: Int = 0
+    public dynamic var favouritesCount: Int = 0
+    public dynamic var reblogged: Bool = false
+    public dynamic var favourited: Bool = false
+    public dynamic var sensitive: Bool = false
+    public dynamic var spoilerText: String? = nil
+    public dynamic var visibility: String = ""
+    public let mediaAttachments: List<Attachment> = List()
+    public let mentions: List<Mention> = List()
+    public let tags: List<Tag> = List()
+    public dynamic var applicationName: String = ""
+    public dynamic var applicationUrl: URL? = nil
+    
+    public override class func primaryKey() -> String? {
+        return "id"
+    }
+
+    public class func from(id: Int, uri: String, url: URL, account: Account?, inReplyToId: Int?, inReplyToAccountId: Int?, reblog: Status?, content: String, created: Date, reblogsCount: Int, favouritesCount: Int, reblogged: Bool, favourited: Bool, sensitive: Bool, spoilerText: String?, visibility: String, mediaAttachments: [Attachment], mentions: [Mention], tags: [Tag], applicationName: String, applicationUrl: URL?) -> Status {
+        let status = Status()
+        status.id = id
+        status.uri = uri
+        status.url = url
+        status.account = account
+        status.inReplyToId.value = inReplyToId
+        status.inReplyToAccountId.value = inReplyToAccountId
+        status.reblog = reblog
+        status.content = content
+        status.created = created
+        status.reblogsCount = reblogsCount
+        status.favouritesCount = favouritesCount
+        status.reblogged = reblogged
+        status.favourited = favourited
+        status.sensitive = sensitive
+        status.spoilerText = spoilerText
+        status.visibility = visibility
+        status.mediaAttachments.append(objectsIn: mediaAttachments)
+        status.mentions.append(objectsIn: mentions)
+        status.tags.append(objectsIn: tags)
+        status.applicationName = applicationName
+        status.applicationUrl = applicationUrl
+        return status
+    }
 }
 
 extension Status: Decodable {
     public static func decode(_ e: Extractor) throws -> Status {
-        return try Status.init(
+        return try Status.from(
             id: e <| "id",
             uri: e <| "uri",
             url: URL.Transformers.string.apply(e <| "url"),
             account: e <| "account",
             inReplyToId: e <|? "in_reply_to_id",
             inReplyToAccountId: e <|? "in_reply_to_account_id",
-            reblog: Box.init(e <|? "reblog"),
+            reblog: e <|? "reblog",
             content: e <| "content",
             created: Date.Transformers.timeInterval.apply(e <| "created_at"),
             reblogsCount: e <| "reblogs_count",
@@ -55,7 +86,8 @@ extension Status: Decodable {
             mediaAttachments: e <|| "media_attachments",
             mentions: e <|| "mentions",
             tags: e <|| "tags",
-            application: e <| "application"
+            applicationName: e <| KeyPath(["application", "name"]),
+            applicationUrl: URL.Transformers.string.apply(e <|? KeyPath(["application", "url"]))
         )
     }
 }

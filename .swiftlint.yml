@@ -7,6 +7,8 @@ disabled_rules:
 - variable_name
 - weak_delegate
 - large_tuple
+- function_parameter_count
+- redundant_optional_initialization
 
 excluded:
 - Carthage

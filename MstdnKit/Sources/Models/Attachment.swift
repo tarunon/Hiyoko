@@ -8,19 +8,35 @@
 
 import Foundation
 import Himotoki
+import RealmSwift
 
-public struct Attachment {
-    public var id: Int
-    public var type: String
-    public var url: URL?
-    public var remoteURL: URL?
-    public var previewURL: URL
-    public var textURL: URL
+public final class Attachment: Object {
+    public dynamic var id: Int = 0
+    public dynamic var type: String = ""
+    public dynamic var url: URL? = nil
+    public dynamic var remoteURL: URL? = nil
+    public dynamic var previewURL: URL = URL(fileURLWithPath: "/")
+    public dynamic var textURL: URL = URL(fileURLWithPath: "/")
+
+    public override class func primaryKey() -> String? {
+        return "id"
+    }
+
+    public class func from(id: Int, type: String, url: URL?, remoteURL: URL?, previewURL: URL, textURL: URL) -> Attachment {
+        let attachment = Attachment()
+        attachment.id = id
+        attachment.type = type
+        attachment.url = url
+        attachment.remoteURL = remoteURL
+        attachment.previewURL = previewURL
+        attachment.textURL = textURL
+        return attachment
+    }
 }
 
 extension Attachment: Decodable {
     public static func decode(_ e: Extractor) throws -> Attachment {
-        return try Attachment.init(
+        return try Attachment.from(
             id: e <| "id",
             type: e <| "type",
             url: URL.Transformers.string.apply(e <|? "url"),

@@ -48,7 +48,6 @@
 		D24EC47F1EAA64BE004B13D7 /* RxSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D27305BE1EAD08C50020C710 /* Mention.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305BD1EAD08C50020C710 /* Mention.swift */; };
 		D27305C01EAD09420020C710 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305BF1EAD09420020C710 /* Tag.swift */; };
-		D27305C21EAD098B0020C710 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305C11EAD098B0020C710 /* Application.swift */; };
 		D27305E31EAE3BB10020C710 /* RxExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; };
 		D27305EA1EAE3BB10020C710 /* RxExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305E91EAE3BB10020C710 /* RxExtensionsTests.swift */; };
 		D27305EC1EAE3BB10020C710 /* RxExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D27305DC1EAE3BB10020C710 /* RxExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -77,7 +76,6 @@
 		D2CECAE51EAC95F500C3B8BA /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */; };
 		D2CECAE71EAC968700C3B8BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */; };
 		D2CECAEE1EACB33200C3B8BA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2CECAED1EACB33200C3B8BA /* Colors.swift */; };
-		D2DE6D051EACCA9E00898889 /* Cell+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DE6D041EACCA9E00898889 /* Cell+Rx.swift */; };
 		D2DE6D071EAD02EE00898889 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DE6D061EAD02EE00898889 /* TimelineViewModel.swift */; };
 		D2DE6D091EAD048400898889 /* Timelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DE6D081EAD048400898889 /* Timelines.swift */; };
 		D2DE6D0B1EAD04DB00898889 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DE6D0A1EAD04DB00898889 /* Status.swift */; };
@@ -450,7 +448,6 @@
 		D24EC4611EAA64AF004B13D7 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		D27305BD1EAD08C50020C710 /* Mention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mention.swift; sourceTree = "<group>"; };
 		D27305BF1EAD09420020C710 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		D27305C11EAD098B0020C710 /* Application.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		D27305DA1EAE3BB10020C710 /* RxExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D27305DC1EAE3BB10020C710 /* RxExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxExtensions.h; sourceTree = "<group>"; };
 		D27305DD1EAE3BB10020C710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -478,7 +475,6 @@
 		D2CECAE41EAC95F500C3B8BA /* LoginViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		D2CECAE61EAC968700C3B8BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D2CECAED1EACB33200C3B8BA /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		D2DE6D041EACCA9E00898889 /* Cell+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cell+Rx.swift"; sourceTree = "<group>"; };
 		D2DE6D061EAD02EE00898889 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		D2DE6D081EAD048400898889 /* Timelines.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timelines.swift; sourceTree = "<group>"; };
 		D2DE6D0A1EAD04DB00898889 /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
@@ -897,7 +893,6 @@
 			children = (
 				D2AA8A131EAC867400B938F1 /* Client.swift */,
 				D2CECADD1EAC8C6F00C3B8BA /* Token.swift */,
-				D27305C11EAD098B0020C710 /* Application.swift */,
 				D2DE6D0C1EAD05EA00898889 /* Account.swift */,
 				D2DE6D0E1EAD07E700898889 /* Attachment.swift */,
 				D27305BD1EAD08C50020C710 /* Mention.swift */,
@@ -1871,7 +1866,6 @@
 				D2DE6D0F1EAD07E700898889 /* Attachment.swift in Sources */,
 				D2DE6D0D1EAD05EA00898889 /* Account.swift in Sources */,
 				D2DE6D0B1EAD04DB00898889 /* Status.swift in Sources */,
-				D27305C21EAD098B0020C710 /* Application.swift in Sources */,
 				D2AA8A141EAC867400B938F1 /* Client.swift in Sources */,
 				D204D3E61EAC884800EC1E58 /* Requests.swift in Sources */,
 				D27305BE1EAD08C50020C710 /* Mention.swift in Sources */,
