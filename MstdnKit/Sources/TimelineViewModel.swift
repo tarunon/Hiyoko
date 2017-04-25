@@ -7,15 +7,15 @@
 //
 
 import Foundation
-import UIKitExtensions
 import RxSwift
 import RxCocoa
+import RxExtensions
 import Persistents
 import APIClient
 import Realm
 import RealmSwift
 
-public protocol TimeLineViewModelOwner {
+public protocol TimeLineViewControllerType {
     associatedtype BaseRequest: Request
     var loadNext: Observable<Void> { get }
     var reload: Observable<Void> { get }
@@ -25,12 +25,11 @@ public protocol TimeLineViewModelOwner {
     var realm: Realm { get }
 }
 
-public class TimeLineViewModel<O: TimeLineViewModelOwner>: RxViewModel where O.BaseRequest.Response == [Status] {
-    public typealias Owner = O
+public class TimeLineViewModel<O: TimeLineViewControllerType>: RxViewModel where O.BaseRequest.Response == [Status] {
     public typealias Result = Void
     public let result: Observable<Void>
     
-    public init(owner: O) {
+    public init(view: O) {
         fatalError()
     }
 }

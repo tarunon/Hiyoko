@@ -105,14 +105,14 @@ public extension Reactive where Base: UIViewController {
             }
     }
     
-    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModel: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> where M.Owner == V {
+    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModelFactory: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> {
         return Observable<(V, M)>
             .create { [weak base=base] (observer) -> Disposable in
                 guard let base=base else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let viewModel = viewModel(viewController)
+                let viewModel = viewModelFactory(viewController)
                 observer.onNext((viewController, viewModel))
                 base.present(viewController, animated: animated, completion: { _ in
                     observer.onCompleted()
@@ -132,14 +132,14 @@ public extension Reactive where Base: UIViewController {
             }
     }
     
-    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModel: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> where M.Owner == V {
+    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModelFactory: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> {
         return Observable<(V, M)>
             .create { [weak base=base] (observer) -> Disposable in
                 guard let base=base, let navigationController = base.navigationController else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let viewModel = viewModel(viewController)
+                let viewModel = viewModelFactory(viewController)
                 observer.onNext((viewController, viewModel))
                 navigationController.pushViewController(viewController, animated: animated)
                 observer.onCompleted()
@@ -158,14 +158,14 @@ public extension Reactive where Base: UIViewController {
         }
     }
     
-    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: @escaping (V) -> M) -> Observable<M.Result> where M.Owner == V {
+    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModelFactory: @escaping (V) -> M) -> Observable<M.Result> {
         return Observable<(V, M)>
             .create { [weak base=base] (observer) -> Disposable in
                 guard let base=base else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let viewModel = viewModel(viewController)
+                let viewModel = viewModelFactory(viewController)
                 base.present(viewController, presentAnimation: presentAnimation, dismissAnimation: dismissAnimation, completion: { _ in
                     observer.onNext((viewController, viewModel))
                     observer.onCompleted()
@@ -185,14 +185,14 @@ public extension Reactive where Base: UIViewController {
         }
     }
     
-    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: @escaping (V) -> M) -> Observable<M.Result> where M.Owner == V {
+    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModelFactory: @escaping (V) -> M) -> Observable<M.Result> {
         return Observable<(V, M)>
             .create { [weak base=base] (observer) -> Disposable in
                 guard let base=base, base.navigationController != nil else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let viewModel = viewModel(viewController)
+                let viewModel = viewModelFactory(viewController)
                 base.push(viewController, pushAnimation: pushAnimation, popAnimation: popAnimation)
                 observer.onNext((viewController, viewModel))
                 observer.onCompleted()

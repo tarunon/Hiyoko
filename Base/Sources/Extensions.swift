@@ -16,7 +16,7 @@ public func undefined<T>(file: String = #file, function: String = #function, lin
 /// https://gist.github.com/erica/5a26d523f3d6ffb74e34d179740596f7
 infix operator ???
 
-public func ???<T>(lhs: T?, error: @autoclosure () -> Error) throws -> T {
+public func ??? <T>(lhs: T?, error: @autoclosure () -> Error) throws -> T {
     guard let value = lhs else { throw error() }
     return value
 }

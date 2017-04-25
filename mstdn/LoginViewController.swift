@@ -47,7 +47,7 @@ final class LoginViewController: UIViewController {
     }
 }
 
-extension LoginViewController: LoginViewModelOwner {
+extension LoginViewController: LoginViewControllerType {
     var hostName: Observable<String> {
         return hostNameField.rx.text
             .map { $0 ?? "" }

@@ -34,9 +34,9 @@ public class AnimatingContext<From: UIViewController, To: UIViewController> {
 
 public class AnimatingTransitioning<From: UIViewController, To: UIViewController>: NSObject, UIViewControllerAnimatedTransitioning {
     let duration: TimeInterval
-    let animation: (AnimatingContext<From, To>) -> ()
+    let animation: (AnimatingContext<From, To>) -> Void
     
-    init(duration: TimeInterval, animation: @escaping (AnimatingContext<From, To>) -> ()) {
+    init(duration: TimeInterval, animation: @escaping (AnimatingContext<From, To>) -> Void) {
         self.duration = duration
         self.animation = animation
     }

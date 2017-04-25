@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import UIKitExtensions
 import RxSwift
 import RxCocoa
+import RxExtensions
 import Persistents
 import APIClient
 
-public protocol LoginViewModelOwner {
+public protocol LoginViewControllerType {
     var hostName: Observable<String> { get }
     var email: Observable<String> { get }
     var password: Observable<String> { get }
@@ -24,20 +24,20 @@ public protocol LoginViewModelOwner {
     func clientPersistent(hostName: String) -> PersistentStore<Client>
 }
 
-public class LoginViewModel<O: LoginViewModelOwner>: RxViewModel {
-    public typealias Owner = O
+final public class LoginViewModel<V: LoginViewControllerType>: RxViewModel {
     public typealias Result = Token
+    
     public let result: Observable<Token>
     
-    public init(owner: O) {
-        result = owner.loginButtonTapped
-            .withLatestFrom(owner.hostName)
-            .withLatestFrom(owner.email) { ($0, $1) }
-            .withLatestFrom(owner.password) { ($0.0, $0.1, $1) }
+    public init(view: V) {
+        result = view.loginButtonTapped
+            .withLatestFrom(view.hostName)
+            .withLatestFrom(view.email) { ($0, $1) }
+            .withLatestFrom(view.password) { ($0.0, $0.1, $1) }
             .filter { !($0.isEmpty || $1.isEmpty || $2.isEmpty) }
             .flatMapFirst { (hostName, email, password) -> Observable<Token> in
-                let persisntent = owner.clientPersistent(hostName: hostName)
-                let apiClient = owner.apiClient(hostName: hostName)
+                let persisntent = view.clientPersistent(hostName: hostName)
+                let apiClient = view.apiClient(hostName: hostName)
                 return Observable
                     .just(persisntent)
                     .map { try $0.restore() }
@@ -51,7 +51,7 @@ public class LoginViewModel<O: LoginViewModelOwner>: RxViewModel {
             }
             .take(1)
             .amb(
-                owner.cancelButtonTapped
+                view.cancelButtonTapped
                     .take(1)
                     .flatMap { _ in Observable.empty() }
             )
