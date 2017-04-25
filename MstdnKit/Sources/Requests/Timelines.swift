@@ -13,6 +13,7 @@ import APIKit
 extension Requests {
     public struct TimelinePagination<Request: RequestBase>: PaginationRequest where Request.Response == [Status] {
         public typealias Base = Request
+        public typealias Response = PaginatedResponse<Base.Response, Base.Error>
         public var base: Request
         public var queryParameters: [String : Any]?
         

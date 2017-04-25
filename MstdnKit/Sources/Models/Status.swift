@@ -9,6 +9,8 @@
 import Foundation
 import Himotoki
 import RealmSwift
+import Barrel
+import Barrel_Realm
 
 public final class Status: Object {
     public dynamic var id: Int = 0
@@ -90,4 +92,28 @@ extension Status: Decodable {
             applicationUrl: URL.Transformers.string.apply(e <|? KeyPath(["application", "url"]))
         )
     }
+}
+
+extension AttributeType where ValueType: Status {
+    public var id: Attribute<Int> { return attribute() }
+    public var uri: Attribute<String> { return attribute() }
+    public var url: Attribute<String> { return attribute() }
+    public var account: Attribute<Account?> { return attribute() }
+    public var inReplyToId: Attribute<Int?> { return attribute() }
+    public var inReplyToAccountId: Attribute<Int?> { return attribute() }
+    public var reblog: Attribute<Status?> { return attribute() }
+    public var content: Attribute<String> { return attribute() }
+    public var created: Attribute<Date> { return attribute() }
+    public var reblogsCount: Attribute<Int> { return attribute() }
+    public var favouritesCount: Attribute<Int> { return attribute() }
+    public var reblogged: Attribute<Bool> { return attribute() }
+    public var favourited: Attribute<Bool> { return attribute() }
+    public var sensitive: Attribute<Bool> { return attribute() }
+    public var spoilerText: Attribute<String?> { return attribute() }
+    public var visibility: Attribute<String> { return attribute() }
+    public var mediaAttachments: Attribute<List<Attachment>> { return attribute() }
+    public var mentions: Attribute<List<Mention>> { return attribute() }
+    public var tags: Attribute<List<Tag>> { return attribute() }
+    public var applicationName: Attribute<String> { return attribute() }
+    public var applicationUrl: Attribute<String?> { return attribute() }
 }
