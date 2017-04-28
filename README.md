@@ -1,4 +1,5 @@
-# mstdn
-mastodonクライアントアプリ開発RTA
+# Hiyoko
 
-2017-04-28. Retire. API is tooo anoying. I'm waiting milestone of mastodon's api/v2. I can make pr, maybe.
+R.I.P. https://github.com/tarunon/mstdn
+
+But I want to make my some App for my experiment.
