@@ -1,0 +1,11 @@
+matrix:
+  include:
+    - os: osx
+      language: objective-c
+      osx_image: xcode8.3
+before_install:
+  - carthage bootstrap --platform iOS --cache-builds
+  - pod install
+script:
+  - set -o pipefail
+  - xcodebuild test -scheme HiyokoKit -configuration Debug -destination "platform=iOS Simulator,name=iPhone 7" | xcpretty -c
