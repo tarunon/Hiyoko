@@ -3,6 +3,9 @@ matrix:
     - os: osx
       language: objective-c
       osx_image: xcode8.3
+cache:
+  directories:
+  - Carthage
 before_install:
   - carthage bootstrap --platform iOS --cache-builds
   - pod install
