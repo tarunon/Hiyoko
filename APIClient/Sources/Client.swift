@@ -22,15 +22,19 @@ open class Client {
     
     let baseURL: URL
     let session: URLSession
+    
     public init(baseURL: URL, session: URLSession = URLSession.shared) {
         self.baseURL = baseURL
         self.session = session
     }
     
+    open func proxy<R: Request>(request: @autoclosure @escaping () throws -> R) rethrows -> AnyRequest<R.Response, R.Error> {
+        return try AnyRequest(_RequestProxy(base: request(), clientURL: self.baseURL))
+    }
+    
     open func request<R: Request>(request: @autoclosure @escaping () throws -> R) -> Observable<R.Response> {
         return Observable<() throws -> R>.just(request)
-            .map { try $0() }
-            .map { _RequestProxy(base: $0, clientURL: self.baseURL) }
+            .map { try self.proxy(request: $0()) }
             .flatMap { (request) in
                 return try self.session.rx.response(request: request.buildURLRequest())
                     .map { (response, data) in

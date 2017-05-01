@@ -103,3 +103,34 @@ final public class PromptViewModel<V: UIAlertController>: RxViewModel {
         }
     }
 }
+
+public protocol ActionSheetElement: CustomStringConvertible {
+    associatedtype E
+    var element: E { get }
+}
+
+final public class ActionSheetViewModel<V: UIAlertController, E: ActionSheetElement>: RxViewModel {
+    public typealias Result = E.E
+    
+    public let result: Observable<Result>
+    
+    public init(view: V, elements: [E], cancelButtonTitle: String) {
+        result = Observable
+            .merge(
+                elements
+                    .map { element in
+                        view.rx.addAction(config: .init(title: "\(element)", style: .default))
+                            .map { _ in element.element }
+                    } + [
+                        view.rx.addAction(config: .init(title: cancelButtonTitle, style: .cancel))
+                            .flatMap { _ in Observable.empty() }
+                    ]
+            )
+    }
+    
+    public static func factory(elements: [E], cancelButtonTitle: String) -> (_ view: V) -> ActionSheetViewModel {
+        return { (view) in
+            ActionSheetViewModel(view: view, elements: elements, cancelButtonTitle: cancelButtonTitle)
+        }
+    }
+}

@@ -15,6 +15,7 @@ public protocol RequestProxy: Request {
     associatedtype Error = Base.Error
     
     var base: Base { get }
+    
 }
 
 public extension RequestProxy {
