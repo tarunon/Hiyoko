@@ -21,7 +21,6 @@
 		D22A086F1EB5E520000ED3D5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22A086D1EB5E2EE000ED3D5 /* LoginViewController.swift */; };
 		D22C09341EB4B3120034E928 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22C09321EB4B3050034E928 /* ModelTests.swift */; };
 		D22C09371EB4B5BB0034E928 /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = D22C09351EB4B5B70034E928 /* User.json */; };
-		D22C09391EB4B6770034E928 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; };
 		D22C093B1EB4B6FC0034E928 /* APIKit.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4521EAA64AF004B13D7 /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C093C1EB4B6FC0034E928 /* Barrel_Realm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C093D1EB4B6FC0034E928 /* Barrel.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4541EAA64AF004B13D7 /* Barrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -73,9 +72,15 @@
 		D297D2091EB5B7BA00215109 /* RxExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; };
 		D297D20A1EB5B7BA00215109 /* Transitioning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD6151EAB6E910013CD80 /* Transitioning.framework */; };
 		D297D20B1EB5B7BA00215109 /* UIKitExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5F21EAB6D850013CD80 /* UIKitExtensions.framework */; };
+		D29A9FA11EBA25B90047CCC8 /* Result.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC45B1EAA64AF004B13D7 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D29A9FA21EBA25C70047CCC8 /* RxDataSources.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC45E1EAA64AF004B13D7 /* RxDataSources.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D29CCA0B1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */; };
 		D29CCA0D1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */; };
 		D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA121EABA60A0082CA72 /* NavigationController.swift */; };
+		D2BDE1321EBA24E70071B09B /* OAuthSwift.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2BDE1331EBA24FC0071B09B /* APIKit.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4521EAA64AF004B13D7 /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2BDE1391EBA257B0071B09B /* RxCocoa.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2BDE13A1EBA257B0071B09B /* RxSwift.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2DEB0241EB5E6C8003F27B4 /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D22A08701EB5E57C000ED3D5 /* LoginViewController.storyboard */; };
 		D2DEB0331EB62434003F27B4 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0321EB62434003F27B4 /* Client.swift */; };
 		D2DEB0361EB6E01D003F27B4 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; };
@@ -201,6 +206,83 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2EFD6141EAB6E910013CD80;
 			remoteInfo = Transitioning;
+		};
+		D2BDE1261EBA24D10071B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2E9955A1EAAF59900771413;
+			remoteInfo = Base;
+		};
+		D2BDE1281EBA24D10071B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2E9957F1EAAF85C00771413;
+			remoteInfo = APIClient;
+		};
+		D2BDE12A1EBA24D10071B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD5BC1EAB26910013CD80;
+			remoteInfo = Persistents;
+		};
+		D2BDE12C1EBA24D10071B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD5F11EAB6D850013CD80;
+			remoteInfo = UIKitExtensions;
+		};
+		D2BDE12E1EBA24D10071B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD6141EAB6E910013CD80;
+			remoteInfo = Transitioning;
+		};
+		D2BDE1301EBA24D10071B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D27305D91EAE3BB10020C710;
+			remoteInfo = RxExtensions;
+		};
+		D2DEB0551EB741FE003F27B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2E9957F1EAAF85C00771413;
+			remoteInfo = APIClient;
+		};
+		D2DEB0571EB741FE003F27B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD5BC1EAB26910013CD80;
+			remoteInfo = Persistents;
+		};
+		D2DEB0591EB741FE003F27B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD5F11EAB6D850013CD80;
+			remoteInfo = UIKitExtensions;
+		};
+		D2DEB05B1EB741FE003F27B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2EFD6141EAB6E910013CD80;
+			remoteInfo = Transitioning;
+		};
+		D2DEB05D1EB741FE003F27B4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21A9A551EAA5B220010AE3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D27305D91EAE3BB10020C710;
+			remoteInfo = RxExtensions;
 		};
 		D2E995651EAAF59900771413 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -328,6 +410,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D29A9FA21EBA25C70047CCC8 /* RxDataSources.framework in Copy Carthage Libraries */,
+				D29A9FA11EBA25B90047CCC8 /* Result.framework in Copy Carthage Libraries */,
+				D2BDE1391EBA257B0071B09B /* RxCocoa.framework in Copy Carthage Libraries */,
+				D2BDE13A1EBA257B0071B09B /* RxSwift.framework in Copy Carthage Libraries */,
+				D2BDE1331EBA24FC0071B09B /* APIKit.framework in Copy Carthage Libraries */,
+				D2BDE1321EBA24E70071B09B /* OAuthSwift.framework in Copy Carthage Libraries */,
 				D22C094B1EB4B7620034E928 /* Himotoki.framework in Copy Carthage Libraries */,
 				D22C094C1EB4B77A0034E928 /* Barrel_Realm.framework in Copy Carthage Libraries */,
 				D22C094D1EB4B77A0034E928 /* Barrel.framework in Copy Carthage Libraries */,
@@ -405,6 +493,8 @@
 		D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentDismissTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPopTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA121EABA60A0082CA72 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		D2BDE1351EBA25300071B09B /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		D2BDE1371EBA25330071B09B /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		D2DEB0321EB62434003F27B4 /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuthSwift.framework; path = Carthage/Build/iOS/OAuthSwift.framework; sourceTree = "<group>"; };
 		D2DEB0381EB6E0FC003F27B4 /* OAuthSwift+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OAuthSwift+Rx.swift"; sourceTree = "<group>"; };
@@ -479,7 +569,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2136BF41EB38D5200237E84 /* HiyokoKit.framework in Frameworks */,
-				D22C09391EB4B6770034E928 /* Himotoki.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,6 +727,8 @@
 		A175C251592594B59418BB27 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D2BDE1371EBA25330071B09B /* Accounts.framework */,
+				D2BDE1351EBA25300071B09B /* Social.framework */,
 				D2891A961EB5BC57000EDF6E /* SafariServices.framework */,
 				D24EC4521EAA64AF004B13D7 /* APIKit.framework */,
 				D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */,
@@ -1081,6 +1172,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				D2DEB0561EB741FE003F27B4 /* PBXTargetDependency */,
+				D2DEB0581EB741FE003F27B4 /* PBXTargetDependency */,
+				D2DEB05A1EB741FE003F27B4 /* PBXTargetDependency */,
+				D2DEB05C1EB741FE003F27B4 /* PBXTargetDependency */,
+				D2DEB05E1EB741FE003F27B4 /* PBXTargetDependency */,
 				D25FB29F1EB476420003EFB3 /* PBXTargetDependency */,
 			);
 			name = HiyokoKit;
@@ -1100,6 +1196,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				D2BDE1271EBA24D10071B09B /* PBXTargetDependency */,
+				D2BDE1291EBA24D10071B09B /* PBXTargetDependency */,
+				D2BDE12B1EBA24D10071B09B /* PBXTargetDependency */,
+				D2BDE12D1EBA24D10071B09B /* PBXTargetDependency */,
+				D2BDE12F1EBA24D10071B09B /* PBXTargetDependency */,
+				D2BDE1311EBA24D10071B09B /* PBXTargetDependency */,
 				D2136BF61EB38D5200237E84 /* PBXTargetDependency */,
 			);
 			name = HiyokoKitTests;
@@ -1873,6 +1975,61 @@
 			isa = PBXTargetDependency;
 			target = D2EFD6141EAB6E910013CD80 /* Transitioning */;
 			targetProxy = D27306021EAE3C270020C710 /* PBXContainerItemProxy */;
+		};
+		D2BDE1271EBA24D10071B09B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2E9955A1EAAF59900771413 /* Base */;
+			targetProxy = D2BDE1261EBA24D10071B09B /* PBXContainerItemProxy */;
+		};
+		D2BDE1291EBA24D10071B09B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2E9957F1EAAF85C00771413 /* APIClient */;
+			targetProxy = D2BDE1281EBA24D10071B09B /* PBXContainerItemProxy */;
+		};
+		D2BDE12B1EBA24D10071B09B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD5BC1EAB26910013CD80 /* Persistents */;
+			targetProxy = D2BDE12A1EBA24D10071B09B /* PBXContainerItemProxy */;
+		};
+		D2BDE12D1EBA24D10071B09B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD5F11EAB6D850013CD80 /* UIKitExtensions */;
+			targetProxy = D2BDE12C1EBA24D10071B09B /* PBXContainerItemProxy */;
+		};
+		D2BDE12F1EBA24D10071B09B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD6141EAB6E910013CD80 /* Transitioning */;
+			targetProxy = D2BDE12E1EBA24D10071B09B /* PBXContainerItemProxy */;
+		};
+		D2BDE1311EBA24D10071B09B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D27305D91EAE3BB10020C710 /* RxExtensions */;
+			targetProxy = D2BDE1301EBA24D10071B09B /* PBXContainerItemProxy */;
+		};
+		D2DEB0561EB741FE003F27B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2E9957F1EAAF85C00771413 /* APIClient */;
+			targetProxy = D2DEB0551EB741FE003F27B4 /* PBXContainerItemProxy */;
+		};
+		D2DEB0581EB741FE003F27B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD5BC1EAB26910013CD80 /* Persistents */;
+			targetProxy = D2DEB0571EB741FE003F27B4 /* PBXContainerItemProxy */;
+		};
+		D2DEB05A1EB741FE003F27B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD5F11EAB6D850013CD80 /* UIKitExtensions */;
+			targetProxy = D2DEB0591EB741FE003F27B4 /* PBXContainerItemProxy */;
+		};
+		D2DEB05C1EB741FE003F27B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2EFD6141EAB6E910013CD80 /* Transitioning */;
+			targetProxy = D2DEB05B1EB741FE003F27B4 /* PBXContainerItemProxy */;
+		};
+		D2DEB05E1EB741FE003F27B4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D27305D91EAE3BB10020C710 /* RxExtensions */;
+			targetProxy = D2DEB05D1EB741FE003F27B4 /* PBXContainerItemProxy */;
 		};
 		D2E995661EAAF59900771413 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
