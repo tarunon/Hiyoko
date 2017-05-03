@@ -25,6 +25,7 @@ public extension Reactive where Base: UITableViewHeaderFooterView {
             .map { _ in }
     }
 }
+class A { deinit { print("a deinit") } }
 
 public class TableViewCellPresenter {
     internal lazy var cell: UITableViewCell = undefined(message: "Should call presenter.present")
@@ -34,11 +35,15 @@ public class TableViewCellPresenter {
         self.tableView = tableView
     }
     
-    public func present<C: UITableViewCell, M: RxViewModel>(dequeue: (_ tableView: UITableView) -> C, viewModelFactory: @escaping (C) -> M) -> Observable<M.Result> {
+    public func present<C: UITableViewCell, M: RxViewModel>(dequeue: (_ tableView: UITableView) -> C, viewModel: M, binder: @escaping (C) -> (M.ViewBinder) -> Disposable) -> Observable<M.Result> {
         let cell = dequeue(tableView)
         self.cell = cell
-        return viewModelFactory(cell).result
-            .takeUntil(cell.rx.reused)
+        return Observable
+            .create { (observer) -> Disposable in
+                let d1 = binder(cell)(viewModel.asViewBinder())
+                let d2 = viewModel.result.takeUntil(cell.rx.reused).bind(to: observer)
+                return Disposables.create(d1, d2)
+            }
     }
     
     public func present(dequeue: (_ tableView: UITableView) -> UITableViewCell) -> Disposable {
@@ -106,11 +111,15 @@ public class CollectionViewCellPresenter {
         self.collectionView = collectionView
     }
     
-    public func present<C: UICollectionViewCell, M: RxViewModel>(dequeue: (_ collectionView: UICollectionView) -> C, viewModelFactory: @escaping (C) -> M) -> Observable<M.Result> {
+    public func present<C: UICollectionViewCell, M: RxViewModel>(dequeue: (_ collectionView: UICollectionView) -> C, viewModel: M, binder: @escaping (C) -> (M.ViewBinder) -> Disposable) -> Observable<M.Result> {
         let cell = dequeue(collectionView)
         self.cell = cell
-        return viewModelFactory(cell).result
-            .takeUntil(cell.rx.reused)
+        return Observable
+            .create { (observer) -> Disposable in
+                let d1 = binder(cell)(viewModel.asViewBinder())
+                let d2 = viewModel.result.takeUntil(cell.rx.reused).bind(to: observer)
+                return Disposables.create(d1, d2)
+        }
     }
     
     public func present(dequeue: (_ collectionView: UICollectionView) -> UICollectionViewCell) -> Disposable {
