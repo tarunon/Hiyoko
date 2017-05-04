@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import Transitioning
 
-public extension UIViewController {
+extension UIViewController {
     public enum State {
         case willAppear
         case didAppear
@@ -33,7 +33,7 @@ public extension UIViewController {
     }
 }
 
-public extension Reactive where Base: UIViewController {
+extension Reactive where Base: UIViewController {
     private var _stateChange: Observable<UIViewController.State> {
         return Observable
             .of(
@@ -57,7 +57,7 @@ public extension Reactive where Base: UIViewController {
                 _stateChange,
                 base.rx.methodInvoked(#selector(UIViewController.didMove(toParentViewController:)))
                     .startWith([])
-                    .flatMapLatest { [weak base=base] _ -> Observable<UIViewController.State?> in
+                    .flatMapLatest { [weak base] _ -> Observable<UIViewController.State?> in
                         guard let base = base, let parent = base.parent else {
                             return Observable.just(nil)
                         }
@@ -75,10 +75,10 @@ public extension Reactive where Base: UIViewController {
     }
 }
 
-public extension Reactive where Base: UIViewController {
-    func dismiss(animated: Bool) -> Observable<Void> {
+extension Reactive where Base: UIViewController {
+    public func dismiss(animated: Bool) -> Observable<Void> {
         return Observable
-            .create { [weak base=base] (observer) -> Disposable in
+            .create { [weak base] (observer) -> Disposable in
                 guard let base = base else {
                     observer.onCompleted()
                     return Disposables.create()
@@ -91,9 +91,9 @@ public extension Reactive where Base: UIViewController {
             }
     }
     
-    func pop(animated: Bool) -> Observable<Void> {
+    public func pop(animated: Bool) -> Observable<Void> {
         return Observable
-            .create { [weak base=base] (observer) -> Disposable in
+            .create { [weak base] (observer) -> Disposable in
                 guard let base = base, let navigationController = base.navigationController else {
                     observer.onCompleted()
                     return Disposables.create()
@@ -105,109 +105,77 @@ public extension Reactive where Base: UIViewController {
             }
     }
     
-    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModelFactory: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> {
-        return Observable<(V, M)>
-            .create { [weak base=base] (observer) -> Disposable in
+    private func presentWithViewModel<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable, present: @escaping (Base, V) -> (), dismiss: Observable<Void>) -> Observable<M.Result> {
+        return Observable<M.Result>
+            .create { [weak base] (observer) -> Disposable in
                 guard let base=base else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let viewModel = viewModelFactory(viewController)
-                observer.onNext((viewController, viewModel))
-                base.present(viewController, animated: animated, completion: { _ in
-                    observer.onCompleted()
-                })
-                return Disposables.create()
-            }
-            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
-                let dismiss = viewController.rx.dismiss(animated: animated)
-                return viewModel.result
-                    .catchError { (error) in
+                let d1 = binder(viewController)(viewModel.asViewBinder())
+                present(base, viewController)
+                let d2 = viewModel.result
+                    .takeUntil(viewController.rx.deallocated)
+                    .catchError { error in
                         dismiss.map { throw error }
                     }
                     .concat(
                         dismiss.flatMap { Observable.empty() }
                     )
-                    .takeUntil(viewController.rx.deallocated)
+                    .bind(to: observer)
+                return Disposables.create(d1, d2)
             }
     }
     
-    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, viewModelFactory: @escaping (V) -> M, animated: Bool) -> Observable<M.Result> {
-        return Observable<(V, M)>
-            .create { [weak base=base] (observer) -> Disposable in
-                guard let base=base, let navigationController = base.navigationController else {
-                    observer.onCompleted()
-                    return Disposables.create()
-                }
-                let viewModel = viewModelFactory(viewController)
-                observer.onNext((viewController, viewModel))
-                navigationController.pushViewController(viewController, animated: animated)
-                observer.onCompleted()
-                return Disposables.create()
-            }
-            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
-                let pop = viewController.rx.pop(animated: animated)
-                return viewModel.result
-                    .catchError { (error) in
-                        pop.map { throw error }
-                    }
-                    .concat(
-                        pop.flatMap { Observable.empty() }
-                    )
-                    .takeUntil(viewController.rx.deallocated)
-        }
+    public func present<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable, animated: Bool) -> Observable<M.Result> {
+        return base.rx
+            .presentWithViewModel(
+                viewController: viewController,
+                viewModel: viewModel,
+                binder: binder,
+                present: { (base, viewController) in
+                    base.present(viewController, animated: animated)
+                },
+                dismiss: viewController.rx.dismiss(animated: animated)
+            )
     }
     
-    func present<V: UIViewController, M: RxViewModel>(_ viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModelFactory: @escaping (V) -> M) -> Observable<M.Result> {
-        return Observable<(V, M)>
-            .create { [weak base=base] (observer) -> Disposable in
-                guard let base=base else {
-                    observer.onCompleted()
-                    return Disposables.create()
-                }
-                let viewModel = viewModelFactory(viewController)
-                base.present(viewController, presentAnimation: presentAnimation, dismissAnimation: dismissAnimation, completion: { _ in
-                    observer.onNext((viewController, viewModel))
-                    observer.onCompleted()
-                })
-                return Disposables.create()
-            }
-            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
-                let dismiss = viewController.rx.dismiss(animated: true)
-                return viewModel.result
-                    .catchError { (error) in
-                        dismiss.map { throw error }
-                    }
-                    .concat(
-                        dismiss.flatMap { Observable.empty() }
-                    )
-                    .takeUntil(viewController.rx.deallocated)
-        }
+    public func push<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable, animated: Bool) -> Observable<M.Result> {
+        return base.rx
+            .presentWithViewModel(
+                viewController: viewController,
+                viewModel: viewModel,
+                binder: binder,
+                present: { (base, viewController) in
+                    base.navigationController?.pushViewController(viewController, animated: animated)
+                },
+                dismiss: viewController.rx.pop(animated: animated)
+            )
     }
     
-    func push<V: UIViewController, M: RxViewModel>(_ viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModelFactory: @escaping (V) -> M) -> Observable<M.Result> {
-        return Observable<(V, M)>
-            .create { [weak base=base] (observer) -> Disposable in
-                guard let base=base, base.navigationController != nil else {
-                    observer.onCompleted()
-                    return Disposables.create()
-                }
-                let viewModel = viewModelFactory(viewController)
-                base.push(viewController, pushAnimation: pushAnimation, popAnimation: popAnimation)
-                observer.onNext((viewController, viewModel))
-                observer.onCompleted()
-                return Disposables.create()
-            }
-            .flatMap { (viewController, viewModel) -> Observable<M.Result> in
-                let pop = viewController.rx.pop(animated: true)
-                return viewModel.result
-                    .catchError { (error) in
-                        pop.map { throw error }
-                    }
-                    .concat(
-                        pop.flatMap { Observable.empty() }
-                    )
-                    .takeUntil(viewController.rx.deallocated)
-        }
+    public func present<V: UIViewController, M: RxViewModel>(viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable) -> Observable<M.Result> {
+        return base.rx
+            .presentWithViewModel(
+                viewController: viewController,
+                viewModel: viewModel,
+                binder: binder,
+                present: { (base, viewController) in
+                    base.present(viewController, presentAnimation: presentAnimation, dismissAnimation: dismissAnimation)
+                },
+                dismiss: viewController.rx.dismiss(animated: true)
+            )
+    }
+    
+    public func push<V: UIViewController, M: RxViewModel>(viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable) -> Observable<M.Result> {
+        return base.rx
+            .presentWithViewModel(
+                viewController: viewController,
+                viewModel: viewModel,
+                binder: binder,
+                present: { (base, viewController) in
+                    base.push(viewController, pushAnimation: pushAnimation, popAnimation: popAnimation)
+                },
+                dismiss: viewController.rx.pop(animated: true)
+            )
     }
 }

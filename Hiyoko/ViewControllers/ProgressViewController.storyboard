@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
+        <!--Progress View Controller-->
         <scene sceneID="ytD-ur-8Zd">
             <objects>
-                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="6uM-V7-vsN" customClass="LoginViewController" customModule="Hiyoko" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" id="6uM-V7-vsN" customClass="ProgressViewController" customModule="Hiyoko" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BUV-sp-CuK"/>
                         <viewControllerLayoutGuide type="bottom" id="JPY-pl-KJ1"/>
