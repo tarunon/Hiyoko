@@ -19,7 +19,7 @@ public protocol Request: APIKit.Request {
 
 public enum ResponseError: Error {
     case parseSuccess(Error)
-    case parseFail(responseParseFailure: Error, errorParseFailure: Error, statusCode: Int)
+    case parseFail(responseParseFailure: Error, errorParseFailure: Error, statusCode: Int, data: Data)
 }
 
 public extension Request {
@@ -40,7 +40,7 @@ public extension Request {
             do {
                 error = .parseSuccess(try self.error(from: errorParser.parse(data: data), urlResponse: urlResponse))
             } catch (let err2) {
-                error = .parseFail(responseParseFailure: err, errorParseFailure: err2, statusCode: urlResponse.statusCode)
+                error = .parseFail(responseParseFailure: err, errorParseFailure: err2, statusCode: urlResponse.statusCode, data: data)
             }
             throw error
         }

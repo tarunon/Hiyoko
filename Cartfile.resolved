@@ -1,3 +1,4 @@
+github "OAuthSwift/OAuthSwift" "1.1.1"
 github "ReactiveX/RxSwift" "3.4.0"
 github "RxSwiftCommunity/RxDataSources" "1.0.3"
 github "RxSwiftCommunity/RxRealm" "0.6.0"
