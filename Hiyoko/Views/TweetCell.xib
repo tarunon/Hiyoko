@@ -49,19 +49,21 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="tLz-Bg-eaF" firstAttribute="top" secondItem="EKt-Bc-lBx" secondAttribute="bottom" constant="1" id="60C-ps-2c8"/>
                     <constraint firstItem="heC-3k-IYc" firstAttribute="leading" secondItem="v46-Mq-mWN" secondAttribute="trailing" constant="8" id="Arh-ME-3uT"/>
                     <constraint firstItem="tLz-Bg-eaF" firstAttribute="top" secondItem="v46-Mq-mWN" secondAttribute="bottom" constant="1" id="SL7-od-sHJ"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Mfl-1t-gEc" secondAttribute="bottom" constant="8" id="Tow-jd-43f"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Mfl-1t-gEc" secondAttribute="bottom" priority="750" constant="8" id="Tow-jd-43f"/>
                     <constraint firstItem="EKt-Bc-lBx" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="WIy-HJ-z4b"/>
                     <constraint firstItem="Mfl-1t-gEc" firstAttribute="leading" secondItem="iIS-Eg-xA1" secondAttribute="leading" constant="8" id="WgE-Lw-xXI"/>
                     <constraint firstItem="tLz-Bg-eaF" firstAttribute="leading" secondItem="Mfl-1t-gEc" secondAttribute="trailing" constant="8" id="ZMN-Dh-3q3"/>
                     <constraint firstItem="heC-3k-IYc" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="b9W-fP-dl5"/>
-                    <constraint firstAttribute="bottom" secondItem="tLz-Bg-eaF" secondAttribute="bottom" constant="8" id="bV6-pc-OPG"/>
+                    <constraint firstAttribute="bottom" secondItem="tLz-Bg-eaF" secondAttribute="bottom" priority="500" constant="8" id="bV6-pc-OPG"/>
                     <constraint firstItem="EKt-Bc-lBx" firstAttribute="leading" secondItem="Mfl-1t-gEc" secondAttribute="trailing" constant="8" id="drn-h7-tIf"/>
                     <constraint firstItem="v46-Mq-mWN" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="eSj-em-2kW"/>
                     <constraint firstAttribute="trailing" secondItem="tLz-Bg-eaF" secondAttribute="trailing" constant="8" id="ncK-sx-y0Q"/>
                     <constraint firstItem="Mfl-1t-gEc" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="oEp-f6-7iQ"/>
                     <constraint firstItem="v46-Mq-mWN" firstAttribute="leading" secondItem="EKt-Bc-lBx" secondAttribute="trailing" constant="8" id="r4k-MQ-kc5"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tLz-Bg-eaF" secondAttribute="bottom" priority="750" constant="8" id="rCo-Q0-M0w"/>
                     <constraint firstAttribute="trailing" secondItem="heC-3k-IYc" secondAttribute="trailing" constant="8" id="xiq-NS-uVM"/>
                 </constraints>
             </tableViewCellContentView>

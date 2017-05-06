@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iFc-k4-wNC" customClass="TweetContentImageView" customModule="Hiyoko" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Qph-lz-5PK" customClass="LinkActionTextView" customModule="UIKitExtensions">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVx-bj-ktM">
+                    <rect key="frame" x="0.0" y="60" width="375" height="120"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="pgn-iN-JQJ"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mqY-v1-2cu">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="xVx-bj-ktM" secondAttribute="bottom" priority="750" id="DiK-rJ-8aA"/>
+                <constraint firstItem="xVx-bj-ktM" firstAttribute="leading" secondItem="iFc-k4-wNC" secondAttribute="leading" id="Kax-2T-5fF"/>
+                <constraint firstAttribute="trailing" secondItem="xVx-bj-ktM" secondAttribute="trailing" id="MYt-eq-Pr1"/>
+                <constraint firstItem="Qph-lz-5PK" firstAttribute="leading" secondItem="iFc-k4-wNC" secondAttribute="leading" id="WyO-ia-hRZ"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="xVx-bj-ktM" secondAttribute="bottom" id="hjW-wJ-pNW"/>
+                <constraint firstItem="xVx-bj-ktM" firstAttribute="top" secondItem="Qph-lz-5PK" secondAttribute="bottom" id="kKT-Wz-0ag"/>
+                <constraint firstItem="Qph-lz-5PK" firstAttribute="top" secondItem="iFc-k4-wNC" secondAttribute="top" id="naV-3g-Lkg"/>
+                <constraint firstAttribute="trailing" secondItem="Qph-lz-5PK" secondAttribute="trailing" id="zMy-QM-jlf"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="imageCollectionView" destination="xVx-bj-ktM" id="OhC-tg-eVP"/>
+                <outlet property="textView" destination="Qph-lz-5PK" id="l3g-LE-4nr"/>
+            </connections>
+            <point key="canvasLocation" x="-81.5" y="-388"/>
+        </view>
+    </objects>
+</document>

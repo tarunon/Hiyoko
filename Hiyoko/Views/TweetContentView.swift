@@ -18,6 +18,11 @@ class TweetContentViewBase: UIView {
             textView.textContainer.lineFragmentPadding = 0.0
         }
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.translatesAutoresizingMaskIntoConstraints = false
+    }
 }
 
 final class TweetContentView: TweetContentViewBase {
@@ -43,8 +48,7 @@ final class TweetContentImageView: TweetContentViewBase {
 }
 
 extension TweetContentImageView: NibInstantiatable {
-    class var nib: UINib { return TweetContentView.nib }
-    class var instantiateIndex: Int { return 1 }
+    
 }
 
 extension TweetContentImageView: Reusable {
@@ -52,6 +56,28 @@ extension TweetContentImageView: Reusable {
 }
 
 extension TweetContentImageView: TweetContentImageViewType {
+    
+}
+
+protocol TweetContentQuotedViewType: class {
+    var quotedUserNameLabel: UILabel! { get }
+    var quotedScreenNameLabel: UILabel! { get }
+    var quotedContentView: IBTweetContentView! { get }
+}
+
+final class TweetContentQuotedView: TweetContentViewBase {
+    @IBOutlet weak var quotedUserNameLabel: UILabel!
+    @IBOutlet weak var quotedScreenNameLabel: UILabel!
+    @IBOutlet weak var quotedContentView: IBTweetContentView!
+    @IBOutlet weak var quotedContainerView: UIView! {
+        didSet {
+            quotedContainerView.layer.cornerRadius = 5.0
+            quotedContainerView.layer.masksToBounds = true
+        }
+    }
+}
+
+extension TweetContentQuotedView: NibInstantiatable {
     
 }
 
@@ -83,36 +109,16 @@ extension TweetContentImageView: TweetContentImageViewType {
     }
 }
 
-class TweetContentImageFlowLayout: NSObject, UICollectionViewDelegateFlowLayout {
-    var numberOfItems: Int
-    var collectionViewSize: CGSize
-    init(numberOfItems: Int, collectionViewSize: CGSize) {
-        self.numberOfItems = numberOfItems
-        self.collectionViewSize = collectionViewSize
+@IBDesignable final class IBTweetContentQuotedView: UIView, NibInstantiatableWrapper {
+    typealias Wrapped = TweetContentQuotedView
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        loadView()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .zero
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch (numberOfItems, indexPath.item) {
-        case (1, _):
-            return collectionViewSize
-        case (2, _):
-            return CGSize(width: (collectionViewSize.width - 1.0) / 2.0, height: collectionViewSize.height)
-        case (let x, let y) where ((x % 2) == 1 && (x - 1) == y):
-            return CGSize(width: (collectionViewSize.width - 1.0) / 2.0, height: collectionViewSize.height)
-        default:
-            return CGSize(width: (collectionViewSize.width - 1.0) / 2.0, height: (collectionViewSize.height - 1.0) / 2.0)
-        }
+    override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        loadView()
     }
 }

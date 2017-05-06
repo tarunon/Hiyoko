@@ -22,6 +22,7 @@ extension ListViewController {
         
         tableView.registerNib(type: TweetCell.self)
         tableView.registerNib(type: TweetImageCell.self)
+        tableView.registerNib(type: TweetQuotedCell.self)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 76.0
         
@@ -63,69 +64,27 @@ extension ListViewController {
                                     viewModel: TweetCellViewModel(client: element.client, tweet: element.tweet),
                                     binder: TweetImageCell.bind
                             )
+                        case .quoted:
+                            result = presenter
+                                .present(
+                                    dequeue: TweetQuotedCell.dequeue,
+                                    viewModel: TweetCellViewModel(client: element.client, tweet: element.tweet),
+                                    binder: TweetQuotedCell.bind
+                            )
                         }
                         return result
                             .flatMapFirst { [unowned self] (action) -> Observable<Void> in
                                 switch action {
                                 case .entities(.tap(.hashtag(let tag))):
-                                    let realmIdentifier = "search_tweets:#\(tag)"
-                                    return self.rx
-                                        .push(
-                                            viewController: ListViewController.instantiate(
-                                                with: .init(
-                                                    title: "#\(tag)"
-                                                )
-                                            ),
-                                            viewModel: TimelineViewModel(
-                                                realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
-                                                client: element.client,
-                                                initialRequest: SinceMaxPaginationRequest(request: SearchTimeLineRequest(query: "#\(tag)"))
-                                            ),
-                                            binder: ListViewController.bind,
-                                            animated: true
-                                    )
+                                    return self.search(query: "#\(tag)", client: element.client)
                                 case .entities(.tap(.symbol(let symbol))):
-                                    let realmIdentifier = "search_tweets:$\(symbol)"
-                                    return self.rx
-                                        .push(
-                                            viewController: ListViewController.instantiate(
-                                                with: .init(
-                                                    title: "$\(symbol)"
-                                                )
-                                            ),
-                                            viewModel: TimelineViewModel(
-                                                realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
-                                                client: element.client,
-                                                initialRequest: SinceMaxPaginationRequest(request: SearchTimeLineRequest(query: "$\(symbol)"))
-                                            ),
-                                            binder: ListViewController.bind,
-                                            animated: true
-                                    )
+                                    return self.search(query: "$\(symbol)", client: element.client)
                                 case .entities(.tap(.mention(let screenName))):
-                                    let realmIdentifier = "user_timeline:\(screenName)"
-                                    return self.rx
-                                        .push(
-                                            viewController: ListViewController.instantiate(
-                                                with: .init(
-                                                    title: "\(screenName)"
-                                                )
-                                            ),
-                                            viewModel: TimelineViewModel(
-                                                realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
-                                                client: element.client,
-                                                initialRequest: SinceMaxPaginationRequest(request: UserTimeLineRequest(screenName: screenName))
-                                            ),
-                                            binder: ListViewController.bind,
-                                            animated: true
-                                    )
+                                    return self.profile(screenName: screenName, client: element.client)
                                 case .entities(.tap(.url(let url))):
-                                    return self.rx
-                                        .present(
-                                            viewController: SFSafariViewController(url: url),
-                                            viewModel: EmptyViewModel(),
-                                            binder: SFSafariViewController.bind,
-                                            animated: true
-                                    )
+                                    return self.safari(url: url)
+                                case .entities(.tap(.media(let media))):
+                                    return self.safari(url: media.mediaURL)
                                 case .entities(.longpress(let entity)):
                                     let item: Any
                                     switch entity {
@@ -140,14 +99,7 @@ extension ListViewController {
                                     case .media(let media):
                                         item = media.mediaURL
                                     }
-                                    return self.rx
-                                        .present(
-                                            viewController: UIActivityViewController(activityItems: [item], applicationActivities: nil),
-                                            viewModel: ActivityViewModel(),
-                                            binder: UIActivityViewController.bind,
-                                            animated: true
-                                        )
-                                        .map { _ in }
+                                    return self.share(object: item).map { _ in }
                                 default:
                                     return Observable.empty()
                                 }
@@ -211,5 +163,53 @@ extension ListViewController {
             .bind(to: viewModel.input)
         
         return Disposables.create(d1, d2, d3, d4, d5)
+    }
+}
+
+extension ListViewController {
+    fileprivate func search(query: String, client: TwitterClient) -> Observable<Void> {
+        let realmIdentifier = "search_tweet:\(query)"
+        return self.rx.present(
+            viewController: ListViewController.instantiate(with: .init(title: query)),
+            viewModel: TimelineViewModel(
+                realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
+                client: client,
+                initialRequest: SinceMaxPaginationRequest(request: SearchTimeLineRequest(query: query))
+            ),
+            binder: ListViewController.bind,
+            animated: true
+        )
+    }
+    
+    fileprivate func profile(screenName: String, client: TwitterClient) -> Observable<Void> {
+        let realmIdentifier = "user_timeline:\(screenName)"
+        return self.rx.present(
+            viewController: ListViewController.instantiate(with: .init(title: "@" + screenName)),
+            viewModel: TimelineViewModel(
+                realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
+                client: client,
+                initialRequest: SinceMaxPaginationRequest(request: UserTimeLineRequest(screenName: screenName))
+            ),
+            binder: ListViewController.bind,
+            animated: true
+        )
+    }
+    
+    fileprivate func safari(url: URL) -> Observable<Void> {
+        return self.rx.present(
+            viewController: SFSafariViewController(url: url),
+            viewModel: EmptyViewModel(),
+            binder: SFSafariViewController.bind,
+            animated: true
+        )
+    }
+    
+    fileprivate func share(object: Any) -> Observable<(UIActivityType?, Bool, [Any]?)> {
+        return self.rx.present(
+            viewController: UIActivityViewController(activityItems: [object], applicationActivities: nil),
+            viewModel: ActivityViewModel(),
+            binder: UIActivityViewController.bind,
+            animated: true
+        )
     }
 }

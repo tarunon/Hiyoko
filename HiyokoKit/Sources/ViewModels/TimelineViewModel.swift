@@ -22,13 +22,16 @@ public struct TweetCellModel {
     public enum Style {
         case plain
         case images
+        case quoted
     }
     public let style: Style
     
     init(client: TwitterClient, tweet: Tweet) {
         self.client = client
         self.tweet = tweet
-        if tweet.entities.media.isEmpty {
+        if tweet.quotedStatus != nil {
+            self.style = .quoted
+        } else if tweet.entities.media.isEmpty {
             self.style = .plain
         } else {
             self.style = .images
@@ -162,13 +165,14 @@ public class TweetCellViewModel: RxViewModel {
     }
     public typealias Result = Action
     public typealias Input = Action
-    public enum Output {
+    public indirect enum Output {
         case profileImage(UIImage?)
         case userName(String)
         case screenName(String)
         case createdAt(Date)
         case text(NSAttributedString)
         case media([TweetContentImageCellViewModel])
+        case quoted(Output)
         
         public var profileImage: UIImage?? {
             switch self {
@@ -211,6 +215,13 @@ public class TweetCellViewModel: RxViewModel {
             default: return nil
             }
         }
+        
+        public var quoted: Output? {
+            switch self {
+            case .quoted(let quoted): return quoted
+            default: return nil
+            }
+        }
     }
     
     public let result: Observable<Result>
@@ -249,7 +260,18 @@ public class TweetCellViewModel: RxViewModel {
                         let d6 = tweet
                             .map { Output.media($0.entities.media.map { TweetContentImageCellViewModel(client: client, media: $0) }) }
                             .bind(to: emitter.output)
-                        return Disposables.create(d1, d2, d3, d4, d5, d6)
+                        let d7 = tweet
+                            .flatMap { Observable.from(optional: $0.quotedStatus) }
+                            .flatMap { (quoted) in
+                                return Observable
+                                    .of(
+                                        Output.quoted(Output.userName(quoted.user.name)),
+                                        Output.quoted(Output.screenName("@" + quoted.user.screenName)),
+                                        Output.quoted(Output.text(quoted.attributedText))
+                                    )
+                            }
+                            .bind(to: emitter.output)
+                        return Disposables.create(d1, d2, d3, d4, d5, d6, d7)
                     }
                 return Disposables.create(d1, d2)
             }
@@ -258,6 +280,7 @@ public class TweetCellViewModel: RxViewModel {
 
 public class TweetContentImageCellViewModel: RxViewModel {
     public enum Input {
+        case tap
         case longPress
     }
     public typealias Output = UIImage?
@@ -275,7 +298,14 @@ public class TweetContentImageCellViewModel: RxViewModel {
                     .startWith(nil)
                     .bind(to: emitter.output)
                 let d2 = emitter.input
-                    .map { _ in Entities.Action.longpress(.media(media)) }
+                    .map { (input) in
+                        switch input {
+                        case .tap:
+                            return Entities.Action.tap(.media(media))
+                        case .longPress:
+                            return Entities.Action.longpress(.media(media))
+                        }
+                    }
                     .bind(to: observer)
                 return Disposables.create(d1, d2)
             }

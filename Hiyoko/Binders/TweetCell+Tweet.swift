@@ -14,7 +14,7 @@ import RxExtensions
 import BonMot
 
 extension TweetCellType where ContentView.Wrapped: TweetContentViewBase {
-    func bind(text viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+    fileprivate func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
         let d1 = profileImageButton.rx.tap
             .withLatestFrom(viewModel.output.flatMap { Observable.from(optional: $0.screenName) })
             .map { TweetCellViewModel.Input.entities(.tap(.mention($0))) }
@@ -65,9 +65,16 @@ extension TweetCellType where ContentView.Wrapped: TweetContentViewBase {
     }
 }
 
-extension TweetCellType where ContentView.Wrapped: TweetContentViewBase, ContentView.Wrapped: TweetContentImageViewType {
+extension TweetCell {
+    func bind(text viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        return bind(viewModel: viewModel)
+    }
+}
+
+
+extension TweetImageCell {
     func bind(image viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
-        let d1 = self.bind(text: viewModel)
+        let d1 = self.bind(viewModel: viewModel)
         let d2 = viewModel.output
             .flatMap { Observable.from(optional: $0.media) }
             .shareReplay(1)
@@ -89,26 +96,54 @@ extension TweetCellType where ContentView.Wrapped: TweetContentViewBase, Content
                             .bind(to: viewModel.input)
                     }
                 
-                let layout = TweetContentImageFlowLayout(numberOfItems: 0, collectionViewSize: .zero)
+                let layout = TweetContentImageFlowLayout(numberOfItems: 0)
                 
                 let d2 = collectionView.rx.setDelegate(layout)
                 
-                let d3 = Observable
-                    .combineLatest(
-                        medias.map { $0.count },
-                        collectionView.rx.observe(CGRect.self, "frame")
-                            .map { $0?.size ?? .zero }
-                    ) { ($0, $1) }
+                let d3 = medias.map { $0.count }
                     .subscribe(
-                        onNext: { (count, size) in
+                        onNext: { (count) in
                             layout.numberOfItems = count
-                            layout.collectionViewSize = size
-                            collectionView.layoutIfNeeded()
+                            collectionView.collectionViewLayout.invalidateLayout()
                         }
                     )
                 return Disposables.create(d1, d2, d3)
             }
         return Disposables.create(d1, d2)
+    }
+}
+
+extension TweetQuotedCell {
+    func bind(quoted viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = self.bind(viewModel: viewModel)
+        let d2 = viewModel.output
+            .flatMap { Observable.from(optional: $0.quoted) }
+            .shareReplay(1)
+            .bind { [unowned self] (quoted) -> Disposable in
+                let d1 = quoted
+                    .flatMap { Observable.from(optional: $0.userName) }
+                    .bind(to: self.tweetContentView.view.quotedUserNameLabel.rx.text)
+                let d2 = quoted
+                    .flatMap { Observable.from(optional: $0.screenName) }
+                    .bind(to: self.tweetContentView.view.quotedScreenNameLabel.rx.text)
+                let d3 = quoted
+                    .flatMap { Observable.from(optional: $0.text) }
+                    .bind { [textView=self.tweetContentView.view.quotedContentView.view.textView] (attributedText) in
+                        textView?.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+                    }
+                return Disposables.create(d1, d2, d3)
+            }
+        let d3 = self.tweetContentView.view.quotedContentView.view.textView.rx.linkTap
+            .map { (url) in
+                TweetCellViewModel.Action.entities(.tap(.init(url)))
+            }
+            .bind(to: viewModel.input)
+        let d4 = self.tweetContentView.view.quotedContentView.view.textView.rx.linkLongPress
+            .map { (url) in
+                TweetCellViewModel.Action.entities(.longpress(.init(url)))
+            }
+            .bind(to: viewModel.input)
+        return Disposables.create(d1, d2, d3, d4)
     }
 }
 
@@ -120,6 +155,9 @@ extension TweetContentImageCell {
             .filter { $0.state == .began }
             .map { _ in TweetContentImageCellViewModel.Input.longPress }
             .bind(to: viewModel.input)
-        return Disposables.create(d1, d2)
+        let d3 = tapGestureRecognizer.rx.event
+            .map { _ in TweetContentImageCellViewModel.Input.tap }
+            .bind(to: viewModel.input)
+        return Disposables.create(d1, d2, d3)
     }
 }

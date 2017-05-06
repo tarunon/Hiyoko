@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="181.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="749" verticalHuggingPriority="251" text="usename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3en-4E-bBo">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="749" verticalHuggingPriority="750" text="usename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3en-4E-bBo">
                         <rect key="frame" x="76" y="8" width="63" height="17"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -52,16 +52,17 @@
                     <constraint firstItem="mtL-jn-5j2" firstAttribute="leading" secondItem="3en-4E-bBo" secondAttribute="trailing" constant="8" id="1Lp-n7-I26"/>
                     <constraint firstItem="crr-4h-tbj" firstAttribute="top" secondItem="yfc-0Q-tjG" secondAttribute="top" constant="8" id="2Xh-LY-707"/>
                     <constraint firstItem="3en-4E-bBo" firstAttribute="leading" secondItem="crr-4h-tbj" secondAttribute="trailing" constant="8" id="5AU-Vw-VY8"/>
-                    <constraint firstAttribute="bottom" secondItem="KfO-dN-Hja" secondAttribute="bottom" constant="8" id="8o1-To-VAp"/>
+                    <constraint firstAttribute="bottom" secondItem="KfO-dN-Hja" secondAttribute="bottom" priority="500" constant="8" id="8o1-To-VAp"/>
                     <constraint firstAttribute="trailing" secondItem="RYI-Ec-ORX" secondAttribute="trailing" constant="8" id="Bd4-dx-Ee0"/>
                     <constraint firstItem="KfO-dN-Hja" firstAttribute="leading" secondItem="crr-4h-tbj" secondAttribute="trailing" constant="8" id="HIQ-1z-eNe"/>
                     <constraint firstItem="RYI-Ec-ORX" firstAttribute="top" secondItem="yfc-0Q-tjG" secondAttribute="top" constant="8" id="HqV-za-wJ7"/>
                     <constraint firstItem="mtL-jn-5j2" firstAttribute="top" secondItem="yfc-0Q-tjG" secondAttribute="top" constant="8" id="IyU-UI-Ixb"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="crr-4h-tbj" secondAttribute="bottom" constant="8" id="O5a-hr-p3p"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KfO-dN-Hja" secondAttribute="bottom" priority="750" constant="8" id="PlU-EZ-ZOq"/>
                     <constraint firstItem="3en-4E-bBo" firstAttribute="top" secondItem="yfc-0Q-tjG" secondAttribute="top" constant="8" id="Sgn-uK-hEb"/>
                     <constraint firstItem="RYI-Ec-ORX" firstAttribute="leading" secondItem="mtL-jn-5j2" secondAttribute="trailing" constant="8" id="eXU-R1-Mfe"/>
                     <constraint firstAttribute="trailing" secondItem="KfO-dN-Hja" secondAttribute="trailing" constant="8" id="ela-qc-oKN"/>
                     <constraint firstItem="KfO-dN-Hja" firstAttribute="top" secondItem="mtL-jn-5j2" secondAttribute="bottom" constant="1" id="hCK-Pw-2F9"/>
+                    <constraint firstItem="KfO-dN-Hja" firstAttribute="top" secondItem="3en-4E-bBo" secondAttribute="bottom" constant="1" id="skI-jK-fod"/>
                     <constraint firstItem="crr-4h-tbj" firstAttribute="leading" secondItem="yfc-0Q-tjG" secondAttribute="leading" constant="8" id="zdr-Pz-SRv"/>
                 </constraints>
             </tableViewCellContentView>

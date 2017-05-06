@@ -84,7 +84,7 @@ public struct Entities {
             symbols: symbols,
             urls: urls,
             mentions: mentions,
-            media: extended?.media ?? media
+            media: (extended?.media).flatMap { $0.isEmpty ? nil : $0 } ?? media
         )
     }
 }
