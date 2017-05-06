@@ -11,6 +11,21 @@ import Instantiate
 import InstantiateStandard
 import UIKitExtensions
 
+protocol TweetContentViewType: class {
+    var textView: LinkActionTextView! { get }
+}
+
+protocol HasTweetContentViewType: TweetContentViewType {
+    associatedtype TweetContentView: TweetContentViewType
+    var tweetContentView: TweetContentView! { get }
+}
+
+extension HasTweetContentViewType {
+    var textView: LinkActionTextView! {
+        return tweetContentView.textView
+    }
+}
+
 class TweetContentViewBase: UIView {
     @IBOutlet weak var textView: LinkActionTextView! {
         didSet {
@@ -33,8 +48,22 @@ extension TweetContentView: NibInstantiatable {
     
 }
 
-protocol TweetContentImageViewType: class {
+extension TweetContentView: TweetContentViewType {
+    
+}
+
+protocol TweetContentImageViewType: TweetContentViewType {
     var imageCollectionView: UICollectionView! { get }
+}
+
+protocol HasTweetContentImageViewType: TweetContentImageViewType, HasTweetContentViewType {
+    associatedtype TweetContentView: TweetContentImageViewType
+}
+
+extension HasTweetContentImageViewType {
+    var imageCollectionView: UICollectionView! {
+        return tweetContentView.imageCollectionView
+    }
 }
 
 final class TweetContentImageView: TweetContentViewBase {
@@ -59,10 +88,28 @@ extension TweetContentImageView: TweetContentImageViewType {
     
 }
 
-protocol TweetContentQuotedViewType: class {
+protocol TweetContentQuotedViewType: TweetContentViewType {
     var quotedUserNameLabel: UILabel! { get }
     var quotedScreenNameLabel: UILabel! { get }
     var quotedContentView: IBTweetContentView! { get }
+}
+
+protocol HasTweetContentQuotedViewType: TweetContentQuotedViewType, HasTweetContentViewType {
+    associatedtype TweetContentView: TweetContentQuotedViewType
+}
+
+extension HasTweetContentQuotedViewType {
+    var quotedUserNameLabel: UILabel! {
+        return tweetContentView.quotedUserNameLabel
+    }
+    
+    var quotedScreenNameLabel: UILabel! {
+        return tweetContentView.quotedScreenNameLabel
+    }
+    
+    var quotedContentView: IBTweetContentView! {
+        return tweetContentView.quotedContentView
+    }
 }
 
 final class TweetContentQuotedView: TweetContentViewBase {
@@ -81,44 +128,75 @@ extension TweetContentQuotedView: NibInstantiatable {
     
 }
 
+extension TweetContentQuotedView: TweetContentQuotedViewType {
+    
+}
+
 @IBDesignable final class IBTweetContentView: UIView, NibInstantiatableWrapper {
     typealias Wrapped = TweetContentView
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        loadView()
-    }
-    
+    #if TARGET_INTERFACE_BUILDER
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         loadView()
+    }
+    #else
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadView()
+    }
+    #endif
+}
+
+extension IBTweetContentView: HasTweetContentViewType {
+    var tweetContentView: TweetContentView! {
+        return view
     }
 }
 
 @IBDesignable final class IBTweetContentImageView: UIView, NibInstantiatableWrapper {
     typealias Wrapped = TweetContentImageView
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        loadView()
-    }
-    
+    #if TARGET_INTERFACE_BUILDER
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         loadView()
+    }
+    #else
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadView()
+    }
+    #endif
+}
+
+extension IBTweetContentImageView: HasTweetContentImageViewType {
+    typealias TweetContentView = TweetContentImageView
+    var tweetContentView: TweetContentImageView! {
+        return view
     }
 }
 
 @IBDesignable final class IBTweetContentQuotedView: UIView, NibInstantiatableWrapper {
     typealias Wrapped = TweetContentQuotedView
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        loadView()
-    }
-    
+    #if TARGET_INTERFACE_BUILDER
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         loadView()
+    }
+    #else
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        loadView()
+    }
+    #endif
+    
+}
+
+extension IBTweetContentQuotedView: HasTweetContentQuotedViewType {
+    typealias TweetContentView = TweetContentQuotedView
+    var tweetContentView: TweetContentQuotedView! {
+        return view
     }
 }

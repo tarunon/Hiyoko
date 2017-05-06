@@ -10,31 +10,22 @@ import Foundation
 import Instantiate
 import InstantiateStandard
 
-protocol TweetCellType: class {
-    associatedtype ContentView: NibInstantiatableWrapper
-    var profileImageButton: UIButton! { get }
-    var userNameLabel: UILabel! { get }
-    var screenNameLabel: UILabel! { get }
-    var dateLabel: UILabel! { get }
-    var tweetContentView: ContentView! { get }
-}
-
 final class TweetCell: UITableViewCell {
-    @IBOutlet weak var profileImageButton: UIButton! {
-        didSet {
-            profileImageButton.layer.cornerRadius = 5.0
-            profileImageButton.layer.masksToBounds = true
-        }
-    }
-    
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var tweetContentView: IBTweetContentView!
+    @IBOutlet weak var tweetCellView: IBTweetCellView!
+    var tweetContentView: TweetContentView! = TweetContentView.instantiate()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentContainerView.addSubview(tweetContentView)
+        NSLayoutConstraint.activate(
+            [
+                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
+                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
+                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
+            ]
+        )
     }
 }
 
@@ -46,26 +37,31 @@ extension TweetCell: Reusable {
     
 }
 
-extension TweetCell: TweetCellType {
-    typealias ContentView = IBTweetContentView
+extension TweetCell: HasTweetCellViewType {
+    typealias TweetCellView = IBTweetCellView
 }
 
-final class TweetImageCell: UITableViewCell {
-    @IBOutlet weak var profileImageButton: UIButton! {
-        didSet {
-            profileImageButton.layer.cornerRadius = 5.0
-            profileImageButton.layer.masksToBounds = true
-        }
-    }
+extension TweetCell: HasTweetContentViewType {
     
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var tweetContentView: IBTweetContentImageView!
+}
 
+
+final class TweetImageCell: UITableViewCell {
+    @IBOutlet weak var tweetCellView: IBTweetCellView!
+    var tweetContentView: TweetContentImageView! = TweetContentImageView.instantiate()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentContainerView.addSubview(tweetContentView)
+        NSLayoutConstraint.activate(
+            [
+                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
+                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
+                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
+            ]
+        )
     }
 }
 
@@ -77,26 +73,30 @@ extension TweetImageCell: Reusable {
     
 }
 
-extension TweetImageCell: TweetCellType {
-    typealias ContentView = IBTweetContentImageView
+extension TweetImageCell: HasTweetCellViewType {
+    typealias TweetCellView = IBTweetCellView
+}
+
+extension TweetImageCell: HasTweetContentImageViewType {
+    typealias TweetContentView = TweetContentImageView
 }
 
 final class TweetQuotedCell: UITableViewCell {
-    @IBOutlet weak var profileImageButton: UIButton! {
-        didSet {
-            profileImageButton.layer.cornerRadius = 5.0
-            profileImageButton.layer.masksToBounds = true
-        }
-    }
+    @IBOutlet weak var tweetCellView: IBTweetCellView!
+    var tweetContentView: TweetContentQuotedView! = TweetContentQuotedView.instantiate()
     
-    @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var screenNameLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var tweetContentView: IBTweetContentQuotedView!
-
     override func awakeFromNib() {
         super.awakeFromNib()
         self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentContainerView.addSubview(tweetContentView)
+        NSLayoutConstraint.activate(
+            [
+                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
+                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
+                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
+            ]
+        )
     }
 }
 
@@ -108,6 +108,116 @@ extension TweetQuotedCell: Reusable {
     
 }
 
-extension TweetQuotedCell: TweetCellType {
-    typealias ContentView = IBTweetContentQuotedView
+extension TweetQuotedCell: HasTweetCellViewType {
+    typealias TweetCellView = IBTweetCellView
+}
+
+extension TweetQuotedCell: HasTweetContentQuotedViewType {
+    typealias TweetContentView = TweetContentQuotedView
+    
+}
+
+final class RetweetCell: UITableViewCell {
+    @IBOutlet weak var tweetCellView: IBRetweetCellView!
+    var tweetContentView: TweetContentView! = TweetContentView.instantiate()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentContainerView.addSubview(tweetContentView)
+        NSLayoutConstraint.activate(
+            [
+                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
+                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
+                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
+            ]
+        )
+    }
+}
+
+extension RetweetCell: NibInstantiatable {
+    
+}
+
+extension RetweetCell: Reusable {
+    
+}
+
+extension RetweetCell: HasRetweetCellViewType {
+    typealias TweetCellView = IBRetweetCellView
+}
+
+extension RetweetCell: HasTweetContentViewType {
+    
+}
+
+final class RetweetImageCell: UITableViewCell {
+    @IBOutlet weak var tweetCellView: IBRetweetCellView!
+    var tweetContentView: TweetContentImageView! = TweetContentImageView.instantiate()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentContainerView.addSubview(tweetContentView)
+        NSLayoutConstraint.activate(
+            [
+                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
+                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
+                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
+            ]
+        )
+    }
+}
+
+extension RetweetImageCell: NibInstantiatable {
+    
+}
+
+extension RetweetImageCell: Reusable {
+    
+}
+
+extension RetweetImageCell: HasRetweetCellViewType {
+    typealias TweetCellView = IBRetweetCellView
+}
+
+extension RetweetImageCell: HasTweetContentImageViewType {
+    typealias TweetContentView = TweetContentImageView
+}
+
+final class RetweetQuotedCell: UITableViewCell {
+    @IBOutlet weak var tweetCellView: IBRetweetCellView!
+    var tweetContentView: TweetContentQuotedView! = TweetContentQuotedView.instantiate()
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.contentContainerView.addSubview(tweetContentView)
+        NSLayoutConstraint.activate(
+            [
+                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
+                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
+                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
+            ]
+        )
+    }
+}
+
+extension RetweetQuotedCell: NibInstantiatable {
+    
+}
+
+extension RetweetQuotedCell: Reusable {
+    
+}
+
+extension RetweetQuotedCell: HasRetweetCellViewType {
+    typealias TweetCellView = IBRetweetCellView
+}
+
+extension RetweetQuotedCell: HasTweetContentQuotedViewType {
+    typealias TweetContentView = TweetContentQuotedView
 }

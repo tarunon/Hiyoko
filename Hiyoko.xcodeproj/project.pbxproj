@@ -52,6 +52,12 @@
 		D249489A1EB467B4003B2C87 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45A1EAA64AF004B13D7 /* RealmSwift.framework */; };
 		D249489B1EB467B8003B2C87 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; };
 		D249489C1EB467B8003B2C87 /* Illuso.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4561EAA64AF004B13D7 /* Illuso.framework */; };
+		D257CDA11EBDFE8E00B56363 /* TweetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */; };
+		D257CDA21EBDFE9300B56363 /* TweetCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */; };
+		D257CDA71EBE14CB00B56363 /* RetweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA51EBE144200B56363 /* RetweetCell.xib */; };
+		D257CDA81EBE1ABD00B56363 /* RetweetCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */; };
+		D257CDAA1EBE1ACF00B56363 /* RetweetImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA91EBE1ACF00B56363 /* RetweetImageCell.xib */; };
+		D257CDAC1EBE1AD700B56363 /* RetweetQuotedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDAB1EBE1AD700B56363 /* RetweetQuotedCell.xib */; };
 		D25FB29C1EB475D20003EFB3 /* Transformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB29A1EB475C10003EFB3 /* Transformers.swift */; };
 		D25FB29D1EB4763D0003EFB3 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D25FB2A21EB47C890003EFB3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB2A01EB47C5E0003EFB3 /* User.swift */; };
@@ -483,6 +489,12 @@
 		D24EC45F1EAA64AF004B13D7 /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
 		D24EC4601EAA64AF004B13D7 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		D24EC4611EAA64AF004B13D7 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCellView.xib; sourceTree = "<group>"; };
+		D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCellView.swift; sourceTree = "<group>"; };
+		D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetCellView.xib; sourceTree = "<group>"; };
+		D257CDA51EBE144200B56363 /* RetweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetCell.xib; sourceTree = "<group>"; };
+		D257CDA91EBE1ACF00B56363 /* RetweetImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetImageCell.xib; sourceTree = "<group>"; };
+		D257CDAB1EBE1AD700B56363 /* RetweetQuotedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetQuotedCell.xib; sourceTree = "<group>"; };
 		D25FB29A1EB475C10003EFB3 /* Transformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transformers.swift; sourceTree = "<group>"; };
 		D25FB2A01EB47C5E0003EFB3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D269F8001EBB33FB0098AD9E /* BonMot.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BonMot.framework; path = Carthage/Build/iOS/BonMot.framework; sourceTree = "<group>"; };
@@ -985,10 +997,16 @@
 				D2DEB0631EB7445D003F27B4 /* AccountCell.xib */,
 				D2DEB0701EB78592003F27B4 /* NewAccountCell.swift */,
 				D2DEB06E1EB78577003F27B4 /* NewAccountCell.xib */,
+				D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */,
+				D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */,
+				D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */,
 				D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */,
 				D29A9FCC1EBAD9850047CCC8 /* TweetCell.xib */,
 				D269F80E1EBB73090098AD9E /* TweetImageCell.xib */,
 				D238D7CD1EBDB40300EC944C /* TweetQuotedCell.xib */,
+				D257CDA51EBE144200B56363 /* RetweetCell.xib */,
+				D257CDA91EBE1ACF00B56363 /* RetweetImageCell.xib */,
+				D257CDAB1EBE1AD700B56363 /* RetweetQuotedCell.xib */,
 				D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */,
 				D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */,
 				D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */,
@@ -1740,15 +1758,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D257CDA71EBE14CB00B56363 /* RetweetCell.xib in Resources */,
 				D2DEB0681EB7459D003F27B4 /* AccountCell.xib in Resources */,
 				D269F80F1EBB73090098AD9E /* TweetImageCell.xib in Resources */,
 				D2FCAAEA1EBDBA6A001B312B /* TweetContentQuotedView.xib in Resources */,
+				D257CDA81EBE1ABD00B56363 /* RetweetCellView.xib in Resources */,
 				D2136C141EB38DBA00237E84 /* LaunchScreen.storyboard in Resources */,
 				D29A9FA81EBA39300047CCC8 /* AppViewController.storyboard in Resources */,
+				D257CDAC1EBE1AD700B56363 /* RetweetQuotedCell.xib in Resources */,
 				D2DEB0731EB785B1003F27B4 /* NewAccountCell.xib in Resources */,
+				D257CDA21EBDFE9300B56363 /* TweetCellView.xib in Resources */,
 				D29A9FAF1EBA39680047CCC8 /* ProgressViewController.storyboard in Resources */,
 				D269F80B1EBB6BCC0098AD9E /* TweetContentView.xib in Resources */,
 				D29A9FAA1EBA39300047CCC8 /* ListViewController.storyboard in Resources */,
+				D257CDAA1EBE1ACF00B56363 /* RetweetImageCell.xib in Resources */,
 				D2FCAAE71EBDBA48001B312B /* TweetContentImageView.xib in Resources */,
 				D2FCAAE81EBDBA4D001B312B /* TweetQuotedCell.xib in Resources */,
 				D2136C111EB38DBA00237E84 /* Assets.xcassets in Resources */,
@@ -1942,6 +1965,7 @@
 			files = (
 				D2DEB0721EB785AA003F27B4 /* NewAccountCell.swift in Sources */,
 				D29A9FDC1EBB1CBB0047CCC8 /* GenericsBindings.swift in Sources */,
+				D257CDA11EBDFE8E00B56363 /* TweetCellView.swift in Sources */,
 				D2DEB0671EB7458D003F27B4 /* AccountCell.swift in Sources */,
 				D29A9FB41EBA3B250047CCC8 /* ListViewController+Accounts.swift in Sources */,
 				D269F8211EBC6BA90098AD9E /* TweetContentImageCell.swift in Sources */,

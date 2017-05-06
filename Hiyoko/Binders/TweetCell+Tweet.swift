@@ -13,8 +13,63 @@ import RxCocoa
 import RxExtensions
 import BonMot
 
-extension TweetCellType where ContentView.Wrapped: TweetContentViewBase {
-    fileprivate func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+extension TweetCell {
+    func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = bind(tweet: viewModel)
+        let d2 = bind(content: viewModel)
+        return Disposables.create(d1, d2)
+    }
+}
+
+extension TweetImageCell {
+    func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = bind(tweet: viewModel)
+        let d2 = bind(content: viewModel)
+        let d3 = bind(image: viewModel)
+        return Disposables.create(d1, d2, d3)
+    }
+}
+
+extension TweetQuotedCell {
+    func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = bind(tweet: viewModel)
+        let d2 = bind(content: viewModel)
+        let d3 = bind(quoted: viewModel)
+        return Disposables.create(d1, d2, d3)
+    }
+}
+
+extension RetweetCell {
+    func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = bind(tweet: viewModel)
+        let d2 = bind(content: viewModel)
+        let d3 = bind(retweet: viewModel)
+        return Disposables.create(d1, d2, d3)
+    }
+}
+
+extension RetweetImageCell {
+    func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = bind(tweet: viewModel)
+        let d2 = bind(content: viewModel)
+        let d3 = bind(image: viewModel)
+        let d4 = bind(retweet: viewModel)
+        return Disposables.create(d1, d2, d3, d4)
+    }
+}
+
+extension RetweetQuotedCell {
+    func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = bind(tweet: viewModel)
+        let d2 = bind(content: viewModel)
+        let d3 = bind(quoted: viewModel)
+        let d4 = bind(retweet: viewModel)
+        return Disposables.create(d1, d2, d3, d4)
+    }
+}
+
+extension TweetCellViewType {
+    fileprivate func bind(tweet viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
         let d1 = profileImageButton.rx.tap
             .withLatestFrom(viewModel.output.flatMap { Observable.from(optional: $0.screenName) })
             .map { TweetCellViewModel.Input.entities(.tap(.mention($0))) }
@@ -29,7 +84,7 @@ extension TweetCellType where ContentView.Wrapped: TweetContentViewBase {
                     }
                 let d2 = output
                     .flatMap { Observable.from(optional: $0.userName) }
-                    .bind(to: self.userNameLabel.rx.text)
+                    .bind(to: self.nameLabel.rx.text)
                 let d3 = output
                     .flatMap { Observable.from(optional: $0.screenName) }
                     .bind(to: self.screenNameLabel.rx.text)
@@ -43,42 +98,60 @@ extension TweetCellType where ContentView.Wrapped: TweetContentViewBase {
                             .observeOn(MainScheduler.instance)
                     }
                     .bind(to: self.dateLabel.rx.text)
-                let d5 = output
-                    .flatMap { Observable.from(optional: $0.text) }
-                    .bind { [textView=self.tweetContentView.view.textView] (attributedText) in
-                        textView?.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
-                    }
-                return Disposables.create(d1, d2, d3, d4, d5)
+                return Disposables.create(d1, d2, d3, d4)
             }
-        let d3 = self.tweetContentView.view.textView.rx.linkTap
+        return Disposables.create(d1, d2)
+    }
+}
+
+extension RetweetCellViewType {
+    fileprivate func bind(retweet viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        return viewModel.output
+            .flatMap { Observable.from(optional: $0.retweeted) }
+            .shareReplay(1)
+            .bind { [imageView=self.retweetUserIconImageView, label=self.retweetUserScreenNameLabel] (retweeted) -> Disposable in
+                guard let imageView = imageView, let label = label else {
+                    return Disposables.create()
+                }
+                let d1 = retweeted
+                    .flatMap { Observable.from(optional: $0.profileImage) }
+                    .bind(to: imageView.rx.image)
+                let d2 = retweeted
+                    .flatMap { Observable.from(optional: $0.screenName) }
+                    .map { "retweeted by \($0)" }
+                    .bind(to: label.rx.text)
+                return Disposables.create(d1, d2)
+            }
+    }
+}
+
+extension TweetContentViewType {
+    fileprivate func bind(content viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = viewModel.output
+            .flatMap { Observable.from(optional: $0.text) }
+            .bind { [textView=self.textView] (attributedText) in
+                textView?.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+            }
+        let d2 = self.textView.rx.linkTap
             .map { (url) in
                 TweetCellViewModel.Action.entities(.tap(.init(url)))
             }
             .bind(to: viewModel.input)
-        let d4 = self.tweetContentView.view.textView.rx.linkLongPress
+        let d3 = self.textView.rx.linkLongPress
             .map { (url) in
                 TweetCellViewModel.Action.entities(.longpress(.init(url)))
             }
             .bind(to: viewModel.input)
-        
-        return Disposables.create(d1, d2, d3, d4)
+        return Disposables.create(d1, d2, d3)
     }
 }
 
-extension TweetCell {
-    func bind(text viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
-        return bind(viewModel: viewModel)
-    }
-}
-
-
-extension TweetImageCell {
-    func bind(image viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
-        let d1 = self.bind(viewModel: viewModel)
-        let d2 = viewModel.output
+extension TweetContentImageViewType {
+    fileprivate func bind(image viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        return viewModel.output
             .flatMap { Observable.from(optional: $0.media) }
             .shareReplay(1)
-            .bind { [collectionView=self.tweetContentView.view.imageCollectionView] (medias) -> Disposable in
+            .bind { [collectionView=self.imageCollectionView] (medias) -> Disposable in
                 guard let collectionView = collectionView else {
                     return Disposables.create()
                 }
@@ -94,7 +167,7 @@ extension TweetImageCell {
                             .concat(Observable.never())
                             .map { TweetCellViewModel.Action.entities($0) }
                             .bind(to: viewModel.input)
-                    }
+                }
                 
                 let layout = TweetContentImageFlowLayout(numberOfItems: 0)
                 
@@ -105,45 +178,43 @@ extension TweetImageCell {
                         onNext: { (count) in
                             layout.numberOfItems = count
                             collectionView.collectionViewLayout.invalidateLayout()
-                        }
-                    )
+                    }
+                )
                 return Disposables.create(d1, d2, d3)
             }
-        return Disposables.create(d1, d2)
     }
 }
 
-extension TweetQuotedCell {
-    func bind(quoted viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
-        let d1 = self.bind(viewModel: viewModel)
-        let d2 = viewModel.output
+extension TweetContentQuotedViewType {
+    fileprivate func bind(quoted viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let d1 = viewModel.output
             .flatMap { Observable.from(optional: $0.quoted) }
             .shareReplay(1)
             .bind { [unowned self] (quoted) -> Disposable in
                 let d1 = quoted
                     .flatMap { Observable.from(optional: $0.userName) }
-                    .bind(to: self.tweetContentView.view.quotedUserNameLabel.rx.text)
+                    .bind(to: self.quotedUserNameLabel.rx.text)
                 let d2 = quoted
                     .flatMap { Observable.from(optional: $0.screenName) }
-                    .bind(to: self.tweetContentView.view.quotedScreenNameLabel.rx.text)
+                    .bind(to: self.quotedScreenNameLabel.rx.text)
                 let d3 = quoted
                     .flatMap { Observable.from(optional: $0.text) }
-                    .bind { [textView=self.tweetContentView.view.quotedContentView.view.textView] (attributedText) in
+                    .bind { [textView=self.quotedContentView.view.textView] (attributedText) in
                         textView?.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
                     }
                 return Disposables.create(d1, d2, d3)
             }
-        let d3 = self.tweetContentView.view.quotedContentView.view.textView.rx.linkTap
+        let d2 = self.quotedContentView.view.textView.rx.linkTap
             .map { (url) in
                 TweetCellViewModel.Action.entities(.tap(.init(url)))
             }
             .bind(to: viewModel.input)
-        let d4 = self.tweetContentView.view.quotedContentView.view.textView.rx.linkLongPress
+        let d3 = self.quotedContentView.view.textView.rx.linkLongPress
             .map { (url) in
                 TweetCellViewModel.Action.entities(.longpress(.init(url)))
             }
             .bind(to: viewModel.input)
-        return Disposables.create(d1, d2, d3, d4)
+        return Disposables.create(d1, d2, d3)
     }
 }
 

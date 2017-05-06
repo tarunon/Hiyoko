@@ -23,6 +23,9 @@ extension ListViewController {
         tableView.registerNib(type: TweetCell.self)
         tableView.registerNib(type: TweetImageCell.self)
         tableView.registerNib(type: TweetQuotedCell.self)
+        tableView.registerNib(type: RetweetCell.self)
+        tableView.registerNib(type: RetweetImageCell.self)
+        tableView.registerNib(type: RetweetQuotedCell.self)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 76.0
         
@@ -49,27 +52,49 @@ extension ListViewController {
                     .map { $0.1 }
                     .bind(to: self.tableView.rx.animatedItem(configureDataSource: { $0.animationConfiguration = AnimationConfiguration.init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none) })) { (presenter, element) -> Disposable in
                         let result: Observable<TweetCellViewModel.Result>
+                        let viewModel = TweetCellViewModel(client: element.client, tweet: element.tweet)
                         switch element.style {
-                        case .plain:
+                        case .tweet(.plain):
                             result = presenter
                                 .present(
                                     dequeue: TweetCell.dequeue,
-                                    viewModel: TweetCellViewModel(client: element.client, tweet: element.tweet),
+                                    viewModel: viewModel,
                                     binder: TweetCell.bind
                             )
-                        case .images:
+                        case .tweet(.images):
                             result = presenter
                                 .present(
                                     dequeue: TweetImageCell.dequeue,
-                                    viewModel: TweetCellViewModel(client: element.client, tweet: element.tweet),
+                                    viewModel: viewModel,
                                     binder: TweetImageCell.bind
                             )
-                        case .quoted:
+                        case .tweet(.quoted):
                             result = presenter
                                 .present(
                                     dequeue: TweetQuotedCell.dequeue,
-                                    viewModel: TweetCellViewModel(client: element.client, tweet: element.tweet),
+                                    viewModel: viewModel,
                                     binder: TweetQuotedCell.bind
+                            )
+                        case .retweet(.plain):
+                            result = presenter
+                                .present(
+                                    dequeue: RetweetCell.dequeue,
+                                    viewModel: viewModel,
+                                    binder: RetweetCell.bind
+                            )
+                        case .retweet(.images):
+                            result = presenter
+                                .present(
+                                    dequeue: RetweetImageCell.dequeue,
+                                    viewModel: viewModel,
+                                    binder: RetweetImageCell.bind
+                            )
+                        case .retweet(.quoted):
+                            result = presenter
+                                .present(
+                                    dequeue: RetweetQuotedCell.dequeue,
+                                    viewModel: viewModel,
+                                    binder: RetweetQuotedCell.bind
                             )
                         }
                         return result
@@ -175,7 +200,7 @@ extension ListViewController {
 extension ListViewController {
     fileprivate func search(query: String, client: TwitterClient) -> Observable<Void> {
         let realmIdentifier = "search_tweet:\(query)"
-        return self.rx.present(
+        return self.rx.push(
             viewController: ListViewController.instantiate(with: .init(title: query)),
             viewModel: TimelineViewModel(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
@@ -189,8 +214,8 @@ extension ListViewController {
     
     fileprivate func profile(screenName: String, client: TwitterClient) -> Observable<Void> {
         let realmIdentifier = "user_timeline:\(screenName)"
-        return self.rx.present(
-            viewController: ListViewController.instantiate(with: .init(title: "@" + screenName)),
+        return self.rx.push(
+            viewController: ListViewController.instantiate(with: .init(title: screenName)),
             viewModel: TimelineViewModel(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
                 client: client,

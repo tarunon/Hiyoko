@@ -16,7 +16,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KRh-sP-Lan" customClass="LinkActionTextView" customModule="UIKitExtensions">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="141"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -61,7 +61,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TjG-Rz-fDZ" secondAttribute="bottom" id="5Sz-c0-dWp"/>
                 <constraint firstItem="KRh-sP-Lan" firstAttribute="top" secondItem="z4s-ju-Nq7" secondAttribute="top" id="AiY-uF-ofQ"/>
-                <constraint firstItem="TjG-Rz-fDZ" firstAttribute="top" secondItem="KRh-sP-Lan" secondAttribute="bottom" id="As5-GC-hZS"/>
+                <constraint firstItem="TjG-Rz-fDZ" firstAttribute="top" secondItem="KRh-sP-Lan" secondAttribute="bottom" constant="5" id="As5-GC-hZS"/>
                 <constraint firstAttribute="bottom" secondItem="TjG-Rz-fDZ" secondAttribute="bottom" priority="750" id="HRb-WJ-ud1"/>
                 <constraint firstItem="TjG-Rz-fDZ" firstAttribute="leading" secondItem="z4s-ju-Nq7" secondAttribute="leading" id="MA6-L2-YuO"/>
                 <constraint firstAttribute="trailing" secondItem="TjG-Rz-fDZ" secondAttribute="trailing" id="Q6D-Dq-ZSD"/>

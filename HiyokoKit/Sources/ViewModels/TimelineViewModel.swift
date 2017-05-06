@@ -20,21 +20,32 @@ public struct TweetCellModel {
     public let client: TwitterClient
     public let tweet: Tweet
     public enum Style {
-        case plain
-        case images
-        case quoted
+        public enum Style {
+            case plain
+            case images
+            case quoted
+        }
+        case tweet(Style)
+        case retweet(Style)
     }
     public let style: Style
     
     init(client: TwitterClient, tweet: Tweet) {
         self.client = client
         self.tweet = tweet
-        if tweet.quotedStatus != nil {
-            self.style = .quoted
-        } else if tweet.entities.media.isEmpty {
-            self.style = .plain
-        } else {
-            self.style = .images
+        switch (tweet.retweetedStatus == nil, tweet.quotedStatus == nil, tweet.entities.media.isEmpty) {
+        case (false, false, _):
+            self.style = .retweet(.quoted)
+        case (false, true, false):
+            self.style = .retweet(.images)
+        case (false, _, _):
+            self.style = .retweet(.plain)
+        case (_, false, _):
+            self.style = .tweet(.quoted)
+        case (_, true, false):
+            self.style = .tweet(.images)
+        case (_, _, _):
+            self.style = .tweet(.plain)
         }
     }
 }
@@ -173,6 +184,7 @@ public class TweetCellViewModel: RxViewModel {
         case text(NSAttributedString)
         case media([TweetContentImageCellViewModel])
         case quoted(Output)
+        case retweeted(Output)
         
         public var profileImage: UIImage?? {
             switch self {
@@ -222,6 +234,13 @@ public class TweetCellViewModel: RxViewModel {
             default: return nil
             }
         }
+        
+        public var retweeted: Output? {
+            switch self {
+            case .retweeted(let retweeted): return retweeted
+            default: return nil
+            }
+        }
     }
     
     public let result: Observable<Result>
@@ -234,44 +253,59 @@ public class TweetCellViewModel: RxViewModel {
                 let d2 = Observable.from(object: tweet)
                     .catchError { _ in Observable.empty() }
                     .shareReplay(1)
-                    .map { (tweet) in
-                        return tweet.retweetedStatus ?? tweet
-                    }
                     .bind { (tweet) -> Disposable in
-                        let d1 = tweet
+                        let presentTweet = tweet.map { $0.retweetedStatus ?? $0 }
+                        let d1 = presentTweet
                             .flatMap { Observable.from(optional: $0.user.profileImageURL) }
                             .flatMap { client.request(request: GetProfileImageRequest(url: $0, quality: .bigger)) }
                             .map { Output.profileImage($0) }
                             .startWith(Output.profileImage(nil))
                             .observeOn(MainScheduler.instance)
                             .bind(to: emitter.output)
-                        let d2 = tweet
-                            .map { Output.userName($0.user.name) }
+                        let d2 = presentTweet
+                            .flatMap { (tweet) in
+                                return Observable
+                                    .of(
+                                        Output.userName(tweet.user.name),
+                                        Output.screenName("@" + tweet.user.screenName),
+                                        Output.createdAt(tweet.createdAt),
+                                        Output.text(tweet.attributedText)
+                                    )
+                            }
                             .bind(to: emitter.output)
-                        let d3 = tweet
-                            .map { Output.screenName("@" + $0.user.screenName) }
-                            .bind(to: emitter.output)
-                        let d4 = tweet
-                            .map { Output.createdAt($0.createdAt) }
-                            .bind(to: emitter.output)
-                        let d5 = tweet
-                            .map { Output.text($0.attributedText) }
-                            .bind(to: emitter.output)
-                        let d6 = tweet
+                        let d3 = presentTweet
                             .map { Output.media($0.entities.media.map { TweetContentImageCellViewModel(client: client, media: $0) }) }
                             .bind(to: emitter.output)
-                        let d7 = tweet
+                        let d4 = presentTweet
                             .flatMap { Observable.from(optional: $0.quotedStatus) }
                             .flatMap { (quoted) in
                                 return Observable
                                     .of(
-                                        Output.quoted(Output.userName(quoted.user.name)),
-                                        Output.quoted(Output.screenName("@" + quoted.user.screenName)),
-                                        Output.quoted(Output.text(quoted.attributedText))
+                                        Output.quoted(.userName(quoted.user.name)),
+                                        Output.quoted(.screenName("@" + quoted.user.screenName)),
+                                        Output.quoted(.text(quoted.attributedText))
                                     )
                             }
                             .bind(to: emitter.output)
-                        return Disposables.create(d1, d2, d3, d4, d5, d6, d7)
+                        let d5 = tweet
+                            .filter { $0.retweetedStatus != nil }
+                            .flatMap { (source) in
+                                return Observable
+                                    .of(
+                                        Output.retweeted(.userName(source.user.name)),
+                                        Output.retweeted(.screenName("@" + source.user.screenName))
+                                    )
+                            }
+                            .bind(to: emitter.output)
+                        let d6 = tweet
+                            .filter { $0.retweetedStatus != nil }
+                            .flatMap { Observable.from(optional: $0.user.profileImageURL) }
+                            .flatMap { client.request(request: GetProfileImageRequest(url: $0, quality: .mini)) }
+                            .map { Output.retweeted(.profileImage($0)) }
+                            .startWith(Output.retweeted(.profileImage(nil)))
+                            .observeOn(MainScheduler.instance)
+                            .bind(to: emitter.output)
+                        return Disposables.create(d1, d2, d3, d4, d5, d6)
                     }
                 return Disposables.create(d1, d2)
             }

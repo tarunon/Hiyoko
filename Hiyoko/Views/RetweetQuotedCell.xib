@@ -11,27 +11,27 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="115" id="8Du-eq-PVz" customClass="TweetImageCell" customModule="Hiyoko" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="115" id="ioq-ca-XtI" customClass="RetweetQuotedCell" customModule="Hiyoko" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
             <autoresizingMask key="autoresizingMask"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Du-eq-PVz" id="uFN-8g-DDX">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ioq-ca-XtI" id="BlV-67-2u7">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="114.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l5N-LY-76Q" customClass="IBTweetCellView" customModule="Hiyoko" customModuleProvider="target">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqw-0C-g16" customClass="IBRetweetCellView" customModule="Hiyoko" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="114.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="l5N-LY-76Q" secondAttribute="bottom" priority="750" id="2iO-ro-9cE"/>
-                    <constraint firstItem="l5N-LY-76Q" firstAttribute="top" secondItem="uFN-8g-DDX" secondAttribute="top" id="Mrr-fC-Ht7"/>
-                    <constraint firstAttribute="trailing" secondItem="l5N-LY-76Q" secondAttribute="trailing" id="OJ7-NE-uWY"/>
-                    <constraint firstItem="l5N-LY-76Q" firstAttribute="leading" secondItem="uFN-8g-DDX" secondAttribute="leading" id="Zqy-Yj-7eT"/>
+                    <constraint firstAttribute="bottom" secondItem="cqw-0C-g16" secondAttribute="bottom" priority="750" id="aTz-r6-ukE"/>
+                    <constraint firstAttribute="trailing" secondItem="cqw-0C-g16" secondAttribute="trailing" id="d8T-Vd-7ae"/>
+                    <constraint firstItem="cqw-0C-g16" firstAttribute="leading" secondItem="BlV-67-2u7" secondAttribute="leading" id="p74-tb-zDJ"/>
+                    <constraint firstItem="cqw-0C-g16" firstAttribute="top" secondItem="BlV-67-2u7" secondAttribute="top" id="ris-wx-4p7"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="tweetCellView" destination="l5N-LY-76Q" id="2MV-Ix-QgJ"/>
+                <outlet property="tweetCellView" destination="cqw-0C-g16" id="D4m-bI-2fE"/>
             </connections>
             <point key="canvasLocation" x="-203.5" y="79.5"/>
         </tableViewCell>

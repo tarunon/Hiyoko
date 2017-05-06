@@ -11,70 +11,29 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="76" id="GOm-Cj-61Z" customClass="TweetCell" customModule="Hiyoko">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="76"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="115" id="GOm-Cj-61Z" customClass="TweetCell" customModule="Hiyoko">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="115"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GOm-Cj-61Z" id="iIS-Eg-xA1">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="75.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="114.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="749" verticalHuggingPriority="251" text="usename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EKt-Bc-lBx">
-                        <rect key="frame" x="76" y="8" width="63" height="17"/>
-                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="750" text="@screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v46-Mq-mWN">
-                        <rect key="frame" x="147" y="8" width="173" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mfl-1t-gEc">
-                        <rect key="frame" x="8" y="8" width="60" height="60"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="60" id="Fmg-cU-dWz"/>
-                            <constraint firstAttribute="height" constant="60" id="aPd-aN-8fM"/>
-                        </constraints>
-                    </button>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLz-Bg-eaF" customClass="IBTweetContentView" customModule="Hiyoko" customModuleProvider="target">
-                        <rect key="frame" x="76" y="26" width="291" height="42"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LcT-wK-I8g" customClass="IBTweetCellView" customModule="Hiyoko" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="114.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heC-3k-IYc">
-                        <rect key="frame" x="328" y="8" width="39" height="17"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="tLz-Bg-eaF" firstAttribute="top" secondItem="EKt-Bc-lBx" secondAttribute="bottom" constant="1" id="60C-ps-2c8"/>
-                    <constraint firstItem="heC-3k-IYc" firstAttribute="leading" secondItem="v46-Mq-mWN" secondAttribute="trailing" constant="8" id="Arh-ME-3uT"/>
-                    <constraint firstItem="tLz-Bg-eaF" firstAttribute="top" secondItem="v46-Mq-mWN" secondAttribute="bottom" constant="1" id="SL7-od-sHJ"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Mfl-1t-gEc" secondAttribute="bottom" priority="750" constant="8" id="Tow-jd-43f"/>
-                    <constraint firstItem="EKt-Bc-lBx" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="WIy-HJ-z4b"/>
-                    <constraint firstItem="Mfl-1t-gEc" firstAttribute="leading" secondItem="iIS-Eg-xA1" secondAttribute="leading" constant="8" id="WgE-Lw-xXI"/>
-                    <constraint firstItem="tLz-Bg-eaF" firstAttribute="leading" secondItem="Mfl-1t-gEc" secondAttribute="trailing" constant="8" id="ZMN-Dh-3q3"/>
-                    <constraint firstItem="heC-3k-IYc" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="b9W-fP-dl5"/>
-                    <constraint firstAttribute="bottom" secondItem="tLz-Bg-eaF" secondAttribute="bottom" priority="500" constant="8" id="bV6-pc-OPG"/>
-                    <constraint firstItem="EKt-Bc-lBx" firstAttribute="leading" secondItem="Mfl-1t-gEc" secondAttribute="trailing" constant="8" id="drn-h7-tIf"/>
-                    <constraint firstItem="v46-Mq-mWN" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="eSj-em-2kW"/>
-                    <constraint firstAttribute="trailing" secondItem="tLz-Bg-eaF" secondAttribute="trailing" constant="8" id="ncK-sx-y0Q"/>
-                    <constraint firstItem="Mfl-1t-gEc" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" constant="8" id="oEp-f6-7iQ"/>
-                    <constraint firstItem="v46-Mq-mWN" firstAttribute="leading" secondItem="EKt-Bc-lBx" secondAttribute="trailing" constant="8" id="r4k-MQ-kc5"/>
-                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="tLz-Bg-eaF" secondAttribute="bottom" priority="750" constant="8" id="rCo-Q0-M0w"/>
-                    <constraint firstAttribute="trailing" secondItem="heC-3k-IYc" secondAttribute="trailing" constant="8" id="xiq-NS-uVM"/>
+                    <constraint firstItem="LcT-wK-I8g" firstAttribute="top" secondItem="iIS-Eg-xA1" secondAttribute="top" id="FcF-Mu-7Hj"/>
+                    <constraint firstItem="LcT-wK-I8g" firstAttribute="leading" secondItem="iIS-Eg-xA1" secondAttribute="leading" id="Vyf-ni-Ko9"/>
+                    <constraint firstAttribute="trailing" secondItem="LcT-wK-I8g" secondAttribute="trailing" id="oFH-fO-Oje"/>
+                    <constraint firstAttribute="bottom" secondItem="LcT-wK-I8g" secondAttribute="bottom" priority="750" id="ydM-Iv-faU"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="dateLabel" destination="heC-3k-IYc" id="XOz-bL-ALY"/>
-                <outlet property="profileImageButton" destination="Mfl-1t-gEc" id="HFS-2w-9lz"/>
-                <outlet property="screenNameLabel" destination="v46-Mq-mWN" id="8oy-Pi-dNc"/>
-                <outlet property="tweetContentView" destination="tLz-Bg-eaF" id="mJT-Qx-UjP"/>
-                <outlet property="userNameLabel" destination="EKt-Bc-lBx" id="jUt-TO-Apb"/>
+                <outlet property="tweetCellView" destination="LcT-wK-I8g" id="CRm-4D-d2X"/>
             </connections>
-            <point key="canvasLocation" x="-205.5" y="9"/>
+            <point key="canvasLocation" x="-203.5" y="79.5"/>
         </tableViewCell>
     </objects>
 </document>
