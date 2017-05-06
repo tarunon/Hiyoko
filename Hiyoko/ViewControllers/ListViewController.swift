@@ -25,6 +25,7 @@ final class ListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        deselectAll(animated: animated)
     }
     
     func deselectAll(animated: Bool = true) {

@@ -153,8 +153,12 @@ extension AttributeType where ValueType: Tweet {
 }
 
 extension Tweet {
-    var attributedText: NSAttributedString {
+    public var attributedText: NSAttributedString {
         return entities.attributed(text: text)
+    }
+    
+    public var url: URL {
+        return URL(string: "https://twitter.com/\(user.screenName)/status/\(id)")!
     }
 }
 

@@ -129,7 +129,13 @@ extension ListViewController {
                 return Disposables.create(d1, d2)
             }
         
-        let d2 = Observable
+        let d2 = self.tableView.rx.modelSelected(TweetCellModel.self)
+            .flatMapFirst { [unowned self] (element) in
+                self.safari(url: element.tweet.url)
+            }
+            .subscribe()
+        
+        let d3 = Observable
             .merge(
                 rx.stateChange
                     .filter { $0 == .willAppear }
@@ -141,7 +147,7 @@ extension ListViewController {
             .map { TimelineViewModel<InitialRequest>.Input.reload }
             .bind(to: viewModel.input)
         
-        let d3 = Observable
+        let d4 = Observable
             .combineLatest(
                 viewModel.output
                     .flatMap { Observable.from(optional: $0.dataSources) },
@@ -153,16 +159,16 @@ extension ListViewController {
             .map { _ in TimelineViewModel<InitialRequest>.Input.next }
             .bind(to: viewModel.input)
         
-        let d4 = viewModel.output
+        let d5 = viewModel.output
             .filter { $0.isFinishLoading }
             .map { _ in false }
             .bind(to: refreshControl.rx.isRefreshing)
         
-        let d5 = leftButton.rx.tap
+        let d6 = leftButton.rx.tap
             .map { TimelineViewModel<InitialRequest>.Input.close }
             .bind(to: viewModel.input)
         
-        return Disposables.create(d1, d2, d3, d4, d5)
+        return Disposables.create(d1, d2, d3, d4, d5, d6)
     }
 }
 
