@@ -79,11 +79,11 @@ extension Reactive where Base: UIViewController {
     public func dismiss(animated: Bool) -> Observable<Void> {
         return Observable
             .create { [weak base] (observer) -> Disposable in
-                guard let base = base else {
+                guard let base = base, let presenting = base.presentingViewController else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                base.dismiss(animated: animated, completion: { 
+                presenting.dismiss(animated: animated, completion: {
                     observer.onNext()
                     observer.onCompleted()
                 })
@@ -115,13 +115,13 @@ extension Reactive where Base: UIViewController {
                 let d1 = binder(viewController)(viewModel.asViewBinder())
                 present(base, viewController)
                 let d2 = viewModel.result
-                    .takeUntil(viewController.rx.deallocated)
                     .catchError { error in
                         dismiss.map { throw error }
                     }
                     .concat(
                         dismiss.flatMap { Observable.empty() }
                     )
+                    .takeUntil(viewController.rx.deallocated)
                     .bind(to: observer)
                 return Disposables.create(d1, d2)
             }

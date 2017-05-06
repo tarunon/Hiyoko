@@ -23,6 +23,10 @@ public final class SavedSearch: Object {
     }
 }
 
+extension SavedSearch: HasID {
+    
+}
+
 extension SavedSearch: Decodable {
     static func from(id: Int64, query: String, createdAt: Date) -> SavedSearch {
         let search = SavedSearch()

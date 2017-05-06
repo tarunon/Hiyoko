@@ -19,18 +19,47 @@ class AppViewController: UIViewController {
     let disposeBag = DisposeBag()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let list = ListViewController.instantiate()
+        let list = ListViewController.instantiate(with: .init(title: "Accounts"))
         self.rx
             .present(
                 viewController: list,
                 viewModel: AccountListViewModel(
-                    realm: Realm.init,
+                    realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
                 binder: ListViewController.bind,
                 animated: false
             )
-            .subscribe()
+            .flatMapFirst { (account, credential) -> Observable<Void> in
+                let realmIdentifier = "home_timeline:\(account.id)"
+                let client = TwitterClient(credential: credential)
+                let timelineRootViewController = NavigationController.instantiate(
+                    rootViewController: ListViewController.instantiate(
+                        with: .init(
+                            title: "Timeline",
+                            leftButtonConfig: { (button) in
+                                button.layer.cornerRadius = 20.0
+                                button.layer.masksToBounds = true
+                                button.imageView?.contentMode = .scaleToFill
+                            }
+                        )
+                    )
+                )
+                timelineRootViewController.modalTransitionStyle = .flipHorizontal
+                return list.rx
+                    .present(
+                        viewController: timelineRootViewController,
+                        viewModel: TimelineViewModel(
+                            realm: {
+                                try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier))
+                            },
+                            client: client,
+                            initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
+                        ),
+                        binder: NavigationController.bind(binder: ListViewController.bind)
+                    )
+           }
+            .subscribe { print($0) }
             .addDisposableTo(disposeBag)
     }
 }

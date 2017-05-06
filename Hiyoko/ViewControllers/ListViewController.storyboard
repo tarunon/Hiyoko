@@ -12,7 +12,7 @@
         <!--List View Controller-->
         <scene sceneID="KTb-l2-lg6">
             <objects>
-                <viewController id="xie-V4-BHD" customClass="ListViewController" customModule="Hiyoko" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="xie-V4-BHD" customClass="ListViewController" customModule="Hiyoko" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9lE-nq-5cx"/>
                         <viewControllerLayoutGuide type="bottom" id="Izm-xu-ojM"/>
@@ -24,16 +24,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oXv-AF-dYx" customClass="BorderView" customModule="UIKitExtensions">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vrX-D3-vcb">
-                                        <rect key="frame" x="8" y="27" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vrX-D3-vcb">
+                                        <rect key="frame" x="8" y="25" width="30" height="34"/>
                                         <state key="normal" title="left"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hF-Ig-pVS">
-                                        <rect key="frame" x="335" y="27" width="32" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hF-Ig-pVS">
+                                        <rect key="frame" x="329" y="25" width="38" height="34"/>
                                         <state key="normal" title="right"/>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9K-0q-C5R">
-                                        <rect key="frame" x="169.5" y="32" width="36.5" height="20.5"/>
+                                        <rect key="frame" x="169" y="32" width="37" height="21"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
