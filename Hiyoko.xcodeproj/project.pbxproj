@@ -22,21 +22,6 @@
 		D22C09341EB4B3120034E928 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22C09321EB4B3050034E928 /* ModelTests.swift */; };
 		D22C09371EB4B5BB0034E928 /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = D22C09351EB4B5B70034E928 /* User.json */; };
 		D22C09391EB4B6770034E928 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; };
-		D22C093B1EB4B6FC0034E928 /* APIKit.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4521EAA64AF004B13D7 /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093C1EB4B6FC0034E928 /* Barrel_Realm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093D1EB4B6FC0034E928 /* Barrel.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4541EAA64AF004B13D7 /* Barrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093E1EB4B6FC0034E928 /* Himotoki.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093F1EB4B6FC0034E928 /* Illuso.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4561EAA64AF004B13D7 /* Illuso.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09401EB4B6FC0034E928 /* Instantiate.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4571EAA64AF004B13D7 /* Instantiate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09411EB4B6FC0034E928 /* InstantiateStandard.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4581EAA64AF004B13D7 /* InstantiateStandard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09421EB4B6FC0034E928 /* KeychainAccess.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09431EB4B6FC0034E928 /* Realm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4591EAA64AF004B13D7 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09441EB4B6FC0034E928 /* RealmSwift.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45A1EAA64AF004B13D7 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09451EB4B6FC0034E928 /* Result.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45B1EAA64AF004B13D7 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09461EB4B6FC0034E928 /* RxCocoa.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09471EB4B6FC0034E928 /* RxDataSources.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45E1EAA64AF004B13D7 /* RxDataSources.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09481EB4B6FC0034E928 /* RxRealm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45F1EAA64AF004B13D7 /* RxRealm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09491EB4B6FC0034E928 /* RxSwift.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C094B1EB4B7620034E928 /* Himotoki.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C094C1EB4B77A0034E928 /* Barrel_Realm.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C094D1EB4B77A0034E928 /* Barrel.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4541EAA64AF004B13D7 /* Barrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -64,9 +49,22 @@
 		D25FB29C1EB475D20003EFB3 /* Transformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB29A1EB475C10003EFB3 /* Transformers.swift */; };
 		D25FB29D1EB4763D0003EFB3 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D25FB2A21EB47C890003EFB3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB2A01EB47C5E0003EFB3 /* User.swift */; };
+		D263FAAF1EBF6A26002E6A32 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
+		D263FAB01EBF6A26002E6A32 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB11EBF6A26002E6A32 /* APIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E995801EAAF85C00771413 /* APIClient.framework */; };
+		D263FAB21EBF6A26002E6A32 /* APIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2E995801EAAF85C00771413 /* APIClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB31EBF6A26002E6A32 /* Persistents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; };
+		D263FAB41EBF6A26002E6A32 /* Persistents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB51EBF6A26002E6A32 /* UIKitExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5F21EAB6D850013CD80 /* UIKitExtensions.framework */; };
+		D263FAB61EBF6A26002E6A32 /* UIKitExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5F21EAB6D850013CD80 /* UIKitExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB71EBF6A26002E6A32 /* Transitioning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD6151EAB6E910013CD80 /* Transitioning.framework */; };
+		D263FAB81EBF6A26002E6A32 /* Transitioning.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD6151EAB6E910013CD80 /* Transitioning.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB91EBF6A26002E6A32 /* RxExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; };
+		D263FABA1EBF6A26002E6A32 /* RxExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FABB1EBF6A26002E6A32 /* HiyokoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2136BEB1EB38D5200237E84 /* HiyokoKit.framework */; };
+		D263FABC1EBF6A26002E6A32 /* HiyokoKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2136BEB1EB38D5200237E84 /* HiyokoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D269F8011EBB33FB0098AD9E /* BonMot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D269F8001EBB33FB0098AD9E /* BonMot.framework */; };
 		D269F8021EBB377F0098AD9E /* BonMot.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D269F8001EBB33FB0098AD9E /* BonMot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D269F8031EBB37960098AD9E /* BonMot.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D269F8001EBB33FB0098AD9E /* BonMot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D269F8051EBB3E800098AD9E /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8041EBB3E800098AD9E /* String+Extensions.swift */; };
 		D269F80B1EBB6BCC0098AD9E /* TweetContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */; };
 		D269F80D1EBB6C9D0098AD9E /* TweetContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */; };
@@ -115,7 +113,6 @@
 		D2DEB0361EB6E01D003F27B4 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; };
 		D2DEB0391EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0381EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift */; };
 		D2DEB03A1EB6E226003F27B4 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; };
-		D2DEB03B1EB6ED00003F27B4 /* OAuthSwift.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2DEB03D1EB6F6F3003F27B4 /* ShowUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB03C1EB6F6F3003F27B4 /* ShowUserRequest.swift */; };
 		D2DEB0411EB70314003F27B4 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0401EB70314003F27B4 /* Account.swift */; };
 		D2DEB0431EB70420003F27B4 /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0421EB70420003F27B4 /* AccountListViewModel.swift */; };
@@ -386,33 +383,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D22C093A1EB4B6E80034E928 /* Copy Carthage Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D269F8031EBB37960098AD9E /* BonMot.framework in Copy Carthage Frameworks */,
-				D2DEB03B1EB6ED00003F27B4 /* OAuthSwift.framework in Copy Carthage Frameworks */,
-				D22C093B1EB4B6FC0034E928 /* APIKit.framework in Copy Carthage Frameworks */,
-				D22C093C1EB4B6FC0034E928 /* Barrel_Realm.framework in Copy Carthage Frameworks */,
-				D22C093D1EB4B6FC0034E928 /* Barrel.framework in Copy Carthage Frameworks */,
-				D22C093E1EB4B6FC0034E928 /* Himotoki.framework in Copy Carthage Frameworks */,
-				D22C093F1EB4B6FC0034E928 /* Illuso.framework in Copy Carthage Frameworks */,
-				D22C09401EB4B6FC0034E928 /* Instantiate.framework in Copy Carthage Frameworks */,
-				D22C09411EB4B6FC0034E928 /* InstantiateStandard.framework in Copy Carthage Frameworks */,
-				D22C09421EB4B6FC0034E928 /* KeychainAccess.framework in Copy Carthage Frameworks */,
-				D22C09431EB4B6FC0034E928 /* Realm.framework in Copy Carthage Frameworks */,
-				D22C09441EB4B6FC0034E928 /* RealmSwift.framework in Copy Carthage Frameworks */,
-				D22C09451EB4B6FC0034E928 /* Result.framework in Copy Carthage Frameworks */,
-				D22C09461EB4B6FC0034E928 /* RxCocoa.framework in Copy Carthage Frameworks */,
-				D22C09471EB4B6FC0034E928 /* RxDataSources.framework in Copy Carthage Frameworks */,
-				D22C09481EB4B6FC0034E928 /* RxRealm.framework in Copy Carthage Frameworks */,
-				D22C09491EB4B6FC0034E928 /* RxSwift.framework in Copy Carthage Frameworks */,
-			);
-			name = "Copy Carthage Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D22C094A1EB4B7530034E928 /* Copy Carthage Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -438,6 +408,23 @@
 				D22C09501EB4B77A0034E928 /* RealmSwift.framework in Copy Carthage Libraries */,
 			);
 			name = "Copy Carthage Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D263FABD1EBF6A26002E6A32 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D263FABA1EBF6A26002E6A32 /* RxExtensions.framework in Embed Frameworks */,
+				D263FAB21EBF6A26002E6A32 /* APIClient.framework in Embed Frameworks */,
+				D263FAB41EBF6A26002E6A32 /* Persistents.framework in Embed Frameworks */,
+				D263FAB01EBF6A26002E6A32 /* Base.framework in Embed Frameworks */,
+				D263FAB81EBF6A26002E6A32 /* Transitioning.framework in Embed Frameworks */,
+				D263FAB61EBF6A26002E6A32 /* UIKitExtensions.framework in Embed Frameworks */,
+				D263FABC1EBF6A26002E6A32 /* HiyokoKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -632,6 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2891A971EB5BC57000EDF6E /* SafariServices.framework in Frameworks */,
+				D263FAB31EBF6A26002E6A32 /* Persistents.framework in Frameworks */,
 				D297D2051EB5B7BA00215109 /* APIClient.framework in Frameworks */,
 				D297D2061EB5B7BA00215109 /* Base.framework in Frameworks */,
 				D297D2071EB5B7BA00215109 /* HiyokoKit.framework in Frameworks */,
@@ -640,6 +628,8 @@
 				D297D20A1EB5B7BA00215109 /* Transitioning.framework in Frameworks */,
 				D297D20B1EB5B7BA00215109 /* UIKitExtensions.framework in Frameworks */,
 				7159CE8E7B1EEC1239EEC4DF /* Pods_Hiyoko.framework in Frameworks */,
+				D263FABB1EBF6A26002E6A32 /* HiyokoKit.framework in Frameworks */,
+				D263FAB91EBF6A26002E6A32 /* RxExtensions.framework in Frameworks */,
 				D2DEB03A1EB6E226003F27B4 /* OAuthSwift.framework in Frameworks */,
 				D2F5DFC91EB5B73F004CEBD1 /* APIKit.framework in Frameworks */,
 				D2F5DFCA1EB5B73F004CEBD1 /* Barrel_Realm.framework in Frameworks */,
@@ -648,13 +638,17 @@
 				D2F5DFCD1EB5B73F004CEBD1 /* Illuso.framework in Frameworks */,
 				D2F5DFCE1EB5B73F004CEBD1 /* Instantiate.framework in Frameworks */,
 				D2F5DFCF1EB5B73F004CEBD1 /* InstantiateStandard.framework in Frameworks */,
+				D263FAB11EBF6A26002E6A32 /* APIClient.framework in Frameworks */,
 				D2F5DFD01EB5B73F004CEBD1 /* KeychainAccess.framework in Frameworks */,
 				D2F5DFD11EB5B73F004CEBD1 /* Realm.framework in Frameworks */,
 				D2F5DFD21EB5B73F004CEBD1 /* RealmSwift.framework in Frameworks */,
 				D2F5DFD31EB5B73F004CEBD1 /* Result.framework in Frameworks */,
+				D263FAAF1EBF6A26002E6A32 /* Base.framework in Frameworks */,
 				D2F5DFD41EB5B73F004CEBD1 /* RxCocoa.framework in Frameworks */,
+				D263FAB51EBF6A26002E6A32 /* UIKitExtensions.framework in Frameworks */,
 				D2F5DFD51EB5B73F004CEBD1 /* RxDataSources.framework in Frameworks */,
 				D2F5DFD61EB5B73F004CEBD1 /* RxRealm.framework in Frameworks */,
+				D263FAB71EBF6A26002E6A32 /* Transitioning.framework in Frameworks */,
 				D2F5DFD71EB5B73F004CEBD1 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1347,9 +1341,10 @@
 				D2136C031EB38DBA00237E84 /* Sources */,
 				D2136C041EB38DBA00237E84 /* Frameworks */,
 				D2136C051EB38DBA00237E84 /* Resources */,
-				D22C093A1EB4B6E80034E928 /* Copy Carthage Frameworks */,
 				17EF949E3CD74C12BDAEF5F4 /* [CP] Embed Pods Frameworks */,
+				D263FAD71EBF6C32002E6A32 /* Run Carthage Script */,
 				A291BF18FC0A5751613F67F5 /* [CP] Copy Pods Resources */,
+				D263FABD1EBF6A26002E6A32 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1619,8 +1614,9 @@
 				TargetAttributes = {
 					D2136BEA1EB38D5200237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2136BF21EB38D5200237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1629,7 +1625,15 @@
 					};
 					D2136C061EB38DBA00237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					D2136C191EB38DBA00237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1638,8 +1642,9 @@
 					};
 					D27305D91EAE3BB10020C710 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D27305E11EAE3BB10020C710 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1648,8 +1653,9 @@
 					};
 					D2E9955A1EAAF59900771413 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2E995621EAAF59900771413 = {
 						CreatedOnToolsVersion = 8.3.1;
@@ -1658,8 +1664,9 @@
 					};
 					D2E9957F1EAAF85C00771413 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2E995871EAAF85C00771413 = {
 						CreatedOnToolsVersion = 8.3.1;
@@ -1669,8 +1676,9 @@
 					};
 					D2EFD5BC1EAB26910013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2EFD5C41EAB26910013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1679,8 +1687,9 @@
 					};
 					D2EFD5F11EAB6D850013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2EFD5F91EAB6D850013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1689,8 +1698,9 @@
 					};
 					D2EFD6141EAB6E910013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2EFD61C1EAB6E920013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1912,6 +1922,37 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		D263FAD71EBF6C32002E6A32 /* Run Carthage Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/APIKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OAuthSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Barrel.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Barrel_Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Himotoki.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Illuso.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Instantiate.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/InstantiateStandard.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/KeychainAccess.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxRealm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BonMot.framework",
+			);
+			name = "Run Carthage Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2254,9 +2295,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2269,6 +2312,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.HiyokoKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2282,9 +2326,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2297,6 +2343,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.HiyokoKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2346,14 +2393,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 26DD9E5ACFAF68E864092C8B /* Pods-Hiyoko.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Hiyoko/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Hiyoko;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.hiyokoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -2363,14 +2413,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 46CB08810AD5EFA049E1B04A /* Pods-Hiyoko.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Hiyoko/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Hiyoko;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.hiyokoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -2424,7 +2477,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2474,7 +2526,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2499,9 +2550,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2514,6 +2567,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.RxExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2527,9 +2581,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2542,6 +2598,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.RxExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2580,9 +2637,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2591,6 +2650,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Base;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2604,9 +2664,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2615,6 +2677,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Base;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2653,9 +2716,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2669,6 +2734,7 @@
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/Carthage/Build/iOS/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.APIClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2682,9 +2748,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2698,6 +2766,7 @@
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/Carthage/Build/iOS/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.APIClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2739,9 +2808,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2754,6 +2825,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Persistents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2767,9 +2839,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2782,6 +2856,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Persistents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2820,9 +2895,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2835,6 +2912,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.UIKitExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2848,9 +2926,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2863,6 +2943,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.UIKitExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2909,9 +2990,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2920,6 +3003,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Transitioning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2933,9 +3017,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2944,6 +3030,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Transitioning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
