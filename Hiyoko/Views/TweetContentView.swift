@@ -33,11 +33,6 @@ class TweetContentViewBase: UIView {
             textView.textContainer.lineFragmentPadding = 0.0
         }
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
 }
 
 final class TweetContentView: TweetContentViewBase {
@@ -77,10 +72,6 @@ final class TweetContentImageView: TweetContentViewBase {
 }
 
 extension TweetContentImageView: NibInstantiatable {
-    
-}
-
-extension TweetContentImageView: Reusable {
     
 }
 

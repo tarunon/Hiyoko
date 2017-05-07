@@ -79,10 +79,8 @@ extension Tweet: HasID {
 extension Tweet {
     public enum Action {
         case reply
-        case favorite
-        case unfacorite
+        case favourite
         case retweet
-        case unretweet
     }
 }
 

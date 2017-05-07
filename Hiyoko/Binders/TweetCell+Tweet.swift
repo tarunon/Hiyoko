@@ -17,7 +17,8 @@ extension TweetCell {
     func bind(viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
         let d1 = bind(tweet: viewModel)
         let d2 = bind(content: viewModel)
-        return Disposables.create(d1, d2)
+        let d3 = bind(interactive: viewModel)
+        return Disposables.create(d1, d2, d3)
     }
 }
 
@@ -26,7 +27,8 @@ extension TweetImageCell {
         let d1 = bind(tweet: viewModel)
         let d2 = bind(content: viewModel)
         let d3 = bind(image: viewModel)
-        return Disposables.create(d1, d2, d3)
+        let d4 = bind(interactive: viewModel)
+        return Disposables.create(d1, d2, d3, d4)
     }
 }
 
@@ -35,7 +37,8 @@ extension TweetQuotedCell {
         let d1 = bind(tweet: viewModel)
         let d2 = bind(content: viewModel)
         let d3 = bind(quoted: viewModel)
-        return Disposables.create(d1, d2, d3)
+        let d4 = bind(interactive: viewModel)
+        return Disposables.create(d1, d2, d3, d4)
     }
 }
 
@@ -44,7 +47,8 @@ extension RetweetCell {
         let d1 = bind(tweet: viewModel)
         let d2 = bind(content: viewModel)
         let d3 = bind(retweet: viewModel)
-        return Disposables.create(d1, d2, d3)
+        let d4 = bind(interactive: viewModel)
+        return Disposables.create(d1, d2, d3, d4)
     }
 }
 
@@ -54,7 +58,8 @@ extension RetweetImageCell {
         let d2 = bind(content: viewModel)
         let d3 = bind(image: viewModel)
         let d4 = bind(retweet: viewModel)
-        return Disposables.create(d1, d2, d3, d4)
+        let d5 = bind(interactive: viewModel)
+        return Disposables.create(d1, d2, d3, d4, d5)
     }
 }
 
@@ -64,7 +69,8 @@ extension RetweetQuotedCell {
         let d2 = bind(content: viewModel)
         let d3 = bind(quoted: viewModel)
         let d4 = bind(retweet: viewModel)
-        return Disposables.create(d1, d2, d3, d4)
+        let d5 = bind(interactive: viewModel)
+        return Disposables.create(d1, d2, d3, d4, d5)
     }
 }
 
@@ -229,6 +235,84 @@ extension TweetContentImageCell {
         let d3 = tapGestureRecognizer.rx.event
             .map { _ in TweetContentImageCellViewModel.Input.tap }
             .bind(to: viewModel.input)
+        return Disposables.create(d1, d2, d3)
+    }
+}
+
+extension TweetCellInteractiveViewType {
+    fileprivate func bind(interactive viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
+        let tweetActionEnabled = interactiveScrollView.rx.contentOffset
+            .map { $0.x }
+            .scan(false) { (flag, x) -> (Bool) in
+                if flag && x > -40.0 {
+                    return false
+                } else if !flag && x < -60.0 {
+                    return true
+                }
+                return flag
+            }
+            .distinctUntilChanged()
+            .shareReplay(1)
+        
+        typealias InteractiveState = (action: Tweet.Action, preAction: Tweet.Action, rate: CGFloat)
+        
+        let interactiveState = self.interactiveScrollView.panGestureRecognizer.rx.event
+            .map { $0.location(in: self.interactiveScrollView) }
+            .map { $0.y / self.interactiveScrollView.frame.height }
+            .scan((action: Tweet.Action.reply, preAction: Tweet.Action.reply, rate: 0.5)) { (previousStatus: InteractiveState, rate) -> (InteractiveState) in
+                switch (previousStatus.action, rate) {
+                case (.favourite, let x) where x < 0.9:
+                    return (action: .reply, preAction: previousStatus.action, rate: rate)
+                case (.retweet, let x) where x > 0.1:
+                    return (action: .reply, preAction: previousStatus.action, rate: rate)
+                case (.reply, let x) where x > 1.1:
+                    return (action: .favourite, preAction: previousStatus.action, rate: rate)
+                case (.reply, let x) where x < -0.1:
+                    return (action: .retweet, preAction: previousStatus.action, rate: rate)
+                default:
+                    return (action: previousStatus.action, preAction: previousStatus.action, rate: rate)
+                }
+            }
+            .shareReplay(1)
+        
+        
+        let d1 = tweetActionEnabled
+            .subscribe(
+                onNext: { (flag) in
+                    self.tweetActionView.setEnabled(flag, animated: true)
+                }
+            )
+        
+        let d2 = interactiveState
+            .subscribe(
+                onNext: { (action, preAction, rate) in
+                    switch (action, preAction) {
+                    case (.reply, .reply):
+                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 5) * (rate - 0.5)
+                    case (.retweet, .reply):
+                        self.tweetActionCenter.constant = -self.interactiveScrollView.frame.height / 5 * 3
+                    case (.favourite, .reply):
+                        self.tweetActionCenter.constant = self.interactiveScrollView.frame.height / 5 * 3
+                    case (.reply, .retweet), (.reply, .favourite):
+                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 5) * (rate - 0.5)
+                    default:
+                        break
+                    }
+                }
+            )
+        
+        let d3 = self.interactiveScrollView.rx.didEndDragging
+            .withLatestFrom(
+                Observable
+                    .combineLatest(
+                        tweetActionEnabled,
+                        interactiveState
+                    )
+                    .map { (enabled: $0, action: $1.action) }
+            )
+            .filter { $0.enabled }
+            .map { TweetCellViewModel.Action.tweet($0.action) }
+            .bind(to: viewModel.input)                
         return Disposables.create(d1, d2, d3)
     }
 }

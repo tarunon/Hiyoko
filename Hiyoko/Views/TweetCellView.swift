@@ -56,11 +56,6 @@ final class TweetCellView: UIView {
         }
     }
     @IBOutlet weak var contentContainerView: UIView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
 }
 
 extension TweetCellView: NibInstantiatable {
@@ -125,11 +120,6 @@ final class RetweetCellView: UIView {
     }
     @IBOutlet weak var retweetUserScreenNameLabel: UILabel!
     @IBOutlet weak var tweetCellView: IBTweetCellView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-    }
 }
 
 extension RetweetCellView: NibInstantiatable {

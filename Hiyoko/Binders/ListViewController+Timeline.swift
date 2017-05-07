@@ -20,12 +20,12 @@ import SafariServices
 extension ListViewController {
     func bind<InitialRequest: PaginationRequest>(viewModel: TimelineViewModel<InitialRequest>.ViewBinder) -> Disposable where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
         
-        tableView.registerNib(type: TweetCell.self)
-        tableView.registerNib(type: TweetImageCell.self)
-        tableView.registerNib(type: TweetQuotedCell.self)
-        tableView.registerNib(type: RetweetCell.self)
-        tableView.registerNib(type: RetweetImageCell.self)
-        tableView.registerNib(type: RetweetQuotedCell.self)
+        tableView.register(type: TweetCell.self)
+        tableView.register(type: TweetImageCell.self)
+        tableView.register(type: TweetQuotedCell.self)
+        tableView.register(type: RetweetCell.self)
+        tableView.register(type: RetweetImageCell.self)
+        tableView.register(type: RetweetQuotedCell.self)
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 76.0
         
@@ -126,6 +126,7 @@ extension ListViewController {
                                     }
                                     return self.share(object: item).map { _ in }
                                 default:
+                                    print("Sorry, \(action) is not implemented yet.")
                                     return Observable.empty()
                                 }
                             }

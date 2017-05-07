@@ -54,10 +54,13 @@
 		D249489C1EB467B8003B2C87 /* Illuso.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4561EAA64AF004B13D7 /* Illuso.framework */; };
 		D257CDA11EBDFE8E00B56363 /* TweetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */; };
 		D257CDA21EBDFE9300B56363 /* TweetCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */; };
-		D257CDA71EBE14CB00B56363 /* RetweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA51EBE144200B56363 /* RetweetCell.xib */; };
 		D257CDA81EBE1ABD00B56363 /* RetweetCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */; };
-		D257CDAA1EBE1ACF00B56363 /* RetweetImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA91EBE1ACF00B56363 /* RetweetImageCell.xib */; };
-		D257CDAC1EBE1AD700B56363 /* RetweetQuotedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDAB1EBE1AD700B56363 /* RetweetQuotedCell.xib */; };
+		D257CDAE1EBEEA3C00B56363 /* TweetActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDAD1EBEEA3C00B56363 /* TweetActionView.xib */; };
+		D257CDB01EBEEA5B00B56363 /* UserActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDAF1EBEEA5B00B56363 /* UserActionView.xib */; };
+		D257CDB21EBEEC4800B56363 /* TweetActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CDB11EBEEC4800B56363 /* TweetActionView.swift */; };
+		D257CDB41EBEF0B100B56363 /* TweetCellInteractiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDB31EBEF0B100B56363 /* TweetCellInteractiveView.xib */; };
+		D257CDB61EBEF18700B56363 /* TweetCellInteractiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CDB51EBEF18700B56363 /* TweetCellInteractiveView.swift */; };
+		D257CDB71EBF22B900B56363 /* TweetCell+Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FD31EBAE4DB0047CCC8 /* TweetCell+Tweet.swift */; };
 		D25FB29C1EB475D20003EFB3 /* Transformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB29A1EB475C10003EFB3 /* Transformers.swift */; };
 		D25FB29D1EB4763D0003EFB3 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D25FB2A21EB47C890003EFB3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB2A01EB47C5E0003EFB3 /* User.swift */; };
@@ -67,7 +70,6 @@
 		D269F8051EBB3E800098AD9E /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8041EBB3E800098AD9E /* String+Extensions.swift */; };
 		D269F80B1EBB6BCC0098AD9E /* TweetContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */; };
 		D269F80D1EBB6C9D0098AD9E /* TweetContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */; };
-		D269F80F1EBB73090098AD9E /* TweetImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D269F80E1EBB73090098AD9E /* TweetImageCell.xib */; };
 		D269F81D1EBB95590098AD9E /* EmptyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F81B1EBB95450098AD9E /* EmptyViewModel.swift */; };
 		D269F81F1EBC6B8B0098AD9E /* TweetContentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D269F81E1EBC6B8B0098AD9E /* TweetContentImageCell.xib */; };
 		D269F8211EBC6BA90098AD9E /* TweetContentImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8201EBC6BA90098AD9E /* TweetContentImageCell.swift */; };
@@ -105,8 +107,6 @@
 		D29A9FCB1EBAD6970047CCC8 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */; };
 		D29A9FCF1EBADAD40047CCC8 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FCE1EBADAD40047CCC8 /* TimelineViewModel.swift */; };
 		D29A9FD21EBAE3CA0047CCC8 /* ListViewController+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FD01EBAE39C0047CCC8 /* ListViewController+Timeline.swift */; };
-		D29A9FD51EBAE4DD0047CCC8 /* TweetCell+Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FD31EBAE4DB0047CCC8 /* TweetCell+Tweet.swift */; };
-		D29A9FD61EBAF78D0047CCC8 /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D29A9FCC1EBAD9850047CCC8 /* TweetCell.xib */; };
 		D29A9FDC1EBB1CBB0047CCC8 /* GenericsBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FDA1EBB1BD00047CCC8 /* GenericsBindings.swift */; };
 		D29CCA0B1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */; };
 		D29CCA0D1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */; };
@@ -190,7 +190,6 @@
 		D2F5DFD61EB5B73F004CEBD1 /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45F1EAA64AF004B13D7 /* RxRealm.framework */; };
 		D2F5DFD71EB5B73F004CEBD1 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
 		D2FCAAE71EBDBA48001B312B /* TweetContentImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */; };
-		D2FCAAE81EBDBA4D001B312B /* TweetQuotedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D238D7CD1EBDB40300EC944C /* TweetQuotedCell.xib */; };
 		D2FCAAEA1EBDBA6A001B312B /* TweetContentQuotedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FCAAE91EBDBA6A001B312B /* TweetContentQuotedView.xib */; };
 /* End PBXBuildFile section */
 
@@ -471,7 +470,6 @@
 		D22C09351EB4B5B70034E928 /* User.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = User.json; sourceTree = "<group>"; };
 		D22C09511EB4B9DE0034E928 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		D22C09541EB4C2510034E928 /* Tweet.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Tweet.json; sourceTree = "<group>"; };
-		D238D7CD1EBDB40300EC944C /* TweetQuotedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetQuotedCell.xib; sourceTree = "<group>"; };
 		D24948951EB4673A003B2C87 /* Entities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entities.swift; sourceTree = "<group>"; };
 		D24EC4521EAA64AF004B13D7 /* APIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = APIKit.framework; path = Carthage/Build/iOS/APIKit.framework; sourceTree = "<group>"; };
 		D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Barrel_Realm.framework; path = Carthage/Build/iOS/Barrel_Realm.framework; sourceTree = "<group>"; };
@@ -492,16 +490,17 @@
 		D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCellView.xib; sourceTree = "<group>"; };
 		D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCellView.swift; sourceTree = "<group>"; };
 		D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetCellView.xib; sourceTree = "<group>"; };
-		D257CDA51EBE144200B56363 /* RetweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetCell.xib; sourceTree = "<group>"; };
-		D257CDA91EBE1ACF00B56363 /* RetweetImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetImageCell.xib; sourceTree = "<group>"; };
-		D257CDAB1EBE1AD700B56363 /* RetweetQuotedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetQuotedCell.xib; sourceTree = "<group>"; };
+		D257CDAD1EBEEA3C00B56363 /* TweetActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetActionView.xib; sourceTree = "<group>"; };
+		D257CDAF1EBEEA5B00B56363 /* UserActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserActionView.xib; sourceTree = "<group>"; };
+		D257CDB11EBEEC4800B56363 /* TweetActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetActionView.swift; sourceTree = "<group>"; };
+		D257CDB31EBEF0B100B56363 /* TweetCellInteractiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCellInteractiveView.xib; sourceTree = "<group>"; };
+		D257CDB51EBEF18700B56363 /* TweetCellInteractiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCellInteractiveView.swift; sourceTree = "<group>"; };
 		D25FB29A1EB475C10003EFB3 /* Transformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transformers.swift; sourceTree = "<group>"; };
 		D25FB2A01EB47C5E0003EFB3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		D269F8001EBB33FB0098AD9E /* BonMot.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BonMot.framework; path = Carthage/Build/iOS/BonMot.framework; sourceTree = "<group>"; };
 		D269F8041EBB3E800098AD9E /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentView.xib; sourceTree = "<group>"; };
 		D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetContentView.swift; sourceTree = "<group>"; };
-		D269F80E1EBB73090098AD9E /* TweetImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetImageCell.xib; sourceTree = "<group>"; };
 		D269F81B1EBB95450098AD9E /* EmptyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyViewModel.swift; sourceTree = "<group>"; };
 		D269F81E1EBC6B8B0098AD9E /* TweetContentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentImageCell.xib; sourceTree = "<group>"; };
 		D269F8201EBC6BA90098AD9E /* TweetContentImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetContentImageCell.swift; sourceTree = "<group>"; };
@@ -531,7 +530,6 @@
 		D29A9FC31EBAD4040047CCC8 /* HasID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasID.swift; sourceTree = "<group>"; };
 		D29A9FC61EBAD64D0047CCC8 /* Paginations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginations.swift; sourceTree = "<group>"; };
 		D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
-		D29A9FCC1EBAD9850047CCC8 /* TweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCell.xib; sourceTree = "<group>"; };
 		D29A9FCE1EBADAD40047CCC8 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
 		D29A9FD01EBAE39C0047CCC8 /* ListViewController+Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListViewController+Timeline.swift"; sourceTree = "<group>"; };
 		D29A9FD31EBAE4DB0047CCC8 /* TweetCell+Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TweetCell+Tweet.swift"; sourceTree = "<group>"; };
@@ -999,14 +997,13 @@
 				D2DEB06E1EB78577003F27B4 /* NewAccountCell.xib */,
 				D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */,
 				D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */,
+				D257CDB51EBEF18700B56363 /* TweetCellInteractiveView.swift */,
+				D257CDB31EBEF0B100B56363 /* TweetCellInteractiveView.xib */,
 				D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */,
 				D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */,
-				D29A9FCC1EBAD9850047CCC8 /* TweetCell.xib */,
-				D269F80E1EBB73090098AD9E /* TweetImageCell.xib */,
-				D238D7CD1EBDB40300EC944C /* TweetQuotedCell.xib */,
-				D257CDA51EBE144200B56363 /* RetweetCell.xib */,
-				D257CDA91EBE1ACF00B56363 /* RetweetImageCell.xib */,
-				D257CDAB1EBE1AD700B56363 /* RetweetQuotedCell.xib */,
+				D257CDB11EBEEC4800B56363 /* TweetActionView.swift */,
+				D257CDAD1EBEEA3C00B56363 /* TweetActionView.xib */,
+				D257CDAF1EBEEA5B00B56363 /* UserActionView.xib */,
 				D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */,
 				D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */,
 				D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */,
@@ -1758,24 +1755,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D257CDA71EBE14CB00B56363 /* RetweetCell.xib in Resources */,
 				D2DEB0681EB7459D003F27B4 /* AccountCell.xib in Resources */,
-				D269F80F1EBB73090098AD9E /* TweetImageCell.xib in Resources */,
 				D2FCAAEA1EBDBA6A001B312B /* TweetContentQuotedView.xib in Resources */,
 				D257CDA81EBE1ABD00B56363 /* RetweetCellView.xib in Resources */,
 				D2136C141EB38DBA00237E84 /* LaunchScreen.storyboard in Resources */,
 				D29A9FA81EBA39300047CCC8 /* AppViewController.storyboard in Resources */,
-				D257CDAC1EBE1AD700B56363 /* RetweetQuotedCell.xib in Resources */,
 				D2DEB0731EB785B1003F27B4 /* NewAccountCell.xib in Resources */,
 				D257CDA21EBDFE9300B56363 /* TweetCellView.xib in Resources */,
 				D29A9FAF1EBA39680047CCC8 /* ProgressViewController.storyboard in Resources */,
+				D257CDB01EBEEA5B00B56363 /* UserActionView.xib in Resources */,
 				D269F80B1EBB6BCC0098AD9E /* TweetContentView.xib in Resources */,
 				D29A9FAA1EBA39300047CCC8 /* ListViewController.storyboard in Resources */,
-				D257CDAA1EBE1ACF00B56363 /* RetweetImageCell.xib in Resources */,
 				D2FCAAE71EBDBA48001B312B /* TweetContentImageView.xib in Resources */,
-				D2FCAAE81EBDBA4D001B312B /* TweetQuotedCell.xib in Resources */,
 				D2136C111EB38DBA00237E84 /* Assets.xcassets in Resources */,
-				D29A9FD61EBAF78D0047CCC8 /* TweetCell.xib in Resources */,
+				D257CDB41EBEF0B100B56363 /* TweetCellInteractiveView.xib in Resources */,
+				D257CDAE1EBEEA3C00B56363 /* TweetActionView.xib in Resources */,
 				D269F81F1EBC6B8B0098AD9E /* TweetContentImageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1964,17 +1958,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2DEB0721EB785AA003F27B4 /* NewAccountCell.swift in Sources */,
+				D257CDB21EBEEC4800B56363 /* TweetActionView.swift in Sources */,
 				D29A9FDC1EBB1CBB0047CCC8 /* GenericsBindings.swift in Sources */,
 				D257CDA11EBDFE8E00B56363 /* TweetCellView.swift in Sources */,
 				D2DEB0671EB7458D003F27B4 /* AccountCell.swift in Sources */,
 				D29A9FB41EBA3B250047CCC8 /* ListViewController+Accounts.swift in Sources */,
 				D269F8211EBC6BA90098AD9E /* TweetContentImageCell.swift in Sources */,
-				D29A9FD51EBAE4DD0047CCC8 /* TweetCell+Tweet.swift in Sources */,
-				D29A9FCB1EBAD6970047CCC8 /* TweetCell.swift in Sources */,
 				D269F80D1EBB6C9D0098AD9E /* TweetContentView.swift in Sources */,
+				D29A9FCB1EBAD6970047CCC8 /* TweetCell.swift in Sources */,
 				D29A9FA91EBA39300047CCC8 /* AppViewController.swift in Sources */,
+				D257CDB61EBEF18700B56363 /* TweetCellInteractiveView.swift in Sources */,
 				D29A9FB01EBA39680047CCC8 /* ProgressViewController.swift in Sources */,
 				D2136C0A1EB38DBA00237E84 /* AppDelegate.swift in Sources */,
+				D257CDB71EBF22B900B56363 /* TweetCell+Tweet.swift in Sources */,
 				D269F8261EBC8FAC0098AD9E /* Date+String.swift in Sources */,
 				D29A9FD21EBAE3CA0047CCC8 /* ListViewController+Timeline.swift in Sources */,
 				D29A9FAB1EBA39300047CCC8 /* ListViewController.swift in Sources */,

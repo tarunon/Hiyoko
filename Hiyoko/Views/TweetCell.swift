@@ -10,16 +10,43 @@ import Foundation
 import Instantiate
 import InstantiateStandard
 
-final class TweetCell: UITableViewCell {
-    @IBOutlet weak var tweetCellView: IBTweetCellView!
-    var tweetContentView: TweetContentView! = TweetContentView.instantiate()
+class TweetCellBase<CellView: UIView, ContentView: UIView>: UITableViewCell where CellView: TweetCellViewType, CellView: NibInstantiatable, ContentView: TweetContentViewType, ContentView: NibInstantiatable, CellView.Dependency == Void, ContentView.Dependency == Void  {
+    var tweetCellView: CellView! = CellView.instantiate()
+    var tweetContentView: ContentView! = ContentView.instantiate()
+    var interactiveView: TweetCellInteractiveView! = TweetCellInteractiveView.instantiate()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        _init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        _init()
+    }
+    
+    private func _init() {
         self.translatesAutoresizingMaskIntoConstraints = false
+        tweetCellView.translatesAutoresizingMaskIntoConstraints = false
+        tweetContentView.translatesAutoresizingMaskIntoConstraints = false
+        interactiveView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(interactiveView)
+        self.tweetCellContainerView.addSubview(tweetCellView)
         self.contentContainerView.addSubview(tweetContentView)
         NSLayoutConstraint.activate(
             [
+                interactiveView.topAnchor.constraint(equalTo: contentView.topAnchor),
+                {
+                    let bottom = interactiveView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+                    bottom.priority = 750
+                    return bottom
+                }(),
+                interactiveView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+                interactiveView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+                tweetCellView.topAnchor.constraint(equalTo: tweetCellContainerView.topAnchor),
+                tweetCellView.bottomAnchor.constraint(equalTo: tweetCellContainerView.bottomAnchor),
+                tweetCellView.leftAnchor.constraint(equalTo: tweetCellContainerView.leftAnchor),
+                tweetCellView.rightAnchor.constraint(equalTo: tweetCellContainerView.rightAnchor),
                 tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
                 tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
                 tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
@@ -29,7 +56,19 @@ final class TweetCell: UITableViewCell {
     }
 }
 
-extension TweetCell: NibInstantiatable {
+extension TweetCellBase: HasTweetCellViewType {
+    
+}
+
+extension TweetCellBase: HasTweetContentViewType {
+    
+}
+
+extension TweetCellBase: HasTweetCellInteractiveViewType {
+    
+}
+
+final class TweetCell: TweetCellBase<TweetCellView, TweetContentView> {
     
 }
 
@@ -37,35 +76,8 @@ extension TweetCell: Reusable {
     
 }
 
-extension TweetCell: HasTweetCellViewType {
-    typealias TweetCellView = IBTweetCellView
-}
 
-extension TweetCell: HasTweetContentViewType {
-    
-}
-
-
-final class TweetImageCell: UITableViewCell {
-    @IBOutlet weak var tweetCellView: IBTweetCellView!
-    var tweetContentView: TweetContentImageView! = TweetContentImageView.instantiate()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentContainerView.addSubview(tweetContentView)
-        NSLayoutConstraint.activate(
-            [
-                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
-                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
-                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
-                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
-            ]
-        )
-    }
-}
-
-extension TweetImageCell: NibInstantiatable {
+final class TweetImageCell: TweetCellBase<TweetCellView, TweetContentImageView> {
     
 }
 
@@ -73,34 +85,11 @@ extension TweetImageCell: Reusable {
     
 }
 
-extension TweetImageCell: HasTweetCellViewType {
-    typealias TweetCellView = IBTweetCellView
-}
-
 extension TweetImageCell: HasTweetContentImageViewType {
-    typealias TweetContentView = TweetContentImageView
-}
-
-final class TweetQuotedCell: UITableViewCell {
-    @IBOutlet weak var tweetCellView: IBTweetCellView!
-    var tweetContentView: TweetContentQuotedView! = TweetContentQuotedView.instantiate()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentContainerView.addSubview(tweetContentView)
-        NSLayoutConstraint.activate(
-            [
-                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
-                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
-                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
-                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
-            ]
-        )
-    }
 }
 
-extension TweetQuotedCell: NibInstantiatable {
+final class TweetQuotedCell: TweetCellBase<TweetCellView, TweetContentQuotedView> {
     
 }
 
@@ -108,35 +97,11 @@ extension TweetQuotedCell: Reusable {
     
 }
 
-extension TweetQuotedCell: HasTweetCellViewType {
-    typealias TweetCellView = IBTweetCellView
-}
-
 extension TweetQuotedCell: HasTweetContentQuotedViewType {
-    typealias TweetContentView = TweetContentQuotedView
     
 }
 
-final class RetweetCell: UITableViewCell {
-    @IBOutlet weak var tweetCellView: IBRetweetCellView!
-    var tweetContentView: TweetContentView! = TweetContentView.instantiate()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentContainerView.addSubview(tweetContentView)
-        NSLayoutConstraint.activate(
-            [
-                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
-                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
-                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
-                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
-            ]
-        )
-    }
-}
-
-extension RetweetCell: NibInstantiatable {
+final class RetweetCell: TweetCellBase<RetweetCellView, TweetContentView> {
     
 }
 
@@ -145,33 +110,10 @@ extension RetweetCell: Reusable {
 }
 
 extension RetweetCell: HasRetweetCellViewType {
-    typealias TweetCellView = IBRetweetCellView
-}
-
-extension RetweetCell: HasTweetContentViewType {
     
 }
 
-final class RetweetImageCell: UITableViewCell {
-    @IBOutlet weak var tweetCellView: IBRetweetCellView!
-    var tweetContentView: TweetContentImageView! = TweetContentImageView.instantiate()
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentContainerView.addSubview(tweetContentView)
-        NSLayoutConstraint.activate(
-            [
-                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
-                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
-                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
-                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
-            ]
-        )
-    }
-}
-
-extension RetweetImageCell: NibInstantiatable {
+final class RetweetImageCell: TweetCellBase<RetweetCellView, TweetContentImageView> {
     
 }
 
@@ -180,33 +122,15 @@ extension RetweetImageCell: Reusable {
 }
 
 extension RetweetImageCell: HasRetweetCellViewType {
-    typealias TweetCellView = IBRetweetCellView
+    
 }
 
 extension RetweetImageCell: HasTweetContentImageViewType {
-    typealias TweetContentView = TweetContentImageView
-}
-
-final class RetweetQuotedCell: UITableViewCell {
-    @IBOutlet weak var tweetCellView: IBRetweetCellView!
-    var tweetContentView: TweetContentQuotedView! = TweetContentQuotedView.instantiate()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.contentContainerView.addSubview(tweetContentView)
-        NSLayoutConstraint.activate(
-            [
-                tweetContentView.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
-                tweetContentView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor),
-                tweetContentView.leftAnchor.constraint(equalTo: contentContainerView.leftAnchor),
-                tweetContentView.rightAnchor.constraint(equalTo: contentContainerView.rightAnchor)
-            ]
-        )
-    }
 }
 
-extension RetweetQuotedCell: NibInstantiatable {
+
+final class RetweetQuotedCell: TweetCellBase<RetweetCellView, TweetContentQuotedView> {
     
 }
 
@@ -215,9 +139,9 @@ extension RetweetQuotedCell: Reusable {
 }
 
 extension RetweetQuotedCell: HasRetweetCellViewType {
-    typealias TweetCellView = IBRetweetCellView
+    
 }
 
 extension RetweetQuotedCell: HasTweetContentQuotedViewType {
-    typealias TweetContentView = TweetContentQuotedView
+    
 }
