@@ -16,52 +16,6 @@ import RxExtensions
 import Barrel
 import Barrel_Realm
 
-public struct TweetCellModel {
-    public let client: TwitterClient
-    public let tweet: Tweet
-    public enum Style {
-        public enum Style {
-            case plain
-            case images
-            case quoted
-        }
-        case tweet(Style)
-        case retweet(Style)
-    }
-    public let style: Style
-    
-    init(client: TwitterClient, tweet: Tweet) {
-        self.client = client
-        self.tweet = tweet
-        switch (tweet.retweetedStatus == nil, tweet.quotedStatus == nil, tweet.entities.media.isEmpty) {
-        case (false, false, _):
-            self.style = .retweet(.quoted)
-        case (false, true, false):
-            self.style = .retweet(.images)
-        case (false, _, _):
-            self.style = .retweet(.plain)
-        case (_, false, _):
-            self.style = .tweet(.quoted)
-        case (_, true, false):
-            self.style = .tweet(.images)
-        case (_, _, _):
-            self.style = .tweet(.plain)
-        }
-    }
-}
-
-extension TweetCellModel: Equatable {
-    public static func == (lhs: TweetCellModel, rhs: TweetCellModel) -> Bool {
-        return lhs.tweet == rhs.tweet
-    }
-}
-
-extension TweetCellModel: IdentifiableType {
-    public var identity: Int64 {
-        return tweet.id
-    }
-}
-
 public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
     public typealias Result = Void
     public enum Input {
@@ -71,10 +25,10 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
     }
     
     public enum Output {
-        case dataSources([AnimatableSection<TweetCellModel>])
+        case dataSources([AnimatableSection<TweetCellViewModel>])
         case finishLoading
         
-        public var dataSources: [AnimatableSection<TweetCellModel>]? {
+        public var dataSources: [AnimatableSection<TweetCellViewModel>]? {
             switch self {
             case .dataSources(let dataSources): return dataSources
             default: return nil
@@ -159,7 +113,7 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
                                 .confirm()
                         )
                     }
-                    .map { $0.map { TweetCellModel(client: client, tweet: $0) } }
+                    .map { $0.map { TweetCellViewModel(client: client, tweet: $0) } }
                     .map { [AnimatableSection(items: $0)] }
                     .map { Output.dataSources($0) }
                     .bind(to: emitter.output)
@@ -243,10 +197,45 @@ public class TweetCellViewModel: RxViewModel {
         }
     }
     
+    public enum Style {
+        public enum Style {
+            case plain
+            case images
+            case quoted
+        }
+        case tweet(Style)
+        case retweet(Style)
+        
+        init(_ tweet: Tweet) {
+            switch (tweet.retweetedStatus == nil, tweet.quotedStatus == nil, tweet.entities.media.isEmpty) {
+            case (false, false, _):
+                self = .retweet(.quoted)
+            case (false, true, false):
+                self = .retweet(.images)
+            case (false, _, _):
+                self = .retweet(.plain)
+            case (_, false, _):
+                self = .tweet(.quoted)
+            case (_, true, false):
+                self = .tweet(.images)
+            case (_, _, _):
+                self = .tweet(.plain)
+            }
+        }
+    }
+    
     public let result: Observable<Result>
     public var emitter: RxIOEmitter<Input, Output> = RxIOEmitter()
     
+    public let client: TwitterClient
+    public let tweet: Tweet
+    public let style: Style
+    
     public init(client: TwitterClient, tweet: Tweet) {
+        self.client = client
+        self.tweet = tweet
+        self.style = .init(tweet)
+        
         result = Observable<Action>
             .create { [emitter = self.emitter] (observer) in
                 let d1 = emitter.input.bind(to: observer)
@@ -309,6 +298,18 @@ public class TweetCellViewModel: RxViewModel {
                     }
                 return Disposables.create(d1, d2)
             }
+    }
+}
+
+extension TweetCellViewModel: Equatable {
+    public static func == (lhs: TweetCellViewModel, rhs: TweetCellViewModel) -> Bool {
+        return lhs.tweet == rhs.tweet
+    }
+}
+
+extension TweetCellViewModel: IdentifiableType {
+    public var identity: Int64 {
+        return tweet.id
     }
 }
 

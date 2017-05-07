@@ -34,7 +34,7 @@ extension ListViewController {
         
         let d1 = viewModel.output
             .flatMap { Observable.from(optional: $0.dataSources) }
-            .map { [unowned self] (dataSources) -> ((visibleTopModel: TweetCellModel, offset: CGFloat)?, [AnimatableSection<TweetCellModel>]) in
+            .map { [unowned self] (dataSources) -> ((visibleTopModel: TweetCellViewModel, offset: CGFloat)?, [AnimatableSection<TweetCellViewModel>]) in
                 guard let indexPath = self.tableView.indexPathsForVisibleRows?.first else {
                     return (nil, dataSources)
                 }
@@ -50,10 +50,9 @@ extension ListViewController {
             .bind { [unowned self] (dataSources) -> Disposable in
                 let d1 = dataSources
                     .map { $0.1 }
-                    .bind(to: self.tableView.rx.animatedItem(configureDataSource: { $0.animationConfiguration = AnimationConfiguration.init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none) })) { (presenter, element) -> Disposable in
+                    .bind(to: self.tableView.rx.animatedItem(configureDataSource: { $0.animationConfiguration = AnimationConfiguration.init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none) })) { (presenter, viewModel) -> Disposable in
                         let result: Observable<TweetCellViewModel.Result>
-                        let viewModel = TweetCellViewModel(client: element.client, tweet: element.tweet)
-                        switch element.style {
+                        switch viewModel.style {
                         case .tweet(.plain):
                             result = presenter
                                 .present(
@@ -101,11 +100,11 @@ extension ListViewController {
                             .flatMapFirst { [unowned self] (action) -> Observable<Void> in
                                 switch action {
                                 case .entities(.tap(.hashtag(let tag))):
-                                    return self.search(query: "#\(tag)", client: element.client)
+                                    return self.search(query: "#\(tag)", client: viewModel.client)
                                 case .entities(.tap(.symbol(let symbol))):
-                                    return self.search(query: "$\(symbol)", client: element.client)
+                                    return self.search(query: "$\(symbol)", client: viewModel.client)
                                 case .entities(.tap(.mention(let screenName))):
-                                    return self.profile(screenName: screenName, client: element.client)
+                                    return self.profile(screenName: screenName, client: viewModel.client)
                                 case .entities(.tap(.url(let url))):
                                     return self.safari(url: url)
                                 case .entities(.tap(.media(let media))):
@@ -155,7 +154,7 @@ extension ListViewController {
                 return Disposables.create(d1, d2)
             }
         
-        let d2 = self.tableView.rx.modelSelected(TweetCellModel.self)
+        let d2 = self.tableView.rx.modelSelected(TweetCellViewModel.self)
             .flatMapFirst { [unowned self] (element) in
                 self.safari(url: element.tweet.url)
             }
