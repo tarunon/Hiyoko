@@ -30,6 +30,7 @@ public final class Tweet: Object {
     public dynamic var retweetCount: Int = 0
     public let retweeted: RealmOptional<Bool> = RealmOptional()
     public dynamic var retweetedStatus: Tweet? = nil
+    public dynamic var usersRetweetStatus: Tweet? = nil
     public dynamic var text: String = ""
     fileprivate dynamic var _user: User? = nil
     public dynamic var timeline: Bool = false
@@ -85,7 +86,7 @@ extension Tweet {
 }
 
 extension Tweet: Decodable {
-    static func from(id: Int64, createdAt: Date, currentUserRetweetId: Int64?, entities: Entities, favoriteCount: Int, favorited: Bool?, filterLevel: String?, inReplyToStatusId: Int64?, inReplyToUserId: Int64?, lang: String?, possiblySensitive: Bool?, quotedStatus: Tweet?, retweetCount: Int, retweeted: Bool?, retweetedStatus: Tweet?, text: String, user: User) -> Tweet {
+    static func from(id: Int64, createdAt: Date, currentUserRetweetId: Int64?, entities: Entities, favoriteCount: Int, favorited: Bool?, filterLevel: String?, inReplyToStatusId: Int64?, inReplyToUserId: Int64?, lang: String?, possiblySensitive: Bool?, quotedStatus: Tweet?, retweetCount: Int, retweeted: Bool?, retweetedStatus: Tweet?, usersRetweetStatus: Tweet?, text: String, user: User) -> Tweet {
         let tweet = Tweet()
         tweet.id = id
         tweet.createdAt = createdAt
@@ -124,6 +125,7 @@ extension Tweet: Decodable {
             retweetCount: e <| "retweet_count",
             retweeted: e <|? "retweeted",
             retweetedStatus: e <|? "retweeted_status",
+            usersRetweetStatus: e <|? "current_user_retweet",
             text: e <| "text",
             user: e <| "user"
         )

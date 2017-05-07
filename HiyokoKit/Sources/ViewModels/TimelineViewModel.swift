@@ -15,6 +15,7 @@ import RxDataSources
 import RxExtensions
 import Barrel
 import Barrel_Realm
+import Base
 
 public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
     public typealias Result = Void
@@ -22,6 +23,27 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
         case reload
         case next
         case close
+        case retweet(Tweet)
+        case favorite(Tweet)
+        case reply(Tweet)
+        
+        var isClose: Bool {
+            switch self {
+            case .close:
+                return true
+            default:
+                return false
+            }
+        }
+        
+        var isReload: Bool {
+            switch self {
+            case .reload:
+                return true
+            default:
+                return false
+            }
+        }
     }
     
     public enum Output {
@@ -54,12 +76,12 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
                     .shareReplay(1)
                     .bind { (input) -> Disposable in
                         let d1 = input
-                            .filter { $0 == .close }
+                            .filter { $0.isClose }
                             .take(1)
                             .map { _ in }
                             .bind(to: observer)
                         let d2 = input
-                            .filter { $0 == .reload }
+                            .filter { $0.isReload }
                             .flatMapFirst { _ in client.request(request: initialRequest) }
                             .do(
                                 onNext: { (response) in
@@ -84,6 +106,23 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
                                                 )
                                                 .map { Array($0.response) }
                                         case .close:
+                                            return Observable.empty()
+                                        case .retweet(let tweet) where tweet.retweeted.value == true:
+                                            return client.request(request: TweetDetailRequest(id: tweet.id))
+                                                .map { try $0.usersRetweetStatus?.id ??? RxError.noElements }
+                                                .flatMap { client.request(request: DeleteTweetRequest(id: $0)) }
+                                                .map { [$0] }
+                                        case .retweet(let tweet):
+                                            return client.request(request: RetweetRequest(id: tweet.id))
+                                                .map { [$0] }
+                                        case .favorite(let tweet) where tweet.favorited.value == true:
+                                            return client.request(request: UnfavoriteRequest(id: tweet.id))
+                                                .map { [$0] }
+                                        case .favorite(let tweet):
+                                            return client.request(request: FavoriteRequest(id: tweet.id))
+                                                .map { [$0] }
+                                        case .reply(let tweet):
+                                            print("reply \(tweet.id) but method is not implemented yet")
                                             return Observable.empty()
                                         }
                                     }
@@ -127,6 +166,27 @@ public class TweetCellViewModel: RxViewModel {
         case tweet(Tweet.Action)
         case user(User.Action)
         case entities(Entities.Action)
+        
+        public var tweet: Tweet.Action? {
+            switch self {
+            case .tweet(let tweet): return tweet
+            default: return nil
+            }
+        }
+
+        public var user: User.Action? {
+            switch self {
+            case .user(let user): return user
+            default: return nil
+            }
+        }
+
+        public var entities: Entities.Action? {
+            switch self {
+            case .entities(let entities): return entities
+            default: return nil
+            }
+        }
     }
     public typealias Result = Action
     public typealias Input = Action
@@ -137,8 +197,10 @@ public class TweetCellViewModel: RxViewModel {
         case createdAt(Date)
         case text(NSAttributedString)
         case media([TweetContentImageCellViewModel])
-        case quoted(Output)
-        case retweeted(Output)
+        case quote(Output)
+        case retweet(Output)
+        case favorited(Bool)
+        case retweeted(Bool)
         
         public var profileImage: UIImage?? {
             switch self {
@@ -182,16 +244,30 @@ public class TweetCellViewModel: RxViewModel {
             }
         }
         
-        public var quoted: Output? {
+        public var quote: Output? {
             switch self {
-            case .quoted(let quoted): return quoted
+            case .quote(let quote): return quote
             default: return nil
             }
         }
         
-        public var retweeted: Output? {
+        public var retweet: Output? {
+            switch self {
+            case .retweet(let retweet): return retweet
+            default: return nil
+            }
+        }
+        
+        public var retweeted: Bool? {
             switch self {
             case .retweeted(let retweeted): return retweeted
+            default: return nil
+            }
+        }
+        
+        public var favorited: Bool? {
+            switch self {
+            case .favorited(let favorited): return favorited
             default: return nil
             }
         }
@@ -258,7 +334,9 @@ public class TweetCellViewModel: RxViewModel {
                                         Output.userName(tweet.user.name),
                                         Output.screenName("@" + tweet.user.screenName),
                                         Output.createdAt(tweet.createdAt),
-                                        Output.text(tweet.attributedText)
+                                        Output.text(tweet.attributedText),
+                                        Output.favorited(tweet.favorited.value ?? false),
+                                        Output.retweeted(tweet.retweeted.value ?? false)
                                     )
                             }
                             .bind(to: emitter.output)
@@ -270,9 +348,9 @@ public class TweetCellViewModel: RxViewModel {
                             .flatMap { (quoted) in
                                 return Observable
                                     .of(
-                                        Output.quoted(.userName(quoted.user.name)),
-                                        Output.quoted(.screenName("@" + quoted.user.screenName)),
-                                        Output.quoted(.text(quoted.attributedText))
+                                        Output.quote(.userName(quoted.user.name)),
+                                        Output.quote(.screenName("@" + quoted.user.screenName)),
+                                        Output.quote(.text(quoted.attributedText))
                                     )
                             }
                             .bind(to: emitter.output)
@@ -281,8 +359,8 @@ public class TweetCellViewModel: RxViewModel {
                             .flatMap { (source) in
                                 return Observable
                                     .of(
-                                        Output.retweeted(.userName(source.user.name)),
-                                        Output.retweeted(.screenName("@" + source.user.screenName))
+                                        Output.retweet(.userName(source.user.name)),
+                                        Output.retweet(.screenName("@" + source.user.screenName))
                                     )
                             }
                             .bind(to: emitter.output)
@@ -290,8 +368,9 @@ public class TweetCellViewModel: RxViewModel {
                             .filter { $0.retweetedStatus != nil }
                             .flatMap { Observable.from(optional: $0.user.profileImageURL) }
                             .flatMap { client.request(request: GetProfileImageRequest(url: $0, quality: .mini)) }
-                            .map { Output.retweeted(.profileImage($0)) }
-                            .startWith(Output.retweeted(.profileImage(nil)))
+                            .map { UIImage?.some($0) }
+                            .startWith(nil)
+                            .map { Output.retweet(.profileImage($0)) }
                             .observeOn(MainScheduler.instance)
                             .bind(to: emitter.output)
                         return Disposables.create(d1, d2, d3, d4, d5, d6)

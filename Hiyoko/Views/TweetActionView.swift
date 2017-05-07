@@ -11,9 +11,9 @@ import Instantiate
 import InstantiateStandard
 
 protocol TweetActionViewType: class {
-    var favouriteView: UIView! { get }
-    var replyView: UIView! { get }
-    var retweetView: UIView! { get }
+    var favouriteButton: UIButton! { get }
+    var replyButton: UIButton! { get }
+    var retweetButton: UIButton! { get }
 }
 
 protocol HasTweetActionViewType: TweetActionViewType {
@@ -22,16 +22,16 @@ protocol HasTweetActionViewType: TweetActionViewType {
 }
 
 extension HasTweetActionViewType {
-    var favouriteView: UIView! {
-        return actionView.favouriteView
+    var favouriteButton: UIButton! {
+        return actionView.favouriteButton
     }
     
-    var replyView: UIView! {
-        return actionView.replyView
+    var replyButton: UIButton! {
+        return actionView.replyButton
     }
     
-    var retweetView: UIView! {
-        return actionView.retweetView
+    var retweetButton: UIButton! {
+        return actionView.retweetButton
     }
 }
 
@@ -40,18 +40,18 @@ extension TweetActionViewType {
         UIView.animate(
             withDuration: animated ? 0.3 : 0.0,
             animations: {
-                self.favouriteView.alpha = flag ? 1.0 : 0.5
-                self.replyView.alpha = flag ? 1.0 : 0.5
-                self.retweetView.alpha = flag ? 1.0 : 0.5
+                self.favouriteButton.alpha = flag ? 1.0 : 0.5
+                self.replyButton.alpha = flag ? 1.0 : 0.5
+                self.retweetButton.alpha = flag ? 1.0 : 0.5
             }
         )
     }
 }
 
 final class TweetActionView: UIView {
-    @IBOutlet weak var favouriteView: UIView!
-    @IBOutlet weak var replyView: UIView!
-    @IBOutlet weak var retweetView: UIView!
+    @IBOutlet weak var favouriteButton: UIButton!
+    @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var retweetButton: UIButton!
 }
 
 extension TweetActionView: NibInstantiatable {

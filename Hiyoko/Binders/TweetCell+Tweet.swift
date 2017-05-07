@@ -113,16 +113,16 @@ extension TweetCellViewType {
 extension RetweetCellViewType {
     fileprivate func bind(retweet viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
         return viewModel.output
-            .flatMap { Observable.from(optional: $0.retweeted) }
+            .flatMap { Observable.from(optional: $0.retweet) }
             .shareReplay(1)
-            .bind { [imageView=self.retweetUserIconImageView, label=self.retweetUserScreenNameLabel] (retweeted) -> Disposable in
+            .bind { [imageView=self.retweetUserIconImageView, label=self.retweetUserScreenNameLabel] (retweet) -> Disposable in
                 guard let imageView = imageView, let label = label else {
                     return Disposables.create()
                 }
-                let d1 = retweeted
+                let d1 = retweet
                     .flatMap { Observable.from(optional: $0.profileImage) }
                     .bind(to: imageView.rx.image)
-                let d2 = retweeted
+                let d2 = retweet
                     .flatMap { Observable.from(optional: $0.screenName) }
                     .map { "retweeted by \($0)" }
                     .bind(to: label.rx.text)
@@ -194,7 +194,7 @@ extension TweetContentImageViewType {
 extension TweetContentQuotedViewType {
     fileprivate func bind(quoted viewModel: TweetCellViewModel.ViewBinder) -> Disposable {
         let d1 = viewModel.output
-            .flatMap { Observable.from(optional: $0.quoted) }
+            .flatMap { Observable.from(optional: $0.quote) }
             .shareReplay(1)
             .bind { [unowned self] (quoted) -> Disposable in
                 let d1 = quoted
@@ -286,17 +286,34 @@ extension TweetCellInteractiveViewType {
         let d2 = interactiveState
             .subscribe(
                 onNext: { (action, preAction, rate) in
+                    let needsToAnimation: Bool
                     switch (action, preAction) {
                     case (.reply, .reply):
-                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 5) * (rate - 0.5)
+                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 10) * (rate - 0.5)
+                        needsToAnimation = false
+                    case (.reply, _):
+                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 10) * (rate - 0.5)
+                        needsToAnimation = true
                     case (.retweet, .reply):
                         self.tweetActionCenter.constant = -self.interactiveScrollView.frame.height / 5 * 3
+                        needsToAnimation = true
                     case (.favourite, .reply):
                         self.tweetActionCenter.constant = self.interactiveScrollView.frame.height / 5 * 3
-                    case (.reply, .retweet), (.reply, .favourite):
-                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 5) * (rate - 0.5)
+                        needsToAnimation = true
                     default:
-                        break
+                        needsToAnimation = false
+                    }
+                    if needsToAnimation {
+                        UIView.animate(
+                            withDuration: 0.25,
+                            delay: 0.0,
+                            usingSpringWithDamping: 0.8,
+                            initialSpringVelocity: 0.0,
+                            options: .curveEaseInOut,
+                            animations: { 
+                                self.tweetActionView.superview?.layoutIfNeeded()
+                            }
+                        )
                     }
                 }
             )
@@ -312,7 +329,24 @@ extension TweetCellInteractiveViewType {
             )
             .filter { $0.enabled }
             .map { TweetCellViewModel.Action.tweet($0.action) }
-            .bind(to: viewModel.input)                
-        return Disposables.create(d1, d2, d3)
+            .bind(to: viewModel.input)
+        
+        let d4 = viewModel.output
+            .shareReplay(1)
+            .bind { [actionView=self.tweetActionView] (tweet) -> Disposable in
+                guard let actionView = actionView else {
+                    return Disposables.create()
+                }
+                let d1 = tweet
+                    .flatMap { Observable.from(optional: $0.retweeted) }
+                    .bind(to: actionView.retweetButton.rx.isSelected)
+                let d2 = tweet
+                    .flatMap { Observable.from(optional: $0.favorited) }
+                    .bind(to: actionView.favouriteButton.rx.isSelected)
+                return Disposables.create(d1, d2)
+            }
+        
+        
+        return Disposables.create(d1, d2, d3, d4)
     }
 }

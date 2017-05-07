@@ -59,3 +59,77 @@ public struct SearchTimeLineRequest: APIClient.Request {
         return try [Tweet].decode(object, rootKeyPath: "statuses")
     }
 }
+
+public struct TweetDetailRequest: APIClient.Request {
+    public typealias Response = Tweet
+    public typealias Error = TwitterError
+    
+    public var path: String = "statuses/show.json"
+    public var method: HTTPMethod = .get
+    
+    public var queryParameters: [String : Any]?
+    
+    public init(id: Int64) {
+        self.queryParameters = ["id": id, "include_my_retweet": true]
+    }
+}
+
+public struct FavoriteRequest: APIClient.Request {
+    public typealias Response = Tweet
+    public typealias Error = TwitterError
+    
+    public var path: String = "favorites/create.json"
+    public var method: HTTPMethod = .post
+    
+    public var queryParameters: [String : Any]?
+    
+    public init(id: Int64) {
+        queryParameters = ["id": id]
+    }
+}
+
+public struct UnfavoriteRequest: APIClient.Request {
+    public typealias Response = Tweet
+    public typealias Error = TwitterError
+    
+    public var path: String = "favorites/destroy.json"
+    public var method: HTTPMethod = .post
+    
+    public var queryParameters: [String : Any]?
+    
+    public init(id: Int64) {
+        queryParameters = ["id": id]
+    }
+}
+
+public struct RetweetRequest: APIClient.Request {
+    public typealias Response = Tweet
+    public typealias Error = TwitterError
+    
+    public var path: String {
+        return "statuses/retweet/\(id).json"
+    }
+    public var method: HTTPMethod = .post
+    
+    public var id: Int64
+    
+    public init(id: Int64) {
+        self.id = id
+    }
+}
+
+public struct DeleteTweetRequest: APIClient.Request {
+    public typealias Response = Tweet
+    public typealias Error = TwitterError
+    
+    public var path: String {
+        return "statuses/destroy/\(id).json"
+    }
+    public var method: HTTPMethod = .post
+    
+    public var id: Int64
+    
+    public init(id: Int64) {
+        self.id = id
+    }
+}

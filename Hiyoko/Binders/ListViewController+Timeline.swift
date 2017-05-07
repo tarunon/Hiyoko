@@ -50,7 +50,7 @@ extension ListViewController {
             .bind { [unowned self] (dataSources) -> Disposable in
                 let d1 = dataSources
                     .map { $0.1 }
-                    .bind(to: self.tableView.rx.animatedItem(configureDataSource: { $0.animationConfiguration = AnimationConfiguration.init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none) })) { (presenter, viewModel) -> Disposable in
+                    .bind(to: self.tableView.rx.animatedItem(configureDataSource: { $0.animationConfiguration = AnimationConfiguration.init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none) })) { [_viewModel=viewModel] (presenter, viewModel) -> Disposable in
                         let result: Observable<TweetCellViewModel.Result>
                         switch viewModel.style {
                         case .tweet(.plain):
@@ -97,39 +97,57 @@ extension ListViewController {
                             )
                         }
                         return result
-                            .flatMapFirst { [unowned self] (action) -> Observable<Void> in
-                                switch action {
-                                case .entities(.tap(.hashtag(let tag))):
-                                    return self.search(query: "#\(tag)", client: viewModel.client)
-                                case .entities(.tap(.symbol(let symbol))):
-                                    return self.search(query: "$\(symbol)", client: viewModel.client)
-                                case .entities(.tap(.mention(let screenName))):
-                                    return self.profile(screenName: screenName, client: viewModel.client)
-                                case .entities(.tap(.url(let url))):
-                                    return self.safari(url: url)
-                                case .entities(.tap(.media(let media))):
-                                    return self.safari(url: media.mediaURL)
-                                case .entities(.longpress(let entity)):
-                                    let item: Any
-                                    switch entity {
-                                    case .hashtag(let tag):
-                                        item = "#" + tag
-                                    case .symbol(let symbol):
-                                        item = "$" + symbol
-                                    case .mention(let screenName):
-                                        item = "@" + screenName
-                                    case .url(let url):
-                                        item = url
-                                    case .media(let media):
-                                        item = media.mediaURL
+                            .bind { [unowned self] (result) -> Disposable in
+                                let d1 = result
+                                    .flatMap { Observable.from(optional: $0.entities) }
+                                    .flatMapFirst { [unowned self] (entities) -> Observable<Void> in
+                                        switch entities {
+                                        case .tap(.hashtag(let tag)):
+                                            return self.search(query: "#\(tag)", client: viewModel.client)
+                                        case .tap(.symbol(let symbol)):
+                                            return self.search(query: "$\(symbol)", client: viewModel.client)
+                                        case .tap(.mention(let screenName)):
+                                            return self.profile(screenName: screenName, client: viewModel.client)
+                                        case .tap(.url(let url)):
+                                            return self.safari(url: url)
+                                        case .tap(.media(let media)):
+                                            return self.safari(url: media.mediaURL)
+                                        case .longpress(let entity):
+                                            let item: Any
+                                            switch entity {
+                                            case .hashtag(let tag):
+                                                item = "#" + tag
+                                            case .symbol(let symbol):
+                                                item = "$" + symbol
+                                            case .mention(let screenName):
+                                                item = "@" + screenName
+                                            case .url(let url):
+                                                item = url
+                                            case .media(let media):
+                                                item = media.mediaURL
+                                            }
+                                            return self.share(object: item).map { _ in }
+                                        }
                                     }
-                                    return self.share(object: item).map { _ in }
-                                default:
-                                    print("Sorry, \(action) is not implemented yet.")
-                                    return Observable.empty()
-                                }
+                                    .subscribe()
+                                
+                                let d2 = result
+                                    .flatMap { Observable.from(optional: $0.tweet) }
+                                    .map { (tweet) in
+                                        switch tweet {
+                                        case .favourite:
+                                            return TimelineViewModel.Input.favorite(viewModel.tweet)
+                                        case .retweet:
+                                            return TimelineViewModel.Input.retweet(viewModel.tweet)
+                                        case .reply:
+                                            return TimelineViewModel.Input.reply(viewModel.tweet)
+                                        }
+                                    }
+                                    .concat(Observable.never())
+                                    .bind(to: _viewModel.input)
+                                
+                                return Disposables.create(d1, d2)
                             }
-                            .subscribe()
                     }
         
                 let d2 = dataSources
