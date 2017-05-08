@@ -271,7 +271,7 @@ public class TweetCellViewModel: RxViewModel {
         case text(NSAttributedString)
         case media([TweetContentImageCellViewModel])
         case quote(State)
-        case retweet(State)
+        case retweetBy(State)
         case favorited(Bool)
         case retweeted(Bool)
         
@@ -324,9 +324,9 @@ public class TweetCellViewModel: RxViewModel {
             }
         }
         
-        public var retweet: Observable<State> {
+        public var retweetBy: Observable<State> {
             switch self {
-            case .retweet(let retweet): return .just(retweet)
+            case .retweetBy(let retweetBy): return .just(retweetBy)
             default: return .empty()
             }
         }
@@ -397,21 +397,22 @@ public class TweetCellViewModel: RxViewModel {
                         )
                     },
                 Observable
-                    .from(optional: tweet.retweetedStatus)
+                    .just(tweet)
+                    .filter { $0.retweetedStatus != nil }
                     .flatMap { (tweet) in
                         Observable<State>
                             .merge(
                                 Observable
                                     .of(
-                                        .retweet(.userName(tweet.user.name)),
-                                        .retweet(.screenName(tweet.user.screenName))
+                                        .retweetBy(.userName(tweet.user.name)),
+                                        .retweetBy(.screenName(tweet.user.screenName))
                                     ),
                                 Observable
                                     .from(optional: tweet.user.profileImageURL)
                                     .flatMap { self.client.request(request: GetProfileImageRequest(url: $0, quality: .mini)) }
                                     .map { UIImage?.some($0) }
                                     .startWith(nil)
-                                    .map { State.retweet(.profileImage($0)) }
+                                    .map { State.retweetBy(.profileImage($0)) }
                                     .observeOn(MainScheduler.instance)
                             )
                     }
