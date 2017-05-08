@@ -17,6 +17,10 @@ import Barrel
 import Barrel_Realm
 import Base
 
+public enum TweetResource {
+    case reply(Tweet)
+}
+
 public struct TweetCellModel {
     public let client: TwitterClient
     public let tweet: Tweet
@@ -64,8 +68,8 @@ extension TweetCellModel: IdentifiableType {
 }
 
 public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
-    public typealias Result = Void
-    public enum Input {
+    public typealias Result = TweetResource
+    public enum Action {
         case reload
         case next
         case close
@@ -73,28 +77,26 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
         case favorite(Tweet)
         case reply(Tweet)
         
-        var isClose: Bool {
+        var close: Observable<Void> {
             switch self {
             case .close:
-                return true
+                return .just()
             default:
-                return false
+                return .empty()
             }
         }
         
-        var isReload: Bool {
+        var reply: Observable<Tweet> {
             switch self {
-            case .reload:
-                return true
-            default:
-                return false
+            case .reply(let reply): return .just(reply)
+            default: return .empty()
             }
         }
     }
     
-    public enum Output {
+    public enum State {
         case dataSources([AnimatableSection<TweetCellModel>])
-        case finishLoading
+        case isLoading(Bool)
         
         public var dataSources: [AnimatableSection<TweetCellModel>]? {
             switch self {
@@ -103,107 +105,130 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
             }
         }
         
-        public var isFinishLoading: Bool {
+        public var isLoading: Bool? {
             switch self {
-            case .finishLoading: return true
-            default: return false
+            case .isLoading(let isLoading): return isLoading
+            default: return nil
             }
         }
     }
     
-    public let result: Observable<Void>
-    public let emitter: RxIOEmitter<Input, Output> = RxIOEmitter()
+    var realm: () throws -> Realm
+    var client: TwitterClient
+    var initialRequest: InitialRequest
     
     public init(realm: @escaping () throws -> Realm, client: TwitterClient, initialRequest: InitialRequest) {
-        result = Observable<Void>
-            .create { [emitter = self.emitter] (observer) in
-                var nextRequest: AnyRequest<InitialRequest.Response, InitialRequest.Error>? = nil
-                let d1 = emitter.input
-                    .shareReplay(1)
-                    .bind { (input) -> Disposable in
-                        let d1 = input
-                            .filter { $0.isClose }
-                            .take(1)
-                            .map { _ in }
-                            .bind(to: observer)
-                        let d2 = input
-                            .filter { $0.isReload }
-                            .flatMapFirst { _ in client.request(request: initialRequest) }
-                            .do(
-                                onNext: { (response) in
-                                    nextRequest = response.next
-                                }
-                            )
-                            .map { Array($0.response) }
-                            .flatMapFirst { (tweets) -> Observable<[Tweet]> in
-                                input
-                                    .flatMapFirst { input -> Observable<[Tweet]> in
-                                        switch input {
-                                        case .reload:
-                                            return client.request(request: initialRequest)
-                                                .map { Array($0.response) }
-                                        case .next:
-                                            return Observable.from(optional: nextRequest)
-                                                .flatMap { client.request(request: $0) }
-                                                .do(
-                                                    onNext: { (response) in
-                                                        nextRequest = response.next
-                                                    }
-                                                )
-                                                .map { Array($0.response) }
-                                        case .close:
-                                            return Observable.empty()
-                                        case .retweet(let tweet) where tweet.retweeted.value == true:
-                                            return client.request(request: TweetDetailRequest(id: tweet.id))
-                                                .map { try $0.usersRetweetStatus?.id ??? RxError.noElements }
-                                                .flatMap { client.request(request: DeleteTweetRequest(id: $0)) }
-                                                .map { [$0] }
-                                        case .retweet(let tweet):
-                                            return client.request(request: RetweetRequest(id: tweet.id))
-                                                .map { [$0] }
-                                        case .favorite(let tweet) where tweet.favorited.value == true:
-                                            return client.request(request: UnfavoriteRequest(id: tweet.id))
-                                                .map { [$0] }
-                                        case .favorite(let tweet):
-                                            return client.request(request: FavoriteRequest(id: tweet.id))
-                                                .map { [$0] }
-                                        case .reply(let tweet):
-                                            print("reply \(tweet.id) but method is not implemented yet")
-                                            return Observable.empty()
-                                        }
-                                    }
-                                    .startWith(tweets)
+        self.realm = realm
+        self.client = client
+        self.initialRequest = initialRequest
+    }
+    
+    public func state(action: Observable<TimelineViewModel<InitialRequest>.Action>, result: AnyObserver<TweetResource>) -> Observable<TimelineViewModel<InitialRequest>.State> {
+        var nextRequest: AnyRequest<InitialRequest.Response, InitialRequest.Error>? = nil
+        
+        let initialLoad = self.client.request(request: self.initialRequest)
+            .do(
+                onNext: { (response) in
+                    nextRequest = response.next
+                }
+            )
+            .map { $0.response.map { $0 as Tweet } }
+        
+        let actionLoad = action
+            .flatMapFirst { (action) -> Observable<[Tweet]> in
+                switch action {
+                case .reload:
+                    return self.client.request(request: self.initialRequest)
+                        .map { Array($0.response) }
+                case .next:
+                    return Observable.from(optional: nextRequest)
+                        .flatMap { self.client.request(request: $0) }
+                        .do(
+                            onNext: { (response) in
+                                nextRequest = response.next
                             }
-                            .do(
-                                onNext: { (tweets) in
-                                    tweets.forEach { $0.timeline = true }
-                                    let _realm = try realm()
-                                    try _realm.write {
-                                        _realm.add(tweets, update: true)
-                                    }
-                                }
-                            )
-                            .map { _ in Output.finishLoading }
-                            .bind(to: emitter.output)
+                        )
+                        .map { Array($0.response) }
+                case .retweet(let tweet) where tweet.retweeted.value == true:
+                    return self.client.request(request: TweetDetailRequest(id: tweet.id))
+                        .map { try $0.usersRetweetStatus?.id ??? RxError.noElements }
+                        .flatMap { self.client.request(request: DeleteTweetRequest(id: $0)) }
+                        .map { [$0] }
+                case .retweet(let tweet):
+                    return self.client.request(request: RetweetRequest(id: tweet.id))
+                        .map { [$0] }
+                case .favorite(let tweet) where tweet.favorited.value == true:
+                    return self.client.request(request: UnfavoriteRequest(id: tweet.id))
+                        .map { [$0] }
+                case .favorite(let tweet):
+                    return self.client.request(request: FavoriteRequest(id: tweet.id))
+                        .map { [$0] }
+                default:
+                    return Observable.empty()
+                }
+            }
+        
+        let loading = Observable
+            .merge(initialLoad, actionLoad)
+            .do(
+                onNext: { (tweets) in
+                    let realm = try self.realm()
+                    try realm.write {
+                        realm.add(tweets)
+                    }
+                }
+            )
+            .map { _ in State.isLoading(false) }
+        
+        let timeline = Observable<Realm>
+            .create { (observer) -> Disposable in
+                do {
+                    let realm = try self.realm()
+                    observer.onNext(realm)
+                    observer.onCompleted()
+                } catch {
+                    observer.onError(error)
+                }
+                return Disposables.create()
+            }
+            .subscribeOn(MainScheduler.instance)
+            .flatMap { (realm) in
+                Observable
+                    .array(
+                        from: Tweet.objects(realm).brl
+                            .filter { $0.timeline == true }
+                            .sorted { $0.createdAt > $1.createdAt }
+                            .confirm()
+                    )
+            }
+            .map { $0.map { TweetCellModel(client: self.client, tweet: $0) } }
+            .map { [AnimatableSection(items: $0)] }
+            .map { State.dataSources($0) }
+        
+        let otherActions = Observable<State>
+            .create { (observer) in
+                observer.onCompleted()
+                return action
+                    .bind { (action) -> Disposable in
+                        let d1 = action
+                            .flatMap { $0.close }
+                            .take(1)
+                            .flatMap { Observable.empty() }
+                            .bind(to: result)
+                        let d2 = action
+                            .flatMap { $0.reply }
+                            .map { TweetResource.reply($0) }
+                            .bind(to: result)
                         return Disposables.create(d1, d2)
                     }
-                let d2 = Observable
-                    .just(realm, scheduler: MainScheduler.instance)
-                    .map { try $0() }
-                    .flatMap { (realm) in
-                        Observable.array(
-                            from: Tweet.objects(realm).brl
-                                .filter { $0.timeline == true }
-                                .sorted { $0.createdAt > $1.createdAt }
-                                .confirm()
-                        )
-                    }
-                    .map { $0.map { TweetCellModel(client: client, tweet: $0) } }
-                    .map { [AnimatableSection(items: $0)] }
-                    .map { Output.dataSources($0) }
-                    .bind(to: emitter.output)
-                return Disposables.create(d1, d2)
             }
+        
+        return Observable
+            .merge(
+                loading,
+                timeline,
+                otherActions
+        )
     }
 }
 
@@ -213,214 +238,219 @@ public class TweetCellViewModel: RxViewModel {
         case user(User.Action)
         case entities(Entities.Action)
         
-        public var tweet: Tweet.Action? {
+        public var tweet: Observable<Tweet.Action> {
             switch self {
-            case .tweet(let tweet): return tweet
-            default: return nil
+            case .tweet(let tweet): return .just(tweet)
+            default: return .empty()
             }
         }
 
-        public var user: User.Action? {
+        public var user: Observable<User.Action> {
             switch self {
-            case .user(let user): return user
-            default: return nil
+            case .user(let user): return .just(user)
+            default: return .empty()
             }
         }
 
-        public var entities: Entities.Action? {
+        public var entities: Observable<Entities.Action> {
             switch self {
-            case .entities(let entities): return entities
-            default: return nil
+            case .entities(let entities): return .just(entities)
+            default: return .empty()
             }
         }
     }
     public typealias Result = Action
-    public typealias Input = Action
-    public indirect enum Output {
+    public indirect enum State {
         case profileImage(UIImage?)
         case userName(String)
         case screenName(String)
         case createdAt(Date)
         case text(NSAttributedString)
         case media([TweetContentImageCellViewModel])
-        case quote(Output)
-        case retweet(Output)
+        case quote(State)
+        case retweet(State)
         case favorited(Bool)
         case retweeted(Bool)
         
-        public var profileImage: UIImage?? {
+        public var profileImage: Observable<UIImage?> {
             switch self {
-            case .profileImage(let image): return image
-            default: return nil
+            case .profileImage(let image): return .just(image)
+            default: return .empty()
             }
         }
         
-        public var userName: String? {
+        public var userName: Observable<String> {
             switch self {
-            case .userName(let userName): return userName
-            default: return nil
+            case .userName(let userName): return .just(userName)
+            default: return .empty()
             }
         }
         
-        public var screenName: String? {
+        public var screenName: Observable<String> {
             switch self {
-            case .screenName(let screenName): return screenName
-            default: return nil
+            case .screenName(let screenName): return .just(screenName)
+            default: return .empty()
             }
         }
         
-        public var createdAt: Date? {
+        public var createdAt: Observable<Date> {
             switch self {
-            case .createdAt(let createdAt): return createdAt
-            default: return nil
+            case .createdAt(let createdAt): return .just(createdAt)
+            default: return .empty()
             }
         }
         
-        public var text: NSAttributedString? {
+        public var text: Observable<NSAttributedString> {
             switch self {
-            case .text(let text): return text
-            default: return nil
+            case .text(let text): return .just(text)
+            default: return .empty()
             }
         }
         
-        public var media: [TweetContentImageCellViewModel]? {
+        public var media: Observable<[TweetContentImageCellViewModel]> {
             switch self {
-            case .media(let media): return media
-            default: return nil
+            case .media(let media): return .just(media)
+            default: return .empty()
             }
         }
         
-        public var quote: Output? {
+        public var quote: Observable<State> {
             switch self {
-            case .quote(let quote): return quote
-            default: return nil
+            case .quote(let quote): return .just(quote)
+            default: return .empty()
             }
         }
         
-        public var retweet: Output? {
+        public var retweet: Observable<State> {
             switch self {
-            case .retweet(let retweet): return retweet
-            default: return nil
+            case .retweet(let retweet): return .just(retweet)
+            default: return .empty()
             }
         }
         
-        public var retweeted: Bool? {
+        public var retweeted: Observable<Bool> {
             switch self {
-            case .retweeted(let retweeted): return retweeted
-            default: return nil
+            case .retweeted(let retweeted): return .just(retweeted)
+            default: return .empty()
             }
         }
         
-        public var favorited: Bool? {
+        public var favorited: Observable<Bool> {
             switch self {
-            case .favorited(let favorited): return favorited
-            default: return nil
+            case .favorited(let favorited): return .just(favorited)
+            default: return .empty()
             }
         }
     }
-    
-    public let result: Observable<Result>
-    public var emitter: RxIOEmitter<Input, Output> = RxIOEmitter()
+   
+    let client: TwitterClient
+    let tweet: Tweet
     
     public init(client: TwitterClient, tweet: Tweet) {
-        result = Observable<Action>
-            .create { [emitter = self.emitter] (observer) in
-                let d1 = emitter.input.bind(to: observer)
-                let d2 = Observable.from(object: tweet)
-                    .catchError { _ in Observable.empty() }
-                    .shareReplay(1)
-                    .bind { (tweet) -> Disposable in
-                        let presentTweet = tweet.map { $0.retweetedStatus ?? $0 }
-                        let d1 = presentTweet
-                            .flatMap { Observable.from(optional: $0.user.profileImageURL) }
-                            .flatMap { client.request(request: GetProfileImageRequest(url: $0, quality: .bigger)) }
-                            .map { Output.profileImage($0) }
-                            .startWith(Output.profileImage(nil))
-                            .observeOn(MainScheduler.instance)
-                            .bind(to: emitter.output)
-                        let d2 = presentTweet
-                            .flatMap { (tweet) in
-                                return Observable
-                                    .of(
-                                        Output.userName(tweet.user.name),
-                                        Output.screenName("@" + tweet.user.screenName),
-                                        Output.createdAt(tweet.createdAt),
-                                        Output.text(tweet.attributedText),
-                                        Output.favorited(tweet.favorited.value ?? false),
-                                        Output.retweeted(tweet.retweeted.value ?? false)
-                                    )
-                            }
-                            .bind(to: emitter.output)
-                        let d3 = presentTweet
-                            .map { Output.media($0.entities.media.map { TweetContentImageCellViewModel(client: client, media: $0) }) }
-                            .bind(to: emitter.output)
-                        let d4 = presentTweet
-                            .flatMap { Observable.from(optional: $0.quotedStatus) }
-                            .flatMap { (quoted) in
-                                return Observable
-                                    .of(
-                                        Output.quote(.userName(quoted.user.name)),
-                                        Output.quote(.screenName("@" + quoted.user.screenName)),
-                                        Output.quote(.text(quoted.attributedText))
-                                    )
-                            }
-                            .bind(to: emitter.output)
-                        let d5 = tweet
-                            .filter { $0.retweetedStatus != nil }
-                            .flatMap { (source) in
-                                return Observable
-                                    .of(
-                                        Output.retweet(.userName(source.user.name)),
-                                        Output.retweet(.screenName("@" + source.user.screenName))
-                                    )
-                            }
-                            .bind(to: emitter.output)
-                        let d6 = tweet
-                            .filter { $0.retweetedStatus != nil }
-                            .flatMap { Observable.from(optional: $0.user.profileImageURL) }
-                            .flatMap { client.request(request: GetProfileImageRequest(url: $0, quality: .mini)) }
-                            .map { UIImage?.some($0) }
-                            .startWith(nil)
-                            .map { Output.retweet(.profileImage($0)) }
-                            .observeOn(MainScheduler.instance)
-                            .bind(to: emitter.output)
-                        return Disposables.create(d1, d2, d3, d4, d5, d6)
-                    }
-                return Disposables.create(d1, d2)
+        self.client = client
+        self.tweet = tweet
+    }
+    
+    public func state(action: Observable<TweetCellViewModel.Action>, result: AnyObserver<TweetCellViewModel.Action>) -> Observable<TweetCellViewModel.State> {
+        let actions = Observable<State>
+            .create { (observer) in
+                observer.onCompleted()
+                return action.bind(to: result)
             }
+        
+        let presentTweet = tweet.retweetedStatus ?? tweet
+        
+        return Observable<State>
+            .merge(
+                actions,
+                Observable
+                    .of(
+                        .userName(presentTweet.user.name),
+                        .screenName(presentTweet.user.screenName),
+                        .createdAt(presentTweet.createdAt),
+                        .text(presentTweet.attributedText),
+                        .favorited(presentTweet.favorited.value ?? false),
+                        .retweeted(presentTweet.retweeted.value ?? false),
+                        .media(presentTweet.entities.media.map { TweetContentImageCellViewModel(client: client, media: $0) })
+                    ),
+                Observable
+                    .from(optional: presentTweet.user.profileImageURL)
+                    .flatMap { self.client.request(request: GetProfileImageRequest(url: $0, quality: .bigger)) }
+                    .map { UIImage?.some($0) }
+                    .startWith(nil)
+                    .map { State.profileImage($0) }
+                    .observeOn(MainScheduler.instance),
+                Observable
+                    .from(optional: presentTweet.quotedStatus)
+                    .flatMap { (tweet) in
+                        Observable<State>
+                            .of(
+                                .quote(.userName(tweet.user.name)),
+                                .quote(.screenName(tweet.user.screenName)),
+                                .quote(.text(tweet.attributedText))
+                        )
+                    },
+                Observable
+                    .from(optional: tweet.retweetedStatus)
+                    .flatMap { (tweet) in
+                        Observable<State>
+                            .merge(
+                                Observable
+                                    .of(
+                                        .retweet(.userName(tweet.user.name)),
+                                        .retweet(.screenName(tweet.user.screenName))
+                                    ),
+                                Observable
+                                    .from(optional: tweet.user.profileImageURL)
+                                    .flatMap { self.client.request(request: GetProfileImageRequest(url: $0, quality: .mini)) }
+                                    .map { UIImage?.some($0) }
+                                    .startWith(nil)
+                                    .map { State.profileImage($0) }
+                                    .observeOn(MainScheduler.instance)
+                            )
+                    }
+        )
     }
 }
 
 public class TweetContentImageCellViewModel: RxViewModel {
-    public enum Input {
+    public enum Action {
         case tap
         case longPress
     }
-    public typealias Output = UIImage?
+    public typealias State = UIImage?
     public typealias Result = Entities.Action
     
-    public let result: Observable<Entities.Action>
-    public let emitter: RxIOEmitter<Input, UIImage?> = RxIOEmitter()
+    
+    let client: TwitterClient
+    let media: Entities.Media
     
     public init(client: TwitterClient, media: Entities.Media) {
-        result = Observable<Entities.Action>
-            .create { [emitter=self.emitter] (observer) in
-                let d1 = client.request(request: GetEntitiesImageRequest(url: media.mediaURL))
+        self.client = client
+        self.media = media
+    }
+    
+    public func state(action: Observable<TweetContentImageCellViewModel.Action>, result: AnyObserver<Entities.Action>) -> Observable<UIImage?> {
+        let actions = Observable<State>
+            .create { (observer) in
+                observer.onCompleted()
+                return action
+                    .map { (action) in
+                        switch action {
+                        case .tap: return Entities.Action.tap(.media(self.media))
+                        case .longPress: return Entities.Action.longpress(.media(self.media))
+                        }
+                    }
+                    .bind(to: result)
+            }
+        
+        return Observable
+            .merge(
+                actions,
+                client.request(request: GetEntitiesImageRequest(url: self.media.mediaURL))
                     .map { UIImage?.some($0) }
                     .observeOn(MainScheduler.instance)
                     .startWith(nil)
-                    .bind(to: emitter.output)
-                let d2 = emitter.input
-                    .map { (input) in
-                        switch input {
-                        case .tap:
-                            return Entities.Action.tap(.media(media))
-                        case .longPress:
-                            return Entities.Action.longpress(.media(media))
-                        }
-                    }
-                    .bind(to: observer)
-                return Disposables.create(d1, d2)
-            }
+        )
     }
 }

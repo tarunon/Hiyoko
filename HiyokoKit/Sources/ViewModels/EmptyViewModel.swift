@@ -11,14 +11,15 @@ import RxSwift
 import RxExtensions
 
 public class EmptyViewModel: RxViewModel {
-    public typealias Result = Void
-    public typealias Input = Void
-    public typealias Output = Void
-    
-    public let result: Observable<Void>
-    public let emitter: RxIOEmitter<Void, Void> = RxIOEmitter()
+    public typealias Result = Never
+    public typealias Action = Never
+    public typealias State = Never
     
     public init() {
-        result = emitter.input
+        
+    }
+    
+    public func state(action: Observable<Never>, result: AnyObserver<Never>) -> Observable<Never> {
+        return Observable.empty()
     }
 }
