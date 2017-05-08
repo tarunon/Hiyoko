@@ -40,89 +40,117 @@ public extension Reactive where Base: UIAlertController {
     }
 }
 
-final public class AlertViewModel: RxViewModel {
+final public class AlertViewModel<ButtonConfig>: RxViewModel {
     public typealias Result = Void
-    public typealias Input = Void
-    public typealias Output = String
-    
-    public let result: Observable<Void>
-    public let emitter: RxIOEmitter<Void, String> = RxIOEmitter()
-    
-    public init(ok: String) {
-        self.result = emitter.input
-        emitter.output.onNext(ok)
-    }
-}
+    public typealias Action = Void
+    public typealias State = ButtonConfig
 
-extension UIAlertController {
-    public func bind(alert: AlertViewModel.ViewBinder) -> Disposable {
-        return alert.output
-            .flatMapFirst { [unowned self] (ok) in
-                self.rx.addAction(config: .init(title: ok, style: .cancel))
-                    .map { _ in }
+    let ok: ButtonConfig
+
+    public init(ok: ButtonConfig) {
+        self.ok = ok
+    }
+
+    public func state(action: Observable<Void>, result: AnyObserver<Void>) -> Observable<ButtonConfig> {
+        return Observable
+            .create { (observer) in
+                observer.onNext(self.ok)
+                return action.bind(to: result)
             }
-            .bind(to: alert.input)
-    }
-}
-
-final public class ConfirmViewModel: RxViewModel {
-    public typealias Result = Bool
-    public typealias Input = Bool
-    public typealias Output = (ok: String, cancel: String)
-    
-    public let result: Observable<Bool>
-    public var emitter: RxIOEmitter<Bool, (ok: String, cancel: String)> = RxIOEmitter()
-    
-    public init(ok: String, cancel: String) {
-        self.result = emitter.input
-        emitter.output.onNext((ok: ok, cancel: cancel))
     }
 }
 
 extension UIAlertController {
-    public func bind(confirm: ConfirmViewModel.ViewBinder) -> Disposable {
-        return confirm.output
+    public func bind(alert: AlertViewModel<UIAlertAction.Config>.Emitter) -> Disposable {
+        return alert.state
+            .flatMap { [unowned self] (ok) in
+                self.rx.addAction(config: ok)
+            }
+            .map { _ in }
+            .bind(to: alert.action)
+    }
+}
+
+final public class ConfirmViewModel<ButtonConfig>: RxViewModel {
+    public typealias Result = Bool
+    public typealias Action = Bool
+    public typealias State = (ok: ButtonConfig, cancel: ButtonConfig)
+
+    let ok: ButtonConfig
+    let cancel: ButtonConfig
+
+    public init(ok: ButtonConfig, cancel: ButtonConfig) {
+        self.ok = ok
+        self.cancel = cancel
+    }
+
+    public func state(action: Observable<Bool>, result: AnyObserver<Bool>) -> Observable<(ok: ButtonConfig, cancel: ButtonConfig)> {
+        return Observable
+            .create { (observer) in
+                observer.onNext((ok: self.ok, cancel: self.cancel))
+                return action.bind(to: result)
+            }
+    }
+}
+
+extension UIAlertController {
+    public func bind(confirm: ConfirmViewModel<UIAlertAction.Config>.Emitter) -> Disposable {
+        return confirm.state
             .flatMapFirst { [unowned self] (ok, cancel) in
                 Observable
                     .merge(
-                        self.rx.addAction(config: .init(title: ok, style: .default))
+                        self.rx.addAction(config: ok)
                             .map { _ in true },
-                        self.rx.addAction(config: .init(title: cancel, style: .cancel))
+                        self.rx.addAction(config: cancel)
                             .map { _ in false }
                     )
             }
-            .bind(to: confirm.input)
+            .bind(to: confirm.action)
     }
 }
 
-final public class PromptViewModel: RxViewModel {
+final public class PromptViewModel<ButtonConfig>: RxViewModel {
     public typealias Result = String?
-    public typealias Input = String?
-    public typealias Output = (ok: String, cancel: String, defaultText: String?)
-    
-    public let result: Observable<String?>
-    public let emitter: RxIOEmitter<String?, (ok: String, cancel: String, defaultText: String?)> = RxIOEmitter()
-    
-    public init(ok: String, cancel: String, defaultText: String?=nil) {
-        self.result = emitter.input
-        emitter.output.onNext((ok: ok, cancel: cancel, defaultText: defaultText))
+    public typealias Action = String?
+    public struct State {
+        let ok: ButtonConfig
+        let cancel: ButtonConfig
+        let defaultText: String?
+        let placeholder: String?
+    }
+
+    let initialState: State
+
+    public init(ok: ButtonConfig, cancel: ButtonConfig, defaultText: String?=nil, placeholder: String?=nil) {
+        self.initialState = State(ok: ok, cancel: cancel, defaultText: defaultText, placeholder: placeholder)
+    }
+
+    public func state(action: Observable<String?>, result: AnyObserver<String?>) -> Observable<State> {
+        return Observable
+            .create { (observer) in
+                observer.onNext(self.initialState)
+                return action.bind(to: result)
+            }
     }
 }
 
 extension UIAlertController {
-    public func bind(prompt: PromptViewModel.ViewBinder) -> Disposable {
-        return prompt.output
-            .flatMapFirst { [unowned self] (ok, cancel, defaultText) -> Observable<String?> in
-                self.addTextField { $0.text = defaultText }
+    public func bind(prompt: PromptViewModel<UIAlertAction.Config>.Emitter) -> Disposable {
+        return prompt.state
+            .flatMap { [unowned self] (state) -> Observable<String?> in
+                self.addTextField { (textField) in
+                    textField.text = state.defaultText
+                    textField.placeholder = state.placeholder
+                }
                 return Observable
                     .merge(
-                        self.rx.addAction(config: .init(title: ok, style: .default))
+                        self.rx.addAction(config: state.ok)
                             .map { _ in self.textFields?.first?.text },
-                        self.rx.addAction(config: .init(title: cancel, style: .cancel))
-                            .map { _ in nil }
+                        self.rx.addAction(config: state.cancel)
+                            .map { _ in String?.none }
                     )
             }
-            .bind(to: prompt.input)
+            .bind(to: prompt.action)
     }
 }
 
@@ -131,23 +159,31 @@ public protocol ActionSheetElement: CustomStringConvertible {
     var element: E { get }
 }
 
-final public class ActionSheetViewModel<E: ActionSheetElement>: RxViewModel {
+final public class ActionSheetViewModel<ButtonConfig, E: ActionSheetElement>: RxViewModel {
     public typealias Result = E.E
-    public typealias Input = E.E
-    public typealias Output = (elements: [E], cancel: String)
-    
-    public let result: Observable<Result>
-    public let emitter: RxIOEmitter<E.E, (elements: [E], cancel: String)> = RxIOEmitter()
-    
-    public init(elements: [E], cancel: String) {
-        self.result = emitter.input
-        emitter.output.onNext((elements: elements, cancel: cancel))
+    public typealias Action = E.E
+    public typealias State = (elements: [E], cancel: ButtonConfig)
+
+    let elements: [E]
+    let cancel: ButtonConfig
+
+    public init(elements: [E], cancel: ButtonConfig) {
+        self.elements = elements
+        self.cancel = cancel
+    }
+
+    public func state(action: Observable<E.E>, result: AnyObserver<E.E>) -> Observable<(elements: [E], cancel: ButtonConfig)> {
+        return Observable
+            .create { (observer) in
+                observer.onNext((elements: self.elements, cancel: self.cancel))
+                return action.bind(to: result)
+            }
     }
 }
 
 extension UIAlertController {
-    public func bind<E: ActionSheetElement>(actionSheet: ActionSheetViewModel<E>.ViewBinder) -> Disposable {
-        return actionSheet.output
+    public func bind<E: ActionSheetElement>(actionSheet: ActionSheetViewModel<UIAlertAction.Config, E>.Emitter) -> Disposable {
+        return actionSheet.state
             .flatMapFirst { [unowned self] (elements, cancel) in
                 Observable
                     .merge(
@@ -156,11 +192,11 @@ extension UIAlertController {
                                 self.rx.addAction(config: .init(title: "\(element)", style: .default))
                                     .map { _ in element.element }
                             } + [
-                                self.rx.addAction(config: .init(title: cancel, style: .cancel))
+                                self.rx.addAction(config: cancel)
                                     .flatMap { _ in Observable.empty() }
                             ]
                     )
             }
-            .bind(to: actionSheet.input)
+            .bind(to: actionSheet.action)
     }
 }

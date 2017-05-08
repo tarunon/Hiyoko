@@ -64,7 +64,7 @@ extension TweetActionView: TweetActionViewType {
 
 @IBDesignable final class IBTweetActionView: UIView, NibInstantiatableWrapper {
     typealias Wrapped = TweetActionView
-    
+
     #if TARGET_INTERFACE_BUILDER
     override func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()

@@ -12,43 +12,34 @@ import RxCocoa
 
 public protocol RxViewModel {
     associatedtype Result
-    associatedtype Input
-    associatedtype Output
-    
-    var emitter: RxIOEmitter<Input, Output> { get }
-    var result: Observable<Result> { get }
+    associatedtype Action
+    associatedtype State
+
+    func state(action: Observable<Action>, result: AnyObserver<Result>) -> Observable<State>
 }
 
-public class RxIOEmitter<Input, Output> {
-    fileprivate let inputSubject = ReplaySubject<Input>.create(bufferSize: 1)
-    fileprivate let outputSubject = ReplaySubject<Output>.create(bufferSize: 1)
+internal class RxViewModelSubject<Result, Action> {
+    fileprivate let resultSubject = PublishSubject<Result>()
+    fileprivate let actionSubject = ReplaySubject<Action>.create(bufferSize: 1)
     
-    public init(inputType: Input.Type=Input.self, outputType: Output.Type=Output.self) {
-        
-    }
-        
-    public var input: Observable<Input> {
-        return inputSubject.asObservable()
-    }
-    
-    public var output: AnyObserver<Output> {
-        return outputSubject.asObserver()
-    }
+    public init() {}
 }
 
-public class ViewBinder<Input, Output> {
-    public let input: AnyObserver<Input>
-    public let output: Observable<Output>
-    init<I: ObserverType, O: ObservableType>(_ input: I, _ output: O) where I.E == Input, O.E == Output {
-        self.input = input.asObserver()
-        self.output = output.asObservable()
+public class RxViewModelEmitter<State, Action> {
+    public let state: Observable<State>
+    public let action: AnyObserver<Action>
+    init<S: ObservableType, A: ObserverType>(_ state: S, _ action: A) where S.E == State, A.E == Action {
+        self.state = state.asObservable()
+        self.action = action.asObserver()
     }
 }
 
 extension RxViewModel {
-    public typealias ViewBinder = RxExtensions.ViewBinder<Input, Output>
-    
-    internal func asViewBinder() -> ViewBinder {
-        return ViewBinder(emitter.inputSubject, emitter.outputSubject)
+    public typealias Emitter = RxViewModelEmitter<State, Action>
+
+    internal func emitter() -> (Emitter, Observable<Result>) {
+        let subject = RxViewModelSubject<Result, Action>()
+        let state = self.state(action: subject.actionSubject.asObservable(), result: subject.resultSubject.asObserver())
+        return (RxViewModelEmitter(state, subject.actionSubject.asObserver()), subject.resultSubject.asObservable())
     }
 }
