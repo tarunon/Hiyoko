@@ -33,22 +33,22 @@ extension AccountCell: Reusable {
 }
 
 extension AccountCell {
-    func bind(viewModel: AccountCellViewModel.ViewBinder) -> Disposable {
-        let uiBinding = viewModel.output
+    func bind(viewModel: AccountCellViewModel.Emitter) -> Disposable {
+        let uiBinding = viewModel.state
             .bind { (output) -> Disposable in
                 let d1 = output
-                    .flatMapFirst { Observable.from(optional: $0.userName) }
+                    .flatMapFirst { $0.userName }
                     .bind(to: nameLabel.rx.text)
                 let d2 = output
-                    .flatMapFirst { Observable.from(optional: $0.screenName) }
+                    .flatMapFirst { $0.screenName }
                     .bind(to: screenNameLabel.rx.text)
                 let d3 = output
-                    .flatMapFirst { Observable.from(optional: $0.profileImage) }
+                    .flatMapFirst { $0.profileImage }
                     .bind(to: profileImageView.rx.image)
                 return Disposables.create(d1, d2, d3)
             }
         let delete = deleteButton.rx.tap
-            .bind(to: viewModel.input)
+            .bind(to: viewModel.action)
         return Disposables.create(uiBinding, delete)
     }
 }

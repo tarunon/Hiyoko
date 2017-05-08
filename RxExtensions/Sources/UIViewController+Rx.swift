@@ -105,29 +105,35 @@ extension Reactive where Base: UIViewController {
             }
     }
     
-    private func presentWithViewModel<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable, present: @escaping (Base, V) -> (), dismiss: Observable<Void>) -> Observable<M.Result> {
+    private func presentWithViewModel<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.Emitter) -> Disposable, present: @escaping (Base, V) -> (), dismiss: Observable<Void>) -> Observable<M.Result> {
         return Observable<M.Result>
             .create { [weak base] (observer) -> Disposable in
                 guard let base=base else {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let d1 = binder(viewController)(viewModel.asViewBinder())
-                present(base, viewController)
-                let d2 = viewModel.result
-                    .catchError { error in
-                        dismiss.map { throw error }
-                    }
-                    .concat(
-                        dismiss.flatMap { Observable.empty() }
-                    )
-                    .takeUntil(viewController.rx.deallocated)
-                    .bind(to: observer)
-                return Disposables.create(d1, d2)
+                do {
+                    let (emitter, result) = try viewModel.emitter()
+                    let d1 = binder(viewController)(emitter)
+                    present(base, viewController)
+                    let d2 = result
+                        .catchError { error in
+                            dismiss.map { throw error }
+                        }
+                        .concat(
+                            dismiss.flatMap { Observable.empty() }
+                        )
+                        .takeUntil(viewController.rx.deallocated)
+                        .bind(to: observer)
+                    return Disposables.create(d1, d2)
+                } catch {
+                    observer.onError(error)
+                    return Disposables.create()
+                }
             }
     }
     
-    public func present<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable, animated: Bool) -> Observable<M.Result> {
+    public func present<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.Emitter) -> Disposable, animated: Bool) -> Observable<M.Result> {
         return base.rx
             .presentWithViewModel(
                 viewController: viewController,
@@ -140,7 +146,7 @@ extension Reactive where Base: UIViewController {
             )
     }
     
-    public func push<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable, animated: Bool) -> Observable<M.Result> {
+    public func push<V: UIViewController, M: RxViewModel>(viewController: V, viewModel: M, binder: @escaping (V) -> (M.Emitter) -> Disposable, animated: Bool) -> Observable<M.Result> {
         return base.rx
             .presentWithViewModel(
                 viewController: viewController,
@@ -153,7 +159,7 @@ extension Reactive where Base: UIViewController {
             )
     }
     
-    public func present<V: UIViewController, M: RxViewModel>(viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable) -> Observable<M.Result> {
+    public func present<V: UIViewController, M: RxViewModel>(viewController: V, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: M, binder: @escaping (V) -> (M.Emitter) -> Disposable) -> Observable<M.Result> {
         return base.rx
             .presentWithViewModel(
                 viewController: viewController,
@@ -166,7 +172,7 @@ extension Reactive where Base: UIViewController {
             )
     }
     
-    public func push<V: UIViewController, M: RxViewModel>(viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: M, binder: @escaping (V) -> (M.ViewBinder) -> Disposable) -> Observable<M.Result> {
+    public func push<V: UIViewController, M: RxViewModel>(viewController: V, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil, viewModel: M, binder: @escaping (V) -> (M.Emitter) -> Disposable) -> Observable<M.Result> {
         return base.rx
             .presentWithViewModel(
                 viewController: viewController,

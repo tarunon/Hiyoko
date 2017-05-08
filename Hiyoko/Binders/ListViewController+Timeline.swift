@@ -18,7 +18,7 @@ import Instantiate
 import SafariServices
 
 extension ListViewController {
-    func bind<InitialRequest: PaginationRequest>(viewModel: TimelineViewModel<InitialRequest>.ViewBinder) -> Disposable where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
+    func bind<InitialRequest: PaginationRequest>(viewModel: TimelineViewModel<InitialRequest>.Emitter) -> Disposable where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
         
         tableView.register(type: TweetCell.self)
         tableView.register(type: TweetImageCell.self)
@@ -32,8 +32,8 @@ extension ListViewController {
         let refreshControl = UIRefreshControl()
         tableView.insertSubview(refreshControl, at: 0)
         
-        let d1 = viewModel.output
-            .flatMap { Observable.from(optional: $0.dataSources) }
+        let d1 = viewModel.state
+            .flatMap { $0.dataSources }
             .map { [unowned self] (dataSources) -> ((visibleTopModel: TweetCellModel, offset: CGFloat)?, [AnimatableSection<TweetCellModel>]) in
                 guard let indexPath = self.tableView.indexPathsForVisibleRows?.first else {
                     return (nil, dataSources)
@@ -98,10 +98,11 @@ extension ListViewController {
                             )
                         }
                         return result
+                            .shareReplay(1)
                             .bind { [unowned self] (result) -> Disposable in
                                 let d1 = result
-                                    .flatMap { Observable.from(optional: $0.entities) }
-                                    .flatMapFirst { [unowned self] (entities) -> Observable<Void> in
+                                    .flatMap { $0.entities }
+                                    .flatMapFirst { [unowned self] (entities) -> Observable<TweetResource> in
                                         switch entities {
                                         case .tap(.hashtag(let tag)):
                                             return self.search(query: "#\(tag)", client: element.client)
@@ -111,8 +112,10 @@ extension ListViewController {
                                             return self.profile(screenName: screenName, client: element.client)
                                         case .tap(.url(let url)):
                                             return self.safari(url: url)
+                                                .flatMap { _ in Observable.empty() }
                                         case .tap(.media(let media)):
                                             return self.safari(url: media.mediaURL)
+                                                .flatMap { _ in Observable.empty() }
                                         case .longpress(let entity):
                                             let item: Any
                                             switch entity {
@@ -127,25 +130,28 @@ extension ListViewController {
                                             case .media(let media):
                                                 item = media.mediaURL
                                             }
-                                            return self.share(object: item).map { _ in }
+                                            return self.share(object: item)
+                                                .flatMap { _ in Observable.empty() }
                                         }
                                     }
-                                    .subscribe()
+                                    .map { TimelineViewModel.Action.tweet($0) }
+                                    .concat(Observable.never())
+                                    .bind(to: _viewModel.action)
                                 
                                 let d2 = result
-                                    .flatMap { Observable.from(optional: $0.tweet) }
+                                    .flatMap { $0.tweet }
                                     .map { (tweet) in
                                         switch tweet {
                                         case .favourite:
-                                            return TimelineViewModel.Input.favorite(element.tweet)
+                                            return TimelineViewModel.Action.favorite(element.tweet)
                                         case .retweet:
-                                            return TimelineViewModel.Input.retweet(element.tweet)
+                                            return TimelineViewModel.Action.retweet(element.tweet)
                                         case .reply:
-                                            return TimelineViewModel.Input.reply(element.tweet)
+                                            return TimelineViewModel.Action.reply(element.tweet)
                                         }
                                     }
                                     .concat(Observable.never())
-                                    .bind(to: _viewModel.input)
+                                    .bind(to: _viewModel.action)
                                 
                                 return Disposables.create(d1, d2)
                             }
@@ -179,45 +185,36 @@ extension ListViewController {
             }
             .subscribe()
         
-        let d3 = Observable
-            .merge(
-                rx.stateChange
-                    .filter { $0 == .willAppear }
-                    .take(1)
-                    .map { _ in },
-                refreshControl.rx.controlEvent(.valueChanged)
-                    .map { _ in }
-            )
-            .map { TimelineViewModel<InitialRequest>.Input.reload }
-            .bind(to: viewModel.input)
+        let d3 = refreshControl.rx.controlEvent(.valueChanged)
+            .map { _ in TimelineViewModel<InitialRequest>.Action.reload }
+            .bind(to: viewModel.action)
         
         let d4 = Observable
             .combineLatest(
-                viewModel.output
-                    .flatMap { Observable.from(optional: $0.dataSources) },
+                viewModel.state
+                    .flatMap { $0.dataSources },
                 tableView.rx.willDisplayCell
             ) { ($0, $1) }
             .filter { (data, cell) in
                 data.count - 1 == cell.indexPath.section && data[cell.indexPath.section].items.count - 1 == cell.indexPath.row
             }
-            .map { _ in TimelineViewModel<InitialRequest>.Input.next }
-            .bind(to: viewModel.input)
+            .map { _ in TimelineViewModel<InitialRequest>.Action.next }
+            .bind(to: viewModel.action)
         
-        let d5 = viewModel.output
-            .filter { $0.isFinishLoading }
-            .map { _ in false }
+        let d5 = viewModel.state
+            .flatMap { $0.isLoading }
             .bind(to: refreshControl.rx.isRefreshing)
         
         let d6 = leftButton.rx.tap
-            .map { TimelineViewModel<InitialRequest>.Input.close }
-            .bind(to: viewModel.input)
+            .map { TimelineViewModel<InitialRequest>.Action.close }
+            .bind(to: viewModel.action)
         
         return Disposables.create(d1, d2, d3, d4, d5, d6)
     }
 }
 
 extension ListViewController {
-    fileprivate func search(query: String, client: TwitterClient) -> Observable<Void> {
+    fileprivate func search(query: String, client: TwitterClient) -> Observable<TweetResource> {
         let realmIdentifier = "search_tweet:\(query)"
         return self.rx.push(
             viewController: ListViewController.instantiate(with: .init(title: query)),
@@ -231,7 +228,7 @@ extension ListViewController {
         )
     }
     
-    fileprivate func profile(screenName: String, client: TwitterClient) -> Observable<Void> {
+    fileprivate func profile(screenName: String, client: TwitterClient) -> Observable<TweetResource> {
         let realmIdentifier = "user_timeline:\(screenName)"
         return self.rx.push(
             viewController: ListViewController.instantiate(with: .init(title: screenName)),
@@ -245,7 +242,7 @@ extension ListViewController {
         )
     }
     
-    fileprivate func safari(url: URL) -> Observable<Void> {
+    fileprivate func safari(url: URL) -> Observable<Never> {
         return self.rx.present(
             viewController: SFSafariViewController(url: url),
             viewModel: EmptyViewModel(),

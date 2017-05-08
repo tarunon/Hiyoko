@@ -37,25 +37,30 @@ extension LoginAccount: ActionSheetElement {
 
 public class LoginViewModel: RxViewModel {
     public typealias Result = (OAuthSwiftCredential, [String : Any])
-    public typealias Input = Never
-    public typealias Output = UIViewController
+    public typealias Action = Never
+    public typealias State = UIViewController
     
-    public let result: Observable<(OAuthSwiftCredential, [String : Any])>
-    public var emitter: RxIOEmitter<Never, UIViewController> = RxIOEmitter()
+    let consumerKey: String
+    let consumerSecret: String
     
     public init(consumerKey: String, consumerSecret: String) {
-        result = Observable<(OAuthSwiftCredential, [String : Any])>
-            .create { [emitter = self.emitter] (observer) -> Disposable in
+        self.consumerKey = consumerKey
+        self.consumerSecret = consumerSecret
+    }
+    
+    public func state(action: Observable<Never>, result: AnyObserver<(OAuthSwiftCredential, [String : Any])>) -> Observable<UIViewController> {
+        return Observable<UIViewController>
+            .create { (observer) -> Disposable in
                 let oauth = OAuth1Swift(
-                    consumerKey: consumerKey,
-                    consumerSecret: consumerSecret,
+                    consumerKey: self.consumerKey,
+                    consumerSecret: self.consumerSecret,
                     requestTokenUrl: "https://api.twitter.com/oauth/request_token",
                     authorizeUrl:    "https://api.twitter.com/oauth/authorize",
                     accessTokenUrl:  "https://api.twitter.com/oauth/access_token"
                 )
                 let safariURLHandler = SafariURLHandler(
                     present: { (viewController, _) in
-                        emitter.output.onNext(viewController)
+                        observer.onNext(viewController)
                     }, dismiss: { (viewController, _) in
                         viewController.dismiss(animated: true)
                     }, oauthSwift: oauth
@@ -67,7 +72,7 @@ public class LoginViewModel: RxViewModel {
                             .take(1)
                             .flatMap { _ in Observable.empty() }
                     )
-                    .bind(to: observer)
+                    .bind(to: result)
                 let d2 = Disposables.create { oauth.authorizeURLHandler = OAuthSwiftOpenURLExternally.sharedInstance }
                 return Disposables.create(d1, d2)
             }

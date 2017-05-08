@@ -12,19 +12,20 @@ import RxCocoa
 
 public class ActivityViewModel: RxViewModel {
     public typealias Result = (UIActivityType?, Bool, [Any]?)
-    public typealias Input = Result
-    public typealias Output = Never
-    
-    public let result: Observable<(UIActivityType?, Bool, [Any]?)>
-    public let emitter: RxIOEmitter<Input, Never> = RxIOEmitter()
-    
+    public typealias Action = Result
+    public typealias State = Never
+
     public init() {
-        result = emitter.input
+
+    }
+
+    public func state(action: Observable<ActivityViewModel.Result>, result: AnyObserver<(UIActivityType?, Bool, [Any]?)>) -> Observable<Never> {
+        return Observable.create { _ in action.bind(to: result) }
     }
 }
 
 extension UIActivityViewController {
-    public func bind(viewModel: ActivityViewModel.ViewBinder) -> Disposable {
+    public func bind(viewModel: ActivityViewModel.Emitter) -> Disposable {
         return Observable<ActivityViewModel.Result>
             .create { [unowned self] (observer) -> Disposable in
                 self.completionWithItemsHandler = { (type, success, parameters, error) in
@@ -42,6 +43,6 @@ extension UIActivityViewController {
                 }
                 return Disposables.create()
             }
-            .bind(to: viewModel.input)
+            .bind(to: viewModel.action)
     }
 }

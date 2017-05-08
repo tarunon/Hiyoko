@@ -54,157 +54,165 @@ public class AccountListViewModel: RxViewModel {
         case delete(Account)
         case new(Account, OAuthSwiftCredential)
         
-        var select: Account? {
+        var select: Observable<Account> {
             switch self {
-            case .select(let account): return account
-            default: return nil
+            case .select(let account): return .just(account)
+            default: return .empty()
             }
         }
         
-        var delete: Account? {
+        var delete: Observable<Account> {
             switch self {
-            case .delete(let account): return account
-            default: return nil
+            case .delete(let account): return .just(account)
+            default: return .empty()
             }
         }
         
-        var new: (Account, OAuthSwiftCredential)? {
+        var new: Observable<(Account, OAuthSwiftCredential)> {
             switch self {
-            case .new(let account, let credential): return (account, credential)
-            default: return nil
+            case .new(let account, let credential): return .just((account, credential))
+            default: return .empty()
             }
         }
     }
     
     public typealias Result = (Account, OAuthSwiftCredential)
-    public typealias Input = Action
-    public typealias Output = [AnimatableSection<AccountCellModel>]
+    public typealias State = [AnimatableSection<AccountCellModel>]
     
-    public let result: Observable<(Account, OAuthSwiftCredential)>
-    public let emitter: RxIOEmitter<AccountListViewModel.Action, [AnimatableSection<AccountCellModel>]> = RxIOEmitter()
+    
+    let realm: () throws -> Realm
+    let credentialFor: (Account) -> PersistentStore<OAuthSwiftCredential>
     
     public init(realm: @escaping () throws -> Realm, credentialFor: @escaping (Account) -> PersistentStore<OAuthSwiftCredential>) {
-        result = Observable
-            .create { [emitter = self.emitter] (observer: AnyObserver<Result>) in
-                let _realm: Realm
-                do {
-                    _realm = try realm()
-                } catch {
-                    observer.onError(error)
-                    return Disposables.create()
-                }
-                let models = Observable
-                    .array(
-                        from: Account.objects(_realm).brl
-                            .sorted { $0.createdAt < $1.createdAt }
-                            .confirm()
-                    )
-                    .map { try $0.map { try AccountCellModel.account($0, $0.id, credentialFor($0).restore()) } + [AccountCellModel.new] }
-                    .map { [AnimatableSection(items: $0)] }
-                    .bind(to: emitter.output)
-                
-                let action = emitter.input
+        self.realm = realm
+        self.credentialFor = credentialFor
+    }
+    
+    public func state(action: Observable<AccountListViewModel.Action>, result: AnyObserver<(Account, OAuthSwiftCredential)>) throws -> Observable<[AnimatableSection<AccountCellModel>]> {
+        let realm = try self.realm()
+        let actions = Observable<State>
+            .create { (observer) in
+                return action
                     .shareReplay(1)
-                    .bind  { (action) -> Disposable in
-                        let select = action
-                            .flatMapFirst { Observable.from(optional: $0.select) }
-                            .map { ($0, try credentialFor($0).restore()) }
-                            .bind(to: observer)
-                        let delete = action
-                            .flatMapFirst { Observable.from(optional: $0.delete) }
+                    .bind { (action) -> Disposable in
+                        let d1 = action
+                            .flatMapFirst { $0.select }
+                            .map { ($0, try self.credentialFor($0).restore()) }
+                            .bind(to: result)
+                        let d2 = action
+                            .flatMapFirst { $0.delete }
                             .do(
                                 onNext: { (account) in
-                                    try _realm.write {
-                                        _realm.delete(account)
+                                    try realm.write {
+                                        realm.delete(account)
                                     }
                                 }
                             )
-                            .subscribe()
-                        let new = action
-                            .flatMapFirst { Observable.from(optional: $0.new) }
+                            .flatMap { _ in Observable.empty() }
+                            .bind(to: result)
+                        let d3 = action
+                            .flatMapFirst { $0.new }
                             .shareReplay(1)
                             .bind { (newAccount) -> Disposable in
-                                let store = newAccount
+                                let d1 = newAccount
                                     .do(
                                         onNext: { (account, credential) in
-                                            try credentialFor(account).store(credential)
-                                            let _realm = try realm()
-                                            try _realm.write {
-                                                _realm.add(account, update: true)
+                                            try self.credentialFor(account).store(credential)
+                                            let realm = try self.realm()
+                                            try realm.write {
+                                                realm.add(account, update: true)
                                             }
                                         }
                                     )
-                                    .subscribe()
-                                let select = newAccount
-                                    .bind(to: observer)
-                                return Disposables.create([store, select])
-                            }
-                        return Disposables.create([select, delete, new])
-                    }
-                return Disposables.create([models, action])
-            }
+                                    .observeOn(MainScheduler.instance)
+                                    .bind(to: result)
+                                return Disposables.create(d1, d2)
+                        }
+                        let d4 = action
+                            .flatMap { _ in Observable.empty() }
+                            .bind(to: observer)
+                        return Disposables.create(d1, d2, d3, d4)
+                }
+        }
+        
+        let accounts = Observable
+            .array(
+                from: Account.objects(realm).brl
+                    .sorted { $0.createdAt < $1.createdAt }
+                    .confirm()
+            )
+            .map { try $0.map { try AccountCellModel.account($0, $0.id, self.credentialFor($0).restore()) } + [AccountCellModel.new] }
+            .map { [AnimatableSection(items: $0)] }
+        
+        return Observable
+            .merge(actions, accounts)
+            .shareReplay(1)
     }
 }
 
 final public class AccountCellViewModel: RxViewModel {
     public typealias Result = AccountListViewModel.Action
-    public typealias Input = Void
-    public enum Output {
+    public typealias Action = Void
+    public enum State {
         case userName(String)
         case screenName(String)
         case profileImage(UIImage?)
         
-        public var userName: String? {
+        public var userName: Observable<String> {
             switch self {
-            case .userName(let userName): return userName
-            default: return nil
+            case .userName(let userName): return .just(userName)
+            default: return .empty()
             }
         }
 
-        public var screenName: String? {
+        public var screenName: Observable<String> {
             switch self {
-            case .screenName(let screenName): return screenName
-            default: return nil
+            case .screenName(let screenName): return .just(screenName)
+            default: return .empty()
             }
         }
         
-        public var profileImage: UIImage?? {
+        public var profileImage: Observable<UIImage?> {
             switch self {
-            case .profileImage(let profileImage): return profileImage
-            default: return nil
+            case .profileImage(let profileImage): return .just(profileImage)
+            default: return .empty()
             }
         }
     }
     
-    public let result: Observable<AccountListViewModel.Action>
-    public var emitter: RxIOEmitter<Void, AccountCellViewModel.Output> = RxIOEmitter()
+    let account: Account
+    let client: TwitterClient
     
-    public init(account: Account, apiClient: TwitterClient) {
-        result = Observable
-            .create { [emitter = self.emitter] (observer: AnyObserver<Result>) in
-                let uiBinding = Observable.from(object: account)
-                    .catchError { _ in Observable.empty() }
-                    .shareReplay(1)
-                    .bind { (account) -> Disposable in
-                        let profileImage = account
-                            .flatMap { Observable.from(optional: $0.profileImageURL) }
-                            .flatMap { apiClient.request(request: GetProfileImageRequest(url: $0, quality: .bigger))  }
-                            .map { Output.profileImage($0) }
-                            .observeOn(MainScheduler.instance)
-                            .startWith(Output.profileImage(nil))
-                            .bind(to: emitter.output)
-                        let userName = account
-                            .map { Output.userName($0.userName) }
-                            .bind(to: emitter.output)
-                        let screenName = account
-                            .map { Output.screenName("@" + $0.screenName) }
-                            .bind(to: emitter.output)
-                        return Disposables.create([profileImage, userName, screenName])
-                    }
-                let deleted = emitter.input
-                    .map { Result.delete(account) }
+    public init(account: Account, client: TwitterClient) {
+        self.account = account
+        self.client = client
+    }
+    
+    public func state(action: Observable<Void>, result: AnyObserver<AccountListViewModel.Action>) -> Observable<AccountCellViewModel.State> {
+        let actions = Observable<State>
+            .create { (observer) in
+                let d1 = action
+                    .map { Result.delete(self.account) }
+                    .bind(to: result)
+                let d2 = action
+                    .flatMap { _ in Observable.empty() }
                     .bind(to: observer)
-                return Disposables.create([uiBinding, deleted])
+                return Disposables.create(d1, d2)
             }
+        
+        return Observable<State>
+            .merge(
+                actions,
+                Observable<State>
+                    .of(
+                        .userName(self.account.userName),
+                        .screenName("@" + self.account.screenName)
+                ),
+                Observable.from(optional: account.profileImageURL)
+                    .flatMap { self.client.request(request: GetProfileImageRequest(url: $0, quality: .bigger))  }
+                    .map { UIImage?.some($0) }
+                    .startWith(nil)
+                    .map { State.profileImage($0) }
+        )
     }
 }
