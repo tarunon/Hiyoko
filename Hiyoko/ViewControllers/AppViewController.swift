@@ -40,6 +40,8 @@ class AppViewController: UIViewController {
                             leftButtonConfig: { (button) in
                                 button.layer.cornerRadius = 20.0
                                 button.layer.masksToBounds = true
+                                button.layer.shouldRasterize = true
+                                button.layer.rasterizationScale = UIScreen.main.scale
                                 button.imageView?.contentMode = .scaleToFill
                             }
                         )

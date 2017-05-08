@@ -66,6 +66,8 @@ final class TweetContentImageView: TweetContentViewBase {
         didSet {
             imageCollectionView.registerNib(type: TweetContentImageCell.self)
             imageCollectionView.layer.cornerRadius = 5.0
+            imageCollectionView.layer.shouldRasterize = true
+            imageCollectionView.layer.rasterizationScale = UIScreen.main.scale
             imageCollectionView.layer.masksToBounds = true
         }
     }

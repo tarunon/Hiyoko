@@ -53,6 +53,8 @@ final class TweetCellView: UIView {
         didSet {
             profileImageButton.layer.cornerRadius = 5.0
             profileImageButton.layer.masksToBounds = true
+            profileImageButton.layer.shouldRasterize = true
+            profileImageButton.layer.rasterizationScale = UIScreen.main.scale
         }
     }
     @IBOutlet weak var contentContainerView: UIView!
@@ -116,6 +118,8 @@ final class RetweetCellView: UIView {
         didSet {
             retweetUserIconImageView.layer.cornerRadius = 5.0
             retweetUserIconImageView.layer.masksToBounds = true
+            retweetUserIconImageView.layer.shouldRasterize = true
+            retweetUserIconImageView.layer.rasterizationScale = UIScreen.main.scale
         }
     }
     @IBOutlet weak var retweetUserScreenNameLabel: UILabel!

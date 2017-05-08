@@ -24,12 +24,6 @@
                             <constraint firstAttribute="width" constant="60" id="8kw-pC-qkY"/>
                             <constraint firstAttribute="height" constant="60" id="Alj-To-xNZ"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="5"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="UsM-C4-VaW">
                         <rect key="frame" x="76" y="17.5" width="253" height="41"/>

@@ -18,7 +18,14 @@ import SafariServices
 import Base
 
 final class AccountCell: UITableViewCell {
-    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView! {
+        didSet {
+            profileImageView.layer.cornerRadius = 5.0
+            profileImageView.layer.masksToBounds = true
+            profileImageView.layer.shouldRasterize = true
+            profileImageView.layer.rasterizationScale = UIScreen.main.scale
+        }
+    }
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screenNameLabel: UILabel!
     @IBOutlet weak var deleteButton: UIButton!
