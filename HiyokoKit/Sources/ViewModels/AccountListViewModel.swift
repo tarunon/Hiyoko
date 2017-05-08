@@ -189,8 +189,9 @@ final public class AccountCellViewModel: RxViewModel {
                         let profileImage = account
                             .flatMap { Observable.from(optional: $0.profileImageURL) }
                             .flatMap { apiClient.request(request: GetProfileImageRequest(url: $0, quality: .bigger))  }
-                            .observeOn(MainScheduler.instance)
                             .map { Output.profileImage($0) }
+                            .observeOn(MainScheduler.instance)
+                            .startWith(Output.profileImage(nil))
                             .bind(to: emitter.output)
                         let userName = account
                             .map { Output.userName($0.userName) }

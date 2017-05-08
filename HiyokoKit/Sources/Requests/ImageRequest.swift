@@ -1,5 +1,5 @@
 //
-//  GetImageRequest.swift
+//  ImageRequest.swift
 //  Hiyoko
 //
 //  Created by tarunon on 2017/05/01.
@@ -47,5 +47,24 @@ public struct GetProfileImageRequest: APIClient.Request {
     
     public init(url: URL, quality: Quality = .normal) {
         self.url = quality.apply(url)
+    }
+}
+
+public struct GetEntitiesImageRequest: APIClient.Request {
+    public typealias Response = UIImage
+    public typealias Error = TwitterError
+    
+    public let path: String = "/"
+    public let method: HTTPMethod = .get
+    public let url: URL
+    
+    public func intercept(urlRequest: URLRequest) throws -> URLRequest {
+        var urlRequest = urlRequest
+        urlRequest.url = url
+        return urlRequest
+    }
+    
+    public init(url: URL) {
+        self.url = url
     }
 }

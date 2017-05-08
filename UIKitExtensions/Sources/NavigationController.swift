@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NavigationController<V: UIViewController>: UINavigationController {
+final public class NavigationController<V: UIViewController>: UINavigationController {
     class InteractivePopGestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
         weak var parent: UINavigationController?
         init(parent: UINavigationController?) {
@@ -22,24 +22,15 @@ public class NavigationController<V: UIViewController>: UINavigationController {
     public private(set) var rootViewController: V!
     var interactivePopGestureRecognizerDelegate: InteractivePopGestureRecognizerDelegate?
     
-    public init(rootViewController: V) {
-        self.rootViewController = rootViewController
-        super.init(rootViewController: rootViewController)
-        self.setNavigationBarHidden(true, animated: false)
-        interactivePopGestureRecognizerDelegate = InteractivePopGestureRecognizerDelegate(parent: self)
-        self.interactivePopGestureRecognizer?.delegate = interactivePopGestureRecognizerDelegate
-        self.modalPresentationStyle = rootViewController.modalPresentationStyle
-        self.modalTransitionStyle = rootViewController.modalTransitionStyle
-    }
-    
-    @available(*, unavailable)
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    @available(*, unavailable)
-    public required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public static func instantiate(rootViewController: V) -> NavigationController {
+        let navigationController = NavigationController(rootViewController: rootViewController)
+        navigationController.rootViewController = rootViewController
+        navigationController.setNavigationBarHidden(true, animated: false)
+        navigationController.interactivePopGestureRecognizerDelegate = InteractivePopGestureRecognizerDelegate(parent: navigationController)
+        navigationController.interactivePopGestureRecognizer?.delegate = navigationController.interactivePopGestureRecognizerDelegate
+        navigationController.modalPresentationStyle = rootViewController.modalPresentationStyle
+        navigationController.modalTransitionStyle = rootViewController.modalTransitionStyle
+        return navigationController
     }
     
     public override func viewDidLoad() {

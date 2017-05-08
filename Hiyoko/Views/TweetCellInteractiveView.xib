@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TweetCellInteractiveView" customModule="Hiyoko" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="156"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I90-2U-CIW" customClass="InteractiveScrollView" customModule="Hiyoko" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="156"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="isF-dD-bh4" customClass="IBTweetActionView" customModule="Hiyoko" customModuleProvider="target">
+                            <rect key="frame" x="-375" y="-93.5" width="375" height="343"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ATH-27-Ej8">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="156"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="ATH-27-Ej8" firstAttribute="leading" secondItem="I90-2U-CIW" secondAttribute="leading" id="89J-0e-B0U"/>
+                        <constraint firstItem="isF-dD-bh4" firstAttribute="height" secondItem="ATH-27-Ej8" secondAttribute="height" multiplier="11:5" id="HfO-0c-iJh"/>
+                        <constraint firstItem="ATH-27-Ej8" firstAttribute="leading" secondItem="isF-dD-bh4" secondAttribute="trailing" id="VAz-fY-klu"/>
+                        <constraint firstItem="isF-dD-bh4" firstAttribute="width" secondItem="ATH-27-Ej8" secondAttribute="width" id="bed-H4-PLq"/>
+                        <constraint firstItem="isF-dD-bh4" firstAttribute="centerY" secondItem="I90-2U-CIW" secondAttribute="centerY" id="hB9-d2-qzV"/>
+                        <constraint firstItem="ATH-27-Ej8" firstAttribute="top" secondItem="I90-2U-CIW" secondAttribute="top" id="pvw-ub-BgD"/>
+                        <constraint firstAttribute="bottom" secondItem="ATH-27-Ej8" secondAttribute="bottom" id="qAx-fH-qDc"/>
+                        <constraint firstAttribute="trailing" secondItem="ATH-27-Ej8" secondAttribute="trailing" id="saX-Aq-Xkr"/>
+                    </constraints>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="I90-2U-CIW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="1d5-5u-4SE"/>
+                <constraint firstItem="I90-2U-CIW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="83G-cg-MpJ"/>
+                <constraint firstItem="ATH-27-Ej8" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="W0k-Cj-XME"/>
+                <constraint firstItem="ATH-27-Ej8" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="i64-gk-Rq8"/>
+                <constraint firstAttribute="bottom" secondItem="I90-2U-CIW" secondAttribute="bottom" id="tYz-N5-fpv"/>
+                <constraint firstAttribute="trailing" secondItem="I90-2U-CIW" secondAttribute="trailing" id="uA2-pd-1M7"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="interactiveScrollView" destination="I90-2U-CIW" id="gum-AQ-ov2"/>
+                <outlet property="tweetActionCenter" destination="hB9-d2-qzV" id="Ng2-3T-hoj"/>
+                <outlet property="tweetActionView" destination="isF-dD-bh4" id="ngy-WL-wb0"/>
+                <outlet property="tweetCellContainerView" destination="ATH-27-Ej8" id="vLz-Q2-TMT"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="191"/>
+        </view>
+    </objects>
+</document>

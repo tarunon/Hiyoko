@@ -12,6 +12,7 @@ import Himotoki
 import Illuso
 import Barrel
 import Barrel_Realm
+//import BonMot
 
 public final class Tweet: Object {
     public dynamic var id: Int64 = 0
@@ -29,8 +30,10 @@ public final class Tweet: Object {
     public dynamic var retweetCount: Int = 0
     public let retweeted: RealmOptional<Bool> = RealmOptional()
     public dynamic var retweetedStatus: Tweet? = nil
+    public dynamic var usersRetweetStatus: Tweet? = nil
     public dynamic var text: String = ""
     fileprivate dynamic var _user: User? = nil
+    public dynamic var timeline: Bool = false
     
     fileprivate var _entities: Entities? = nil
     
@@ -70,8 +73,20 @@ extension Tweet {
     }
 }
 
+extension Tweet: HasID {
+    
+}
+
+extension Tweet {
+    public enum Action {
+        case reply
+        case favourite
+        case retweet
+    }
+}
+
 extension Tweet: Decodable {
-    static func from(id: Int64, createdAt: Date, currentUserRetweetId: Int64?, entities: Entities, favoriteCount: Int, favorited: Bool?, filterLevel: String?, inReplyToStatusId: Int64?, inReplyToUserId: Int64?, lang: String?, possiblySensitive: Bool?, quotedStatus: Tweet?, retweetCount: Int, retweeted: Bool?, retweetedStatus: Tweet?, text: String, user: User) -> Tweet {
+    static func from(id: Int64, createdAt: Date, currentUserRetweetId: Int64?, entities: Entities, favoriteCount: Int, favorited: Bool?, filterLevel: String?, inReplyToStatusId: Int64?, inReplyToUserId: Int64?, lang: String?, possiblySensitive: Bool?, quotedStatus: Tweet?, retweetCount: Int, retweeted: Bool?, retweetedStatus: Tweet?, usersRetweetStatus: Tweet?, text: String, user: User) -> Tweet {
         let tweet = Tweet()
         tweet.id = id
         tweet.createdAt = createdAt
@@ -98,7 +113,7 @@ extension Tweet: Decodable {
             id: e <| "id",
             createdAt: Date.Transformers.utcString.apply(e <| "created_at"),
             currentUserRetweetId: e <|? KeyPath(["current_user_retweet", "id"]),
-            entities: e <| "entities",
+            entities: (e <| "entities" as Entities).extend(e <|? "extended_entities"),
             favoriteCount: e <| "favorite_count",
             favorited: e <|? "favorited",
             filterLevel: e <|? "filter_level",
@@ -110,6 +125,7 @@ extension Tweet: Decodable {
             retweetCount: e <| "retweet_count",
             retweeted: e <|? "retweeted",
             retweetedStatus: e <|? "retweeted_status",
+            usersRetweetStatus: e <|? "current_user_retweet",
             text: e <| "text",
             user: e <| "user"
         )
@@ -132,5 +148,17 @@ extension AttributeType where ValueType: Tweet {
     var retweeted: Attribute<Bool?> { return attribute() }
     var retweetedStatus: Attribute<Tweet?> { return attribute() }
     var text: Attribute<String> { return attribute() }
-    var user: Attribute<User> { return attribute("_user") }
+    var user: Attribute<ExpressionWrapper<User>> { return attribute("_user") }
+    var timeline: Attribute<Bool> { return attribute() }
 }
+
+extension Tweet {
+    public var attributedText: NSAttributedString {
+        return entities.attributed(text: text)
+    }
+    
+    public var url: URL {
+        return URL(string: "https://twitter.com/\(user.screenName)/status/\(id)")!
+    }
+}
+

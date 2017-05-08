@@ -8,15 +8,10 @@
 
 import Foundation
 import HiyokoKit
-import Instantiate
-import InstantiateStandard
 import RxSwift
 import RxCocoa
 import RxDataSources
 import RxExtensions
-import SafariServices
-import RealmSwift
-import Persistents
 import OAuthSwift
 import Base
 
@@ -24,19 +19,14 @@ extension ListViewController {
     func bind(viewModel: AccountListViewModel.ViewBinder) -> Disposable {
         tableView.registerNib(type: AccountCell.self)
         tableView.registerNib(type: NewAccountCell.self)
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 64.0
-        rightButton.isHidden = true
-        leftButton.isHidden = true
-        titleLabel.text = "Accounts"
         
         let d1 = viewModel.output
-            .bind(to: tableView.rx.animatedItem()) { [unowned self] (presenter, indexPath, element) -> Disposable in
+            .bind(to: tableView.rx.animatedItem()) { [unowned self] (presenter, element) -> Disposable in
                 switch element {
                 case .account(let account, _, let credential):
                     return presenter
                         .present(
-                            dequeue: { AccountCell.dequeue(from: $0, for: indexPath) },
+                            dequeue: AccountCell.dequeue,
                             viewModel: AccountCellViewModel(account: account, apiClient: TwitterClient(credential: credential)),
                             binder: AccountCell.bind
                         )
@@ -63,7 +53,7 @@ extension ListViewController {
                         .concat(Observable.never())
                         .bind(to: viewModel.input)
                 case .new:
-                    return presenter.present(dequeue: { NewAccountCell.dequeue(from: $0, for: indexPath) })
+                    return presenter.present(dequeue: NewAccountCell.dequeue)
                 }
             }
         

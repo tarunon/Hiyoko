@@ -10,6 +10,7 @@ import Foundation
 import RealmSwift
 import Himotoki
 import Illuso
+import BonMot
 
 public struct Entities {
     public struct Hashtag {
@@ -55,7 +56,7 @@ public struct Entities {
                 public var url: Foundation.URL
             }
             public var aspectRatio: (width: Int, height: Int)
-            public var durationMillis: Int
+            public var durationMillis: Int?
             public var variants: [Variant]
         }
         public var id: Int64
@@ -74,9 +75,18 @@ public struct Entities {
     public var urls: [URL]
     public var mentions: [Mention]
     public var media: [Media]
-    public var extends: [Media]
     
-    static let empty = Entities(hashtags: [], symbols: [], urls: [], mentions: [], media: [], extends: [])
+    static let empty = Entities(hashtags: [], symbols: [], urls: [], mentions: [], media: [])
+    
+    func extend(_ extended: Entities?) -> Entities {
+        return Entities(
+            hashtags: hashtags,
+            symbols: symbols,
+            urls: urls,
+            mentions: mentions,
+            media: (extended?.media).flatMap { $0.isEmpty ? nil : $0 } ?? media
+        )
+    }
 }
 
 extension Entities.Hashtag: Decodable {
@@ -122,8 +132,8 @@ extension Entities.Symbol: Encodable {
 extension Entities.URL: Decodable {
     public static func decode(_ e: Extractor) throws -> Entities.URL {
         return try .init(
-            displayURL: e <| "display_url",
-            expandedURL: e <| "expanded_url",
+            displayURL: e <|? "display_url" ?? e <| "url",
+            expandedURL: e <|? "expanded_url" ?? e <| "url",
             indices: Range.Transformers.array.apply(e <|| "indices"),
             url: e <| "url"
         )
@@ -239,7 +249,7 @@ extension Entities.Media.VideoInfo: Decodable {
     public static func decode(_ e: Extractor) throws -> Entities.Media.VideoInfo {
         return try .init(
             aspectRatio: Transformer<[Int], (width: Int, height: Int)> { ($0[0], $0[1]) }.apply(e <|| "aspect_ratio"),
-            durationMillis: e <| "duration_millis",
+            durationMillis: e <|? "duration_millis",
             variants: e <|| "variants"
         )
     }
@@ -248,7 +258,7 @@ extension Entities.Media.VideoInfo: Decodable {
 extension Entities.Media.VideoInfo: Encodable {
     public func encode() throws -> JSON {
         return try encode(
-            [
+            dictionary: [
                 "aspect_ratio": [aspectRatio.width, aspectRatio.height],
                 "duration_millis": durationMillis,
                 "variants": variants
@@ -298,8 +308,7 @@ extension Entities: Decodable {
             symbols: e <||? "symbols" ?? [],
             urls: e <||? "urls" ?? [],
             mentions: e <||? "user_mentions" ?? [],
-            media: e <||? "media" ?? [],
-            extends: e <||? "extended_entities" ?? []
+            media: e <||? "media" ?? []
         )
     }
 }
@@ -311,10 +320,94 @@ extension Entities: Encodable {
                 "hashtags": hashtags,
                 "symbols": symbols,
                 "urls": urls,
-                "mentions": mentions,
-                "media": media,
-                "extends": extends
+                "user_mentions": mentions,
+                "media": media
             ]
         )
+    }
+}
+
+extension Entities {
+    public enum Action {
+        public enum EntityType {
+            case hashtag(String)
+            case symbol(String)
+            case mention(String)
+            case url(Foundation.URL)
+            case media(Media)
+            
+            public init(_ url: Foundation.URL) {
+                switch (url.scheme, url.host) {
+                case (.some("hiyokoapp"), .some("hashtag")):
+                    self = .hashtag(url.query!.removingPercentEncoding!)
+                case (.some("hiyokoapp"), .some("symbol")):
+                    self = .symbol(url.query!.removingPercentEncoding!)
+                case (.some("hiyokoapp"), .some("mention")):
+                    self = .mention(url.query!)
+                default:
+                    self = .url(url)
+                }
+            }
+        }
+        
+        case tap(EntityType)
+        case longpress(EntityType)
+    }
+}
+
+extension Entities {
+    func attributed(text: String) -> NSAttributedString {
+        var pairs: [(Range<Int>, NSAttributedString)] = []
+        pairs += hashtags.map { (hashtag) in
+            (
+                hashtag.indices,
+                ("#" + hashtag.text).styled(
+                    with: .link(Foundation.URL(string: "hiyokoapp://hashtag?" + hashtag.text.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!)
+                )
+            )
+        }
+        pairs += symbols.map { (symbol) in
+            (
+                symbol.indices,
+                ("#" + symbol.text).styled(
+                    with: .link(Foundation.URL(string: "hiyokoapp://symbol?" + symbol.text.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!)
+                )
+            )
+        }
+        pairs += mentions.map { (mention) in
+            (
+                mention.indices,
+                ("@" + mention.screenName).styled(
+                    with: .link(Foundation.URL(string: "hiyokoapp://mention?" + mention.screenName)!)
+                )
+            )
+        }
+        pairs += urls.map { (url) in
+            (
+                url.indices,
+                url.displayURL.styled(
+                    with: .link(url.expandedURL)
+                )
+            )
+        }
+        pairs += media.first.map { [($0.indices, NSAttributedString(string: ""))] } ?? []
+        
+        pairs.sort(by: { $0.0.lowerBound < $1.0.lowerBound })
+        let progress = pairs
+            .map { $0.0 }
+            .reduce((index: 0, pairs: pairs.map { ($0.lowerBound, $1) }), { (result, indices) -> (index: Int, pairs: [(Int, NSAttributedString)]) in
+                let range = Range(uncheckedBounds: (lower: result.index, upper: indices.lowerBound))
+                return (index: indices.upperBound, pairs: result.pairs + [(result.index, NSAttributedString(string: text.substring(with: range).twitterUnescaped()))])
+            })
+        
+        let results = (
+            progress.pairs +
+                [(progress.index, NSAttributedString(string: text.substring(from: progress.index).twitterUnescaped()))]
+            ).sorted { $0.0 < $1.0 }
+        
+        return results.map { $0.1 }.reduce(NSMutableAttributedString(), { (result: NSMutableAttributedString, part) in
+            result.append(part)
+            return result
+        })
     }
 }

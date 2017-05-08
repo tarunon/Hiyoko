@@ -54,11 +54,27 @@ public final class User: Object {
     }
 }
 
+extension User: HasID {
+    
+}
+
+extension User {
+    public enum Action {
+        case reply
+        case follow
+        case unfollow
+        case block
+        case unblock
+        case mute
+        case unmute
+    }
+}
+
 extension User.Entities: Decodable {
     public static func decode(_ e: Extractor) throws -> User.Entities {
         return try .init(
-            url: e <| "url",
-            userDescription: e <| "description"
+            url: e <|? "url" ?? Entities.empty,
+            userDescription: e <|? "description" ?? Entities.empty
         )
     }
 }
@@ -135,7 +151,7 @@ extension User {
 }
 
 extension User: Decodable {
-    static func from(id: Int64, createdAt: Date, name: String, screenName: String, userDescription: String?, entities: Entities, favouritesCount: Int, followersCount: Int, friendsCount: Int, statusesCount: Int, listedCount: Int, location: String?, profileImageURL: URL?, backgroundImageURL: URL?, protected: Bool, url: URL) -> User {
+    static func from(id: Int64, createdAt: Date, name: String, screenName: String, userDescription: String?, entities: Entities, favouritesCount: Int, followersCount: Int, friendsCount: Int, statusesCount: Int, listedCount: Int, location: String?, profileImageURL: URL?, backgroundImageURL: URL?, protected: Bool, url: URL?) -> User {
         let user = User()
         user.id = id
         user.createdAt = createdAt
@@ -173,7 +189,7 @@ extension User: Decodable {
             profileImageURL: e <|? "profile_image_url_https",
             backgroundImageURL: e <|? "profile_background_image_url_https",
             protected: e <| "protected",
-            url: e <| "url"
+            url: e <|? "url"
         )
     }
 }

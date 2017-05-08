@@ -46,6 +46,10 @@ extension List {
     }
 }
 
+extension List: HasID {
+    
+}
+
 extension List: Decodable {
     static func from(id: Int64, slug: String, name: String, uri: String, createdAt: Date, subscriberCount: Int, mode: String, fullName: String, listDescription: String, following: Bool, user: User) -> List {
         let list = List()

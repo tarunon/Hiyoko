@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TweetActionView" customModule="Hiyoko" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="206" height="213"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gz5-Pb-yWk">
+                    <rect key="frame" x="0.0" y="0.0" width="206" height="19.5"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PsA-Mu-R1j">
+                    <rect key="frame" x="0.0" y="193" width="206" height="19.5"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xM-iF-P4m">
+                    <rect key="frame" x="0.0" y="19.5" width="206" height="58"/>
+                    <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                    <state key="normal" title="Favorite"/>
+                    <state key="selected" title="Unfavorite"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a76-3f-ki9">
+                    <rect key="frame" x="0.0" y="77.5" width="206" height="58"/>
+                    <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                    <state key="normal" title="Reply"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XeJ-PK-pfh">
+                    <rect key="frame" x="0.0" y="135.5" width="206" height="57.5"/>
+                    <color key="backgroundColor" red="0.40000000600000002" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="8" maxY="0.0"/>
+                    <state key="normal" title="Retweet"/>
+                    <state key="selected" title="Unretweet"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="4xM-iF-P4m" secondAttribute="trailing" id="3Zd-Ll-FPI"/>
+                <constraint firstAttribute="bottom" secondItem="PsA-Mu-R1j" secondAttribute="bottom" id="7qh-ey-WZ4"/>
+                <constraint firstItem="4xM-iF-P4m" firstAttribute="height" secondItem="Gz5-Pb-yWk" secondAttribute="height" multiplier="3:1" id="8dF-2C-7pc"/>
+                <constraint firstItem="XeJ-PK-pfh" firstAttribute="height" secondItem="a76-3f-ki9" secondAttribute="height" id="CMI-mU-C2b"/>
+                <constraint firstAttribute="trailing" secondItem="Gz5-Pb-yWk" secondAttribute="trailing" id="CNu-fI-imn"/>
+                <constraint firstItem="Gz5-Pb-yWk" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="F7M-Q0-mkN"/>
+                <constraint firstItem="a76-3f-ki9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="FXz-HV-VQN"/>
+                <constraint firstItem="PsA-Mu-R1j" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="G52-0E-XbN"/>
+                <constraint firstItem="a76-3f-ki9" firstAttribute="top" secondItem="4xM-iF-P4m" secondAttribute="bottom" id="HFD-SO-g8N"/>
+                <constraint firstItem="Gz5-Pb-yWk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="IDN-cA-N1f"/>
+                <constraint firstItem="XeJ-PK-pfh" firstAttribute="height" secondItem="PsA-Mu-R1j" secondAttribute="height" multiplier="3:1" id="Nja-Je-BgK"/>
+                <constraint firstItem="4xM-iF-P4m" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="PhL-i3-tSP"/>
+                <constraint firstItem="a76-3f-ki9" firstAttribute="top" secondItem="4xM-iF-P4m" secondAttribute="bottom" id="YNQ-OJ-EwB"/>
+                <constraint firstItem="XeJ-PK-pfh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bLh-yE-bf6"/>
+                <constraint firstItem="4xM-iF-P4m" firstAttribute="top" secondItem="Gz5-Pb-yWk" secondAttribute="bottom" id="bcU-oU-lrT"/>
+                <constraint firstItem="XeJ-PK-pfh" firstAttribute="top" secondItem="a76-3f-ki9" secondAttribute="bottom" id="czV-8c-Q3w"/>
+                <constraint firstItem="a76-3f-ki9" firstAttribute="height" secondItem="4xM-iF-P4m" secondAttribute="height" id="dcZ-zR-Tu9"/>
+                <constraint firstItem="PsA-Mu-R1j" firstAttribute="top" secondItem="XeJ-PK-pfh" secondAttribute="bottom" id="dtM-H4-39c"/>
+                <constraint firstAttribute="trailing" secondItem="PsA-Mu-R1j" secondAttribute="trailing" id="eat-Qy-sJ3"/>
+                <constraint firstItem="XeJ-PK-pfh" firstAttribute="top" secondItem="a76-3f-ki9" secondAttribute="bottom" id="hYz-Bd-FqR"/>
+                <constraint firstAttribute="trailing" secondItem="a76-3f-ki9" secondAttribute="trailing" id="oSS-WY-USS"/>
+                <constraint firstAttribute="trailing" secondItem="XeJ-PK-pfh" secondAttribute="trailing" id="sfx-KB-hbe"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="favouriteButton" destination="4xM-iF-P4m" id="pqB-xh-rCx"/>
+                <outlet property="replyButton" destination="a76-3f-ki9" id="1dL-xK-j1L"/>
+                <outlet property="retweetButton" destination="XeJ-PK-pfh" id="Z0B-Ub-sc9"/>
+            </connections>
+            <point key="canvasLocation" x="-51" y="-172.5"/>
+        </view>
+    </objects>
+</document>

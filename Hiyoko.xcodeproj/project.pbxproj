@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		7159CE8E7B1EEC1239EEC4DF /* Pods_Hiyoko.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B979C929AC1FF0CF9E146C36 /* Pods_Hiyoko.framework */; };
+		D2019B1B1EBCABD600594AE5 /* LinkActionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2019B191EBCABD500594AE5 /* LinkActionTextView.swift */; };
+		D2019B1D1EBCAC0E00594AE5 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; };
+		D2019B1E1EBCAC0E00594AE5 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
 		D2136BF41EB38D5200237E84 /* HiyokoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2136BEB1EB38D5200237E84 /* HiyokoKit.framework */; };
 		D2136BF91EB38D5200237E84 /* HiyokoKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2136BF81EB38D5200237E84 /* HiyokoKitTests.swift */; };
 		D2136BFB1EB38D5200237E84 /* HiyokoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D2136BED1EB38D5200237E84 /* HiyokoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -19,21 +22,6 @@
 		D22C09341EB4B3120034E928 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22C09321EB4B3050034E928 /* ModelTests.swift */; };
 		D22C09371EB4B5BB0034E928 /* User.json in Resources */ = {isa = PBXBuildFile; fileRef = D22C09351EB4B5B70034E928 /* User.json */; };
 		D22C09391EB4B6770034E928 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; };
-		D22C093B1EB4B6FC0034E928 /* APIKit.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4521EAA64AF004B13D7 /* APIKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093C1EB4B6FC0034E928 /* Barrel_Realm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093D1EB4B6FC0034E928 /* Barrel.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4541EAA64AF004B13D7 /* Barrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093E1EB4B6FC0034E928 /* Himotoki.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C093F1EB4B6FC0034E928 /* Illuso.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4561EAA64AF004B13D7 /* Illuso.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09401EB4B6FC0034E928 /* Instantiate.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4571EAA64AF004B13D7 /* Instantiate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09411EB4B6FC0034E928 /* InstantiateStandard.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4581EAA64AF004B13D7 /* InstantiateStandard.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09421EB4B6FC0034E928 /* KeychainAccess.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5EA1EAB5FC50013CD80 /* KeychainAccess.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09431EB4B6FC0034E928 /* Realm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4591EAA64AF004B13D7 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09441EB4B6FC0034E928 /* RealmSwift.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45A1EAA64AF004B13D7 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09451EB4B6FC0034E928 /* Result.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45B1EAA64AF004B13D7 /* Result.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09461EB4B6FC0034E928 /* RxCocoa.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09471EB4B6FC0034E928 /* RxDataSources.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45E1EAA64AF004B13D7 /* RxDataSources.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09481EB4B6FC0034E928 /* RxRealm.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45F1EAA64AF004B13D7 /* RxRealm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D22C09491EB4B6FC0034E928 /* RxSwift.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C094B1EB4B7620034E928 /* Himotoki.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C094C1EB4B77A0034E928 /* Barrel_Realm.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D22C094D1EB4B77A0034E928 /* Barrel.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC4541EAA64AF004B13D7 /* Barrel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -49,9 +37,42 @@
 		D249489A1EB467B4003B2C87 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45A1EAA64AF004B13D7 /* RealmSwift.framework */; };
 		D249489B1EB467B8003B2C87 /* Himotoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4551EAA64AF004B13D7 /* Himotoki.framework */; };
 		D249489C1EB467B8003B2C87 /* Illuso.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4561EAA64AF004B13D7 /* Illuso.framework */; };
+		D257CDA11EBDFE8E00B56363 /* TweetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */; };
+		D257CDA21EBDFE9300B56363 /* TweetCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */; };
+		D257CDA81EBE1ABD00B56363 /* RetweetCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */; };
+		D257CDAE1EBEEA3C00B56363 /* TweetActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDAD1EBEEA3C00B56363 /* TweetActionView.xib */; };
+		D257CDB01EBEEA5B00B56363 /* UserActionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDAF1EBEEA5B00B56363 /* UserActionView.xib */; };
+		D257CDB21EBEEC4800B56363 /* TweetActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CDB11EBEEC4800B56363 /* TweetActionView.swift */; };
+		D257CDB41EBEF0B100B56363 /* TweetCellInteractiveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D257CDB31EBEF0B100B56363 /* TweetCellInteractiveView.xib */; };
+		D257CDB61EBEF18700B56363 /* TweetCellInteractiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D257CDB51EBEF18700B56363 /* TweetCellInteractiveView.swift */; };
+		D257CDB71EBF22B900B56363 /* TweetCell+Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FD31EBAE4DB0047CCC8 /* TweetCell+Tweet.swift */; };
 		D25FB29C1EB475D20003EFB3 /* Transformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB29A1EB475C10003EFB3 /* Transformers.swift */; };
 		D25FB29D1EB4763D0003EFB3 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
 		D25FB2A21EB47C890003EFB3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25FB2A01EB47C5E0003EFB3 /* User.swift */; };
+		D263FAAF1EBF6A26002E6A32 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; };
+		D263FAB01EBF6A26002E6A32 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2E9955B1EAAF59900771413 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB11EBF6A26002E6A32 /* APIClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2E995801EAAF85C00771413 /* APIClient.framework */; };
+		D263FAB21EBF6A26002E6A32 /* APIClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2E995801EAAF85C00771413 /* APIClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB31EBF6A26002E6A32 /* Persistents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; };
+		D263FAB41EBF6A26002E6A32 /* Persistents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5BD1EAB26910013CD80 /* Persistents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB51EBF6A26002E6A32 /* UIKitExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5F21EAB6D850013CD80 /* UIKitExtensions.framework */; };
+		D263FAB61EBF6A26002E6A32 /* UIKitExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD5F21EAB6D850013CD80 /* UIKitExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB71EBF6A26002E6A32 /* Transitioning.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD6151EAB6E910013CD80 /* Transitioning.framework */; };
+		D263FAB81EBF6A26002E6A32 /* Transitioning.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2EFD6151EAB6E910013CD80 /* Transitioning.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FAB91EBF6A26002E6A32 /* RxExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; };
+		D263FABA1EBF6A26002E6A32 /* RxExtensions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D263FABB1EBF6A26002E6A32 /* HiyokoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2136BEB1EB38D5200237E84 /* HiyokoKit.framework */; };
+		D263FABC1EBF6A26002E6A32 /* HiyokoKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2136BEB1EB38D5200237E84 /* HiyokoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D269F8011EBB33FB0098AD9E /* BonMot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D269F8001EBB33FB0098AD9E /* BonMot.framework */; };
+		D269F8021EBB377F0098AD9E /* BonMot.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D269F8001EBB33FB0098AD9E /* BonMot.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D269F8051EBB3E800098AD9E /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8041EBB3E800098AD9E /* String+Extensions.swift */; };
+		D269F80B1EBB6BCC0098AD9E /* TweetContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */; };
+		D269F80D1EBB6C9D0098AD9E /* TweetContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */; };
+		D269F81D1EBB95590098AD9E /* EmptyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F81B1EBB95450098AD9E /* EmptyViewModel.swift */; };
+		D269F81F1EBC6B8B0098AD9E /* TweetContentImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D269F81E1EBC6B8B0098AD9E /* TweetContentImageCell.xib */; };
+		D269F8211EBC6BA90098AD9E /* TweetContentImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8201EBC6BA90098AD9E /* TweetContentImageCell.swift */; };
+		D269F8241EBC896B0098AD9E /* UIActivityViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8221EBC89330098AD9E /* UIActivityViewController+Rx.swift */; };
+		D269F8261EBC8FAC0098AD9E /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D269F8251EBC8FAC0098AD9E /* Date+String.swift */; };
 		D27305E31EAE3BB10020C710 /* RxExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; };
 		D27305EA1EAE3BB10020C710 /* RxExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305E91EAE3BB10020C710 /* RxExtensionsTests.swift */; };
 		D27305EC1EAE3BB10020C710 /* RxExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D27305DC1EAE3BB10020C710 /* RxExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -78,6 +99,13 @@
 		D29A9FB01EBA39680047CCC8 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FAE1EBA39680047CCC8 /* ProgressViewController.swift */; };
 		D29A9FB41EBA3B250047CCC8 /* ListViewController+Accounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FB21EBA3B250047CCC8 /* ListViewController+Accounts.swift */; };
 		D29A9FB51EBA3B250047CCC8 /* ProgressViewController+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FB31EBA3B250047CCC8 /* ProgressViewController+Login.swift */; };
+		D29A9FC21EBAD2E30047CCC8 /* StatusesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FC01EBAD1D60047CCC8 /* StatusesRequest.swift */; };
+		D29A9FC51EBAD4190047CCC8 /* HasID.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FC31EBAD4040047CCC8 /* HasID.swift */; };
+		D29A9FC81EBAD6650047CCC8 /* Paginations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FC61EBAD64D0047CCC8 /* Paginations.swift */; };
+		D29A9FCB1EBAD6970047CCC8 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */; };
+		D29A9FCF1EBADAD40047CCC8 /* TimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FCE1EBADAD40047CCC8 /* TimelineViewModel.swift */; };
+		D29A9FD21EBAE3CA0047CCC8 /* ListViewController+Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FD01EBAE39C0047CCC8 /* ListViewController+Timeline.swift */; };
+		D29A9FDC1EBB1CBB0047CCC8 /* GenericsBindings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29A9FDA1EBB1BD00047CCC8 /* GenericsBindings.swift */; };
 		D29CCA0B1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */; };
 		D29CCA0D1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */; };
 		D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA121EABA60A0082CA72 /* NavigationController.swift */; };
@@ -85,7 +113,6 @@
 		D2DEB0361EB6E01D003F27B4 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; };
 		D2DEB0391EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0381EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift */; };
 		D2DEB03A1EB6E226003F27B4 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; };
-		D2DEB03B1EB6ED00003F27B4 /* OAuthSwift.framework in Copy Carthage Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2DEB03D1EB6F6F3003F27B4 /* ShowUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB03C1EB6F6F3003F27B4 /* ShowUserRequest.swift */; };
 		D2DEB0411EB70314003F27B4 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0401EB70314003F27B4 /* Account.swift */; };
 		D2DEB0431EB70420003F27B4 /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0421EB70420003F27B4 /* AccountListViewModel.swift */; };
@@ -102,7 +129,7 @@
 		D2DEB0541EB73028003F27B4 /* RxBlocking.framework in Copy Carthage Libraries */ = {isa = PBXBuildFile; fileRef = D24EC45C1EAA64AF004B13D7 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2DEB0671EB7458D003F27B4 /* AccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0651EB74479003F27B4 /* AccountCell.swift */; };
 		D2DEB0681EB7459D003F27B4 /* AccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2DEB0631EB7445D003F27B4 /* AccountCell.xib */; };
-		D2DEB06D1EB77B64003F27B4 /* GetImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB06B1EB77B4E003F27B4 /* GetImageRequest.swift */; };
+		D2DEB06D1EB77B64003F27B4 /* ImageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB06B1EB77B4E003F27B4 /* ImageRequest.swift */; };
 		D2DEB0721EB785AA003F27B4 /* NewAccountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0701EB78592003F27B4 /* NewAccountCell.swift */; };
 		D2DEB0731EB785B1003F27B4 /* NewAccountCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2DEB06E1EB78577003F27B4 /* NewAccountCell.xib */; };
 		D2E186241EBA1ACD003F8295 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E186231EBA1ACD003F8295 /* BorderView.swift */; };
@@ -159,6 +186,8 @@
 		D2F5DFD51EB5B73F004CEBD1 /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45E1EAA64AF004B13D7 /* RxDataSources.framework */; };
 		D2F5DFD61EB5B73F004CEBD1 /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45F1EAA64AF004B13D7 /* RxRealm.framework */; };
 		D2F5DFD71EB5B73F004CEBD1 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
+		D2FCAAE71EBDBA48001B312B /* TweetContentImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */; };
+		D2FCAAEA1EBDBA6A001B312B /* TweetContentQuotedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FCAAE91EBDBA6A001B312B /* TweetContentQuotedView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,38 +383,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D22C093A1EB4B6E80034E928 /* Copy Carthage Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				D2DEB03B1EB6ED00003F27B4 /* OAuthSwift.framework in Copy Carthage Frameworks */,
-				D22C093B1EB4B6FC0034E928 /* APIKit.framework in Copy Carthage Frameworks */,
-				D22C093C1EB4B6FC0034E928 /* Barrel_Realm.framework in Copy Carthage Frameworks */,
-				D22C093D1EB4B6FC0034E928 /* Barrel.framework in Copy Carthage Frameworks */,
-				D22C093E1EB4B6FC0034E928 /* Himotoki.framework in Copy Carthage Frameworks */,
-				D22C093F1EB4B6FC0034E928 /* Illuso.framework in Copy Carthage Frameworks */,
-				D22C09401EB4B6FC0034E928 /* Instantiate.framework in Copy Carthage Frameworks */,
-				D22C09411EB4B6FC0034E928 /* InstantiateStandard.framework in Copy Carthage Frameworks */,
-				D22C09421EB4B6FC0034E928 /* KeychainAccess.framework in Copy Carthage Frameworks */,
-				D22C09431EB4B6FC0034E928 /* Realm.framework in Copy Carthage Frameworks */,
-				D22C09441EB4B6FC0034E928 /* RealmSwift.framework in Copy Carthage Frameworks */,
-				D22C09451EB4B6FC0034E928 /* Result.framework in Copy Carthage Frameworks */,
-				D22C09461EB4B6FC0034E928 /* RxCocoa.framework in Copy Carthage Frameworks */,
-				D22C09471EB4B6FC0034E928 /* RxDataSources.framework in Copy Carthage Frameworks */,
-				D22C09481EB4B6FC0034E928 /* RxRealm.framework in Copy Carthage Frameworks */,
-				D22C09491EB4B6FC0034E928 /* RxSwift.framework in Copy Carthage Frameworks */,
-			);
-			name = "Copy Carthage Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D22C094A1EB4B7530034E928 /* Copy Carthage Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				D269F8021EBB377F0098AD9E /* BonMot.framework in Copy Carthage Libraries */,
 				D2DEB0541EB73028003F27B4 /* RxBlocking.framework in Copy Carthage Libraries */,
 				D2DEB0531EB73023003F27B4 /* RxTest.framework in Copy Carthage Libraries */,
 				D2DEB0521EB72FB4003F27B4 /* KeychainAccess.framework in Copy Carthage Libraries */,
@@ -406,6 +410,23 @@
 			name = "Copy Carthage Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D263FABD1EBF6A26002E6A32 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D263FABA1EBF6A26002E6A32 /* RxExtensions.framework in Embed Frameworks */,
+				D263FAB21EBF6A26002E6A32 /* APIClient.framework in Embed Frameworks */,
+				D263FAB41EBF6A26002E6A32 /* Persistents.framework in Embed Frameworks */,
+				D263FAB01EBF6A26002E6A32 /* Base.framework in Embed Frameworks */,
+				D263FAB81EBF6A26002E6A32 /* Transitioning.framework in Embed Frameworks */,
+				D263FAB61EBF6A26002E6A32 /* UIKitExtensions.framework in Embed Frameworks */,
+				D263FABC1EBF6A26002E6A32 /* HiyokoKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -416,6 +437,7 @@
 		AD511E23C4B9074EBF30E1D2 /* Pods-mstdn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mstdn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-mstdn/Pods-mstdn.debug.xcconfig"; sourceTree = "<group>"; };
 		AE1A2190A4E156EB803B5212 /* libPods-mstdn.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mstdn.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B979C929AC1FF0CF9E146C36 /* Pods_Hiyoko.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hiyoko.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2019B191EBCABD500594AE5 /* LinkActionTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkActionTextView.swift; sourceTree = "<group>"; };
 		D2136BEB1EB38D5200237E84 /* HiyokoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HiyokoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2136BED1EB38D5200237E84 /* HiyokoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HiyokoKit.h; sourceTree = "<group>"; };
 		D2136BEE1EB38D5200237E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -452,8 +474,25 @@
 		D24EC45F1EAA64AF004B13D7 /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
 		D24EC4601EAA64AF004B13D7 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		D24EC4611EAA64AF004B13D7 /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCellView.xib; sourceTree = "<group>"; };
+		D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCellView.swift; sourceTree = "<group>"; };
+		D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RetweetCellView.xib; sourceTree = "<group>"; };
+		D257CDAD1EBEEA3C00B56363 /* TweetActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetActionView.xib; sourceTree = "<group>"; };
+		D257CDAF1EBEEA5B00B56363 /* UserActionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserActionView.xib; sourceTree = "<group>"; };
+		D257CDB11EBEEC4800B56363 /* TweetActionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetActionView.swift; sourceTree = "<group>"; };
+		D257CDB31EBEF0B100B56363 /* TweetCellInteractiveView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCellInteractiveView.xib; sourceTree = "<group>"; };
+		D257CDB51EBEF18700B56363 /* TweetCellInteractiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCellInteractiveView.swift; sourceTree = "<group>"; };
 		D25FB29A1EB475C10003EFB3 /* Transformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transformers.swift; sourceTree = "<group>"; };
 		D25FB2A01EB47C5E0003EFB3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D269F8001EBB33FB0098AD9E /* BonMot.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BonMot.framework; path = Carthage/Build/iOS/BonMot.framework; sourceTree = "<group>"; };
+		D269F8041EBB3E800098AD9E /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentView.xib; sourceTree = "<group>"; };
+		D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetContentView.swift; sourceTree = "<group>"; };
+		D269F81B1EBB95450098AD9E /* EmptyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyViewModel.swift; sourceTree = "<group>"; };
+		D269F81E1EBC6B8B0098AD9E /* TweetContentImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentImageCell.xib; sourceTree = "<group>"; };
+		D269F8201EBC6BA90098AD9E /* TweetContentImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetContentImageCell.swift; sourceTree = "<group>"; };
+		D269F8221EBC89330098AD9E /* UIActivityViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityViewController+Rx.swift"; sourceTree = "<group>"; };
+		D269F8251EBC8FAC0098AD9E /* Date+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		D27305DA1EAE3BB10020C710 /* RxExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D27305DC1EAE3BB10020C710 /* RxExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxExtensions.h; sourceTree = "<group>"; };
 		D27305DD1EAE3BB10020C710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -474,6 +513,14 @@
 		D29A9FAE1EBA39680047CCC8 /* ProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
 		D29A9FB21EBA3B250047CCC8 /* ListViewController+Accounts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListViewController+Accounts.swift"; sourceTree = "<group>"; };
 		D29A9FB31EBA3B250047CCC8 /* ProgressViewController+Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ProgressViewController+Login.swift"; sourceTree = "<group>"; };
+		D29A9FC01EBAD1D60047CCC8 /* StatusesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusesRequest.swift; sourceTree = "<group>"; };
+		D29A9FC31EBAD4040047CCC8 /* HasID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasID.swift; sourceTree = "<group>"; };
+		D29A9FC61EBAD64D0047CCC8 /* Paginations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paginations.swift; sourceTree = "<group>"; };
+		D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		D29A9FCE1EBADAD40047CCC8 /* TimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewModel.swift; sourceTree = "<group>"; };
+		D29A9FD01EBAE39C0047CCC8 /* ListViewController+Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ListViewController+Timeline.swift"; sourceTree = "<group>"; };
+		D29A9FD31EBAE4DB0047CCC8 /* TweetCell+Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TweetCell+Tweet.swift"; sourceTree = "<group>"; };
+		D29A9FDA1EBB1BD00047CCC8 /* GenericsBindings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericsBindings.swift; sourceTree = "<group>"; };
 		D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentDismissTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPopTransitioningDelegate.swift; sourceTree = "<group>"; };
 		D29CCA121EABA60A0082CA72 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
@@ -486,7 +533,7 @@
 		D2DEB0441EB70AA8003F27B4 /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		D2DEB0631EB7445D003F27B4 /* AccountCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccountCell.xib; sourceTree = "<group>"; };
 		D2DEB0651EB74479003F27B4 /* AccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
-		D2DEB06B1EB77B4E003F27B4 /* GetImageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetImageRequest.swift; sourceTree = "<group>"; };
+		D2DEB06B1EB77B4E003F27B4 /* ImageRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageRequest.swift; sourceTree = "<group>"; };
 		D2DEB06E1EB78577003F27B4 /* NewAccountCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAccountCell.xib; sourceTree = "<group>"; };
 		D2DEB0701EB78592003F27B4 /* NewAccountCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAccountCell.swift; sourceTree = "<group>"; };
 		D2E186231EBA1ACD003F8295 /* BorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
@@ -537,6 +584,8 @@
 		D2F5DFA91EB57701004CEBD1 /* SavedSearch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SavedSearch.json; sourceTree = "<group>"; };
 		D2F5DFAB1EB578C2004CEBD1 /* List.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = List.json; sourceTree = "<group>"; };
 		D2F5DFB81EB5AEDD004CEBD1 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentImageView.xib; sourceTree = "<group>"; };
+		D2FCAAE91EBDBA6A001B312B /* TweetContentQuotedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentQuotedView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -551,6 +600,7 @@
 				D24948991EB467B4003B2C87 /* Realm.framework in Frameworks */,
 				D249489A1EB467B4003B2C87 /* RealmSwift.framework in Frameworks */,
 				D249489B1EB467B8003B2C87 /* Himotoki.framework in Frameworks */,
+				D269F8011EBB33FB0098AD9E /* BonMot.framework in Frameworks */,
 				D249489C1EB467B8003B2C87 /* Illuso.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,6 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2891A971EB5BC57000EDF6E /* SafariServices.framework in Frameworks */,
+				D263FAB31EBF6A26002E6A32 /* Persistents.framework in Frameworks */,
 				D297D2051EB5B7BA00215109 /* APIClient.framework in Frameworks */,
 				D297D2061EB5B7BA00215109 /* Base.framework in Frameworks */,
 				D297D2071EB5B7BA00215109 /* HiyokoKit.framework in Frameworks */,
@@ -577,6 +628,8 @@
 				D297D20A1EB5B7BA00215109 /* Transitioning.framework in Frameworks */,
 				D297D20B1EB5B7BA00215109 /* UIKitExtensions.framework in Frameworks */,
 				7159CE8E7B1EEC1239EEC4DF /* Pods_Hiyoko.framework in Frameworks */,
+				D263FABB1EBF6A26002E6A32 /* HiyokoKit.framework in Frameworks */,
+				D263FAB91EBF6A26002E6A32 /* RxExtensions.framework in Frameworks */,
 				D2DEB03A1EB6E226003F27B4 /* OAuthSwift.framework in Frameworks */,
 				D2F5DFC91EB5B73F004CEBD1 /* APIKit.framework in Frameworks */,
 				D2F5DFCA1EB5B73F004CEBD1 /* Barrel_Realm.framework in Frameworks */,
@@ -585,13 +638,17 @@
 				D2F5DFCD1EB5B73F004CEBD1 /* Illuso.framework in Frameworks */,
 				D2F5DFCE1EB5B73F004CEBD1 /* Instantiate.framework in Frameworks */,
 				D2F5DFCF1EB5B73F004CEBD1 /* InstantiateStandard.framework in Frameworks */,
+				D263FAB11EBF6A26002E6A32 /* APIClient.framework in Frameworks */,
 				D2F5DFD01EB5B73F004CEBD1 /* KeychainAccess.framework in Frameworks */,
 				D2F5DFD11EB5B73F004CEBD1 /* Realm.framework in Frameworks */,
 				D2F5DFD21EB5B73F004CEBD1 /* RealmSwift.framework in Frameworks */,
 				D2F5DFD31EB5B73F004CEBD1 /* Result.framework in Frameworks */,
+				D263FAAF1EBF6A26002E6A32 /* Base.framework in Frameworks */,
 				D2F5DFD41EB5B73F004CEBD1 /* RxCocoa.framework in Frameworks */,
+				D263FAB51EBF6A26002E6A32 /* UIKitExtensions.framework in Frameworks */,
 				D2F5DFD51EB5B73F004CEBD1 /* RxDataSources.framework in Frameworks */,
 				D2F5DFD61EB5B73F004CEBD1 /* RxRealm.framework in Frameworks */,
+				D263FAB71EBF6A26002E6A32 /* Transitioning.framework in Frameworks */,
 				D2F5DFD71EB5B73F004CEBD1 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,6 +733,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2019B1D1EBCAC0E00594AE5 /* RxCocoa.framework in Frameworks */,
+				D2019B1E1EBCAC0E00594AE5 /* RxSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -719,6 +778,7 @@
 		A175C251592594B59418BB27 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D269F8001EBB33FB0098AD9E /* BonMot.framework */,
 				D2891A961EB5BC57000EDF6E /* SafariServices.framework */,
 				D24EC4521EAA64AF004B13D7 /* APIKit.framework */,
 				D24EC4531EAA64AF004B13D7 /* Barrel_Realm.framework */,
@@ -839,6 +899,7 @@
 		D249489D1EB4711B003B2C87 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D29A9FC31EBAD4040047CCC8 /* HasID.swift */,
 				D2DEB0441EB70AA8003F27B4 /* Section.swift */,
 				D25FB29A1EB475C10003EFB3 /* Transformers.swift */,
 				D2DEB0401EB70314003F27B4 /* Account.swift */,
@@ -879,6 +940,7 @@
 				D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */,
 				D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */,
 				D273060E1EAE42560020C710 /* Cell+Rx.swift */,
+				D269F8221EBC89330098AD9E /* UIActivityViewController+Rx.swift */,
 				D27305DD1EAE3BB10020C710 /* Info.plist */,
 			);
 			path = Sources;
@@ -927,6 +989,21 @@
 				D2DEB0631EB7445D003F27B4 /* AccountCell.xib */,
 				D2DEB0701EB78592003F27B4 /* NewAccountCell.swift */,
 				D2DEB06E1EB78577003F27B4 /* NewAccountCell.xib */,
+				D257CD9D1EBDFD9400B56363 /* TweetCellView.xib */,
+				D257CDA31EBDFF9500B56363 /* RetweetCellView.xib */,
+				D257CDB51EBEF18700B56363 /* TweetCellInteractiveView.swift */,
+				D257CDB31EBEF0B100B56363 /* TweetCellInteractiveView.xib */,
+				D257CD9F1EBDFE8A00B56363 /* TweetCellView.swift */,
+				D29A9FC91EBAD67E0047CCC8 /* TweetCell.swift */,
+				D257CDB11EBEEC4800B56363 /* TweetActionView.swift */,
+				D257CDAD1EBEEA3C00B56363 /* TweetActionView.xib */,
+				D257CDAF1EBEEA5B00B56363 /* UserActionView.xib */,
+				D269F80C1EBB6C9D0098AD9E /* TweetContentView.swift */,
+				D269F8091EBB6AFE0098AD9E /* TweetContentView.xib */,
+				D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */,
+				D2FCAAE91EBDBA6A001B312B /* TweetContentQuotedView.xib */,
+				D269F8201EBC6BA90098AD9E /* TweetContentImageCell.swift */,
+				D269F81E1EBC6B8B0098AD9E /* TweetContentImageCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -934,8 +1011,11 @@
 		D29A9FB11EBA39730047CCC8 /* Binders */ = {
 			isa = PBXGroup;
 			children = (
+				D29A9FD01EBAE39C0047CCC8 /* ListViewController+Timeline.swift */,
 				D29A9FB21EBA3B250047CCC8 /* ListViewController+Accounts.swift */,
 				D29A9FB31EBA3B250047CCC8 /* ProgressViewController+Login.swift */,
+				D29A9FD31EBAE4DB0047CCC8 /* TweetCell+Tweet.swift */,
+				D29A9FDA1EBB1BD00047CCC8 /* GenericsBindings.swift */,
 			);
 			path = Binders;
 			sourceTree = "<group>";
@@ -944,6 +1024,8 @@
 			isa = PBXGroup;
 			children = (
 				D2DEB0381EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift */,
+				D269F8041EBB3E800098AD9E /* String+Extensions.swift */,
+				D269F8251EBC8FAC0098AD9E /* Date+String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1085,6 +1167,7 @@
 				D2EFD5F41EAB6D850013CD80 /* UIKitExtensions.h */,
 				D29CCA121EABA60A0082CA72 /* NavigationController.swift */,
 				D2E186231EBA1ACD003F8295 /* BorderView.swift */,
+				D2019B191EBCABD500594AE5 /* LinkActionTextView.swift */,
 				D2EFD5F51EAB6D850013CD80 /* Info.plist */,
 			);
 			path = Sources;
@@ -1124,8 +1207,10 @@
 		D2F5DFAD1EB599DF004CEBD1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				D269F81B1EBB95450098AD9E /* EmptyViewModel.swift */,
 				D2DEB0421EB70420003F27B4 /* AccountListViewModel.swift */,
 				D2F5DFB81EB5AEDD004CEBD1 /* LoginViewModel.swift */,
+				D29A9FCE1EBADAD40047CCC8 /* TimelineViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1135,8 +1220,10 @@
 			children = (
 				D2DEB0321EB62434003F27B4 /* Client.swift */,
 				D22A086A1EB5DC15000ED3D5 /* TwitterError.swift */,
+				D29A9FC61EBAD64D0047CCC8 /* Paginations.swift */,
 				D2DEB03C1EB6F6F3003F27B4 /* ShowUserRequest.swift */,
-				D2DEB06B1EB77B4E003F27B4 /* GetImageRequest.swift */,
+				D2DEB06B1EB77B4E003F27B4 /* ImageRequest.swift */,
+				D29A9FC01EBAD1D60047CCC8 /* StatusesRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
@@ -1254,9 +1341,10 @@
 				D2136C031EB38DBA00237E84 /* Sources */,
 				D2136C041EB38DBA00237E84 /* Frameworks */,
 				D2136C051EB38DBA00237E84 /* Resources */,
-				D22C093A1EB4B6E80034E928 /* Copy Carthage Frameworks */,
 				17EF949E3CD74C12BDAEF5F4 /* [CP] Embed Pods Frameworks */,
+				D263FAD71EBF6C32002E6A32 /* Run Carthage Script */,
 				A291BF18FC0A5751613F67F5 /* [CP] Copy Pods Resources */,
+				D263FABD1EBF6A26002E6A32 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1526,8 +1614,9 @@
 				TargetAttributes = {
 					D2136BEA1EB38D5200237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2136BF21EB38D5200237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1536,7 +1625,15 @@
 					};
 					D2136C061EB38DBA00237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 0;
+							};
+						};
 					};
 					D2136C191EB38DBA00237E84 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1545,8 +1642,9 @@
 					};
 					D27305D91EAE3BB10020C710 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D27305E11EAE3BB10020C710 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1555,8 +1653,9 @@
 					};
 					D2E9955A1EAAF59900771413 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2E995621EAAF59900771413 = {
 						CreatedOnToolsVersion = 8.3.1;
@@ -1565,8 +1664,9 @@
 					};
 					D2E9957F1EAAF85C00771413 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2E995871EAAF85C00771413 = {
 						CreatedOnToolsVersion = 8.3.1;
@@ -1576,8 +1676,9 @@
 					};
 					D2EFD5BC1EAB26910013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2EFD5C41EAB26910013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1586,8 +1687,9 @@
 					};
 					D2EFD5F11EAB6D850013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2EFD5F91EAB6D850013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1596,8 +1698,9 @@
 					};
 					D2EFD6141EAB6E910013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = U376YN5H26;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D2EFD61C1EAB6E920013CD80 = {
 						CreatedOnToolsVersion = 8.3.2;
@@ -1663,12 +1766,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2DEB0681EB7459D003F27B4 /* AccountCell.xib in Resources */,
+				D2FCAAEA1EBDBA6A001B312B /* TweetContentQuotedView.xib in Resources */,
+				D257CDA81EBE1ABD00B56363 /* RetweetCellView.xib in Resources */,
 				D2136C141EB38DBA00237E84 /* LaunchScreen.storyboard in Resources */,
 				D29A9FA81EBA39300047CCC8 /* AppViewController.storyboard in Resources */,
 				D2DEB0731EB785B1003F27B4 /* NewAccountCell.xib in Resources */,
+				D257CDA21EBDFE9300B56363 /* TweetCellView.xib in Resources */,
 				D29A9FAF1EBA39680047CCC8 /* ProgressViewController.storyboard in Resources */,
+				D257CDB01EBEEA5B00B56363 /* UserActionView.xib in Resources */,
+				D269F80B1EBB6BCC0098AD9E /* TweetContentView.xib in Resources */,
 				D29A9FAA1EBA39300047CCC8 /* ListViewController.storyboard in Resources */,
+				D2FCAAE71EBDBA48001B312B /* TweetContentImageView.xib in Resources */,
 				D2136C111EB38DBA00237E84 /* Assets.xcassets in Resources */,
+				D257CDB41EBEF0B100B56363 /* TweetCellInteractiveView.xib in Resources */,
+				D257CDAE1EBEEA3C00B56363 /* TweetActionView.xib in Resources */,
+				D269F81F1EBC6B8B0098AD9E /* TweetContentImageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,6 +1923,37 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		D263FAD71EBF6C32002E6A32 /* Run Carthage Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/APIKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/OAuthSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Barrel.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Barrel_Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Himotoki.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Illuso.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Instantiate.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/InstantiateStandard.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/KeychainAccess.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxRealm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/BonMot.framework",
+			);
+			name = "Run Carthage Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1818,13 +1961,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D269F8051EBB3E800098AD9E /* String+Extensions.swift in Sources */,
 				D24948961EB4673A003B2C87 /* Entities.swift in Sources */,
 				D25FB29C1EB475D20003EFB3 /* Transformers.swift in Sources */,
-				D2DEB06D1EB77B64003F27B4 /* GetImageRequest.swift in Sources */,
+				D29A9FC51EBAD4190047CCC8 /* HasID.swift in Sources */,
+				D2DEB06D1EB77B64003F27B4 /* ImageRequest.swift in Sources */,
 				D22A086C1EB5DC1F000ED3D5 /* TwitterError.swift in Sources */,
 				D2DEB0451EB70AA8003F27B4 /* Section.swift in Sources */,
+				D29A9FC21EBAD2E30047CCC8 /* StatusesRequest.swift in Sources */,
 				D2DEB0431EB70420003F27B4 /* AccountListViewModel.swift in Sources */,
+				D269F81D1EBB95590098AD9E /* EmptyViewModel.swift in Sources */,
+				D29A9FCF1EBADAD40047CCC8 /* TimelineViewModel.swift in Sources */,
 				D25FB2A21EB47C890003EFB3 /* User.swift in Sources */,
+				D29A9FC81EBAD6650047CCC8 /* Paginations.swift in Sources */,
 				D2F5DFA51EB4D5E4004CEBD1 /* SavedSearch.swift in Sources */,
 				D2DEB0411EB70314003F27B4 /* Account.swift in Sources */,
 				D22C09531EB4B9EC0034E928 /* Tweet.swift in Sources */,
@@ -1850,11 +1999,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2DEB0721EB785AA003F27B4 /* NewAccountCell.swift in Sources */,
+				D257CDB21EBEEC4800B56363 /* TweetActionView.swift in Sources */,
+				D29A9FDC1EBB1CBB0047CCC8 /* GenericsBindings.swift in Sources */,
+				D257CDA11EBDFE8E00B56363 /* TweetCellView.swift in Sources */,
 				D2DEB0671EB7458D003F27B4 /* AccountCell.swift in Sources */,
 				D29A9FB41EBA3B250047CCC8 /* ListViewController+Accounts.swift in Sources */,
+				D269F8211EBC6BA90098AD9E /* TweetContentImageCell.swift in Sources */,
+				D269F80D1EBB6C9D0098AD9E /* TweetContentView.swift in Sources */,
+				D29A9FCB1EBAD6970047CCC8 /* TweetCell.swift in Sources */,
 				D29A9FA91EBA39300047CCC8 /* AppViewController.swift in Sources */,
+				D257CDB61EBEF18700B56363 /* TweetCellInteractiveView.swift in Sources */,
 				D29A9FB01EBA39680047CCC8 /* ProgressViewController.swift in Sources */,
 				D2136C0A1EB38DBA00237E84 /* AppDelegate.swift in Sources */,
+				D257CDB71EBF22B900B56363 /* TweetCell+Tweet.swift in Sources */,
+				D269F8261EBC8FAC0098AD9E /* Date+String.swift in Sources */,
+				D29A9FD21EBAE3CA0047CCC8 /* ListViewController+Timeline.swift in Sources */,
 				D29A9FAB1EBA39300047CCC8 /* ListViewController.swift in Sources */,
 				D29A9FB51EBA3B250047CCC8 /* ProgressViewController+Login.swift in Sources */,
 			);
@@ -1873,6 +2032,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D27305FD1EAE3C170020C710 /* UIAlertController+Rx.swift in Sources */,
+				D269F8241EBC896B0098AD9E /* UIActivityViewController+Rx.swift in Sources */,
 				D27305FE1EAE3C170020C710 /* UITextField+Rx.swift in Sources */,
 				D27305FF1EAE3C170020C710 /* UIViewController+Rx.swift in Sources */,
 				D273060F1EAE42560020C710 /* Cell+Rx.swift in Sources */,
@@ -1947,6 +2107,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2019B1B1EBCABD600594AE5 /* LinkActionTextView.swift in Sources */,
 				D2E186241EBA1ACD003F8295 /* BorderView.swift in Sources */,
 				D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */,
 			);
@@ -2134,9 +2295,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2149,6 +2312,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.HiyokoKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2162,9 +2326,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2177,6 +2343,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.HiyokoKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2226,14 +2393,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 26DD9E5ACFAF68E864092C8B /* Pods-Hiyoko.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Hiyoko/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Hiyoko;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.hiyokoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -2243,14 +2413,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 46CB08810AD5EFA049E1B04A /* Pods-Hiyoko.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Hiyoko/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Hiyoko;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.hiyokoapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -2304,7 +2477,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2354,7 +2526,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2379,9 +2550,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2394,6 +2567,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.RxExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2407,9 +2581,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2422,6 +2598,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.RxExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2460,9 +2637,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2471,6 +2650,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Base;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2484,9 +2664,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2495,6 +2677,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Base;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2533,9 +2716,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2549,6 +2734,7 @@
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/Carthage/Build/iOS/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.APIClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2562,9 +2748,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2578,6 +2766,7 @@
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/Carthage/Build/iOS/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.APIClient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2619,9 +2808,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2634,6 +2825,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Persistents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2647,9 +2839,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2662,6 +2856,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Persistents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2700,9 +2895,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2715,6 +2912,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.UIKitExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2728,9 +2926,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2743,6 +2943,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.UIKitExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2789,9 +2990,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2800,6 +3003,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Transitioning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -2813,9 +3017,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nobuo Saito (5AH5VXT56E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = U376YN5H26;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -2824,6 +3030,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.Transitioning;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

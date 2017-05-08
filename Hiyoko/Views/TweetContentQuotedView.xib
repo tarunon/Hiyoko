@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="z4s-ju-Nq7" customClass="TweetContentQuotedView" customModule="Hiyoko" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="KRh-sP-Lan" customClass="LinkActionTextView" customModule="UIKitExtensions">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="141"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjG-Rz-fDZ">
+                    <rect key="frame" x="0.0" y="146" width="375" height="34"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="749" verticalHuggingPriority="750" text="usename" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YEb-7b-Fhb">
+                            <rect key="frame" x="8" y="8" width="63" height="17"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="750" text="@screenname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFL-4G-m9M">
+                            <rect key="frame" x="79" y="8" width="288" height="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ENU-6x-fGw" customClass="IBTweetContentView" customModule="Hiyoko" customModuleProvider="target">
+                            <rect key="frame" x="8" y="26" width="359" height="0.0"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="ENU-6x-fGw" firstAttribute="top" secondItem="YEb-7b-Fhb" secondAttribute="bottom" constant="1" id="1D3-1I-Jom"/>
+                        <constraint firstItem="YEb-7b-Fhb" firstAttribute="top" secondItem="TjG-Rz-fDZ" secondAttribute="top" constant="8" id="3Xm-Uz-7Js"/>
+                        <constraint firstItem="YEb-7b-Fhb" firstAttribute="leading" secondItem="TjG-Rz-fDZ" secondAttribute="leading" constant="8" id="3in-nM-xZa"/>
+                        <constraint firstItem="ENU-6x-fGw" firstAttribute="top" secondItem="PFL-4G-m9M" secondAttribute="bottom" constant="1" id="5ED-sL-shn"/>
+                        <constraint firstAttribute="trailing" secondItem="PFL-4G-m9M" secondAttribute="trailing" constant="8" id="Dl5-ca-ct5"/>
+                        <constraint firstAttribute="trailing" secondItem="ENU-6x-fGw" secondAttribute="trailing" constant="8" id="Odq-e7-cEe"/>
+                        <constraint firstItem="ENU-6x-fGw" firstAttribute="leading" secondItem="TjG-Rz-fDZ" secondAttribute="leading" constant="8" id="VjT-36-K2K"/>
+                        <constraint firstAttribute="bottom" secondItem="ENU-6x-fGw" secondAttribute="bottom" constant="8" id="gui-Ov-CKs"/>
+                        <constraint firstItem="PFL-4G-m9M" firstAttribute="top" secondItem="TjG-Rz-fDZ" secondAttribute="top" constant="8" id="pQX-M0-9Z5"/>
+                        <constraint firstItem="PFL-4G-m9M" firstAttribute="leading" secondItem="YEb-7b-Fhb" secondAttribute="trailing" constant="8" id="rF6-e7-MHg"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TjG-Rz-fDZ" secondAttribute="bottom" id="5Sz-c0-dWp"/>
+                <constraint firstItem="KRh-sP-Lan" firstAttribute="top" secondItem="z4s-ju-Nq7" secondAttribute="top" id="AiY-uF-ofQ"/>
+                <constraint firstItem="TjG-Rz-fDZ" firstAttribute="top" secondItem="KRh-sP-Lan" secondAttribute="bottom" constant="5" id="As5-GC-hZS"/>
+                <constraint firstAttribute="bottom" secondItem="TjG-Rz-fDZ" secondAttribute="bottom" priority="750" id="HRb-WJ-ud1"/>
+                <constraint firstItem="TjG-Rz-fDZ" firstAttribute="leading" secondItem="z4s-ju-Nq7" secondAttribute="leading" id="MA6-L2-YuO"/>
+                <constraint firstAttribute="trailing" secondItem="TjG-Rz-fDZ" secondAttribute="trailing" id="Q6D-Dq-ZSD"/>
+                <constraint firstItem="KRh-sP-Lan" firstAttribute="leading" secondItem="z4s-ju-Nq7" secondAttribute="leading" id="clc-gR-KOy"/>
+                <constraint firstAttribute="trailing" secondItem="KRh-sP-Lan" secondAttribute="trailing" id="pit-t9-Rz0"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="quotedContainerView" destination="TjG-Rz-fDZ" id="23l-0C-Gab"/>
+                <outlet property="quotedContentView" destination="ENU-6x-fGw" id="TJK-iM-Ghf"/>
+                <outlet property="quotedScreenNameLabel" destination="PFL-4G-m9M" id="Is8-Sr-Bnm"/>
+                <outlet property="quotedUserNameLabel" destination="YEb-7b-Fhb" id="j4g-Ux-Tgm"/>
+                <outlet property="textView" destination="KRh-sP-Lan" id="mZU-oS-CZm"/>
+            </connections>
+            <point key="canvasLocation" x="-82.5" y="-96"/>
+        </view>
+    </objects>
+</document>
