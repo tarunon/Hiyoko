@@ -76,6 +76,7 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
         case retweet(Tweet)
         case favorite(Tweet)
         case reply(Tweet)
+        case tweet(TweetResource)
         
         var close: Observable<Void> {
             switch self {
@@ -92,23 +93,30 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
             default: return .empty()
             }
         }
+        
+        var tweet: Observable<TweetResource> {
+            switch self {
+            case .tweet(let tweet): return .just(tweet)
+            default: return .empty()
+            }
+        }
     }
     
     public enum State {
         case dataSources([AnimatableSection<TweetCellModel>])
         case isLoading(Bool)
         
-        public var dataSources: [AnimatableSection<TweetCellModel>]? {
+        public var dataSources: Observable<[AnimatableSection<TweetCellModel>]> {
             switch self {
-            case .dataSources(let dataSources): return dataSources
-            default: return nil
+            case .dataSources(let dataSources): return .just(dataSources)
+            default: return .empty()
             }
         }
         
-        public var isLoading: Bool? {
+        public var isLoading: Observable<Bool> {
             switch self {
-            case .isLoading(let isLoading): return isLoading
-            default: return nil
+            case .isLoading(let isLoading): return .just(isLoading)
+            default: return .empty()
             }
         }
     }
@@ -123,7 +131,7 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
         self.initialRequest = initialRequest
     }
     
-    public func state(action: Observable<TimelineViewModel<InitialRequest>.Action>, result: AnyObserver<TweetResource>) -> Observable<TimelineViewModel<InitialRequest>.State> {
+    public func state(action: Observable<TimelineViewModel<InitialRequest>.Action>, result: AnyObserver<TweetResource>) throws -> Observable<TimelineViewModel<InitialRequest>.State> {
         var nextRequest: AnyRequest<InitialRequest.Response, InitialRequest.Error>? = nil
         
         let initialLoad = self.client.request(request: self.initialRequest)
@@ -174,41 +182,29 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
                 onNext: { (tweets) in
                     let realm = try self.realm()
                     try realm.write {
-                        realm.add(tweets)
+                        tweets.forEach { $0.timeline = true }
+                        realm.add(tweets, update: true)
                     }
                 }
             )
             .map { _ in State.isLoading(false) }
         
-        let timeline = Observable<Realm>
-            .create { (observer) -> Disposable in
-                do {
-                    let realm = try self.realm()
-                    observer.onNext(realm)
-                    observer.onCompleted()
-                } catch {
-                    observer.onError(error)
-                }
-                return Disposables.create()
-            }
-            .subscribeOn(MainScheduler.instance)
-            .flatMap { (realm) in
-                Observable
-                    .array(
-                        from: Tweet.objects(realm).brl
-                            .filter { $0.timeline == true }
-                            .sorted { $0.createdAt > $1.createdAt }
-                            .confirm()
-                    )
-            }
+        let realm = try self.realm()
+
+        let timeline = Observable
+            .array(
+                from: Tweet.objects(realm).brl
+                    .filter { $0.timeline == true }
+                    .sorted { $0.createdAt > $1.createdAt }
+                    .confirm()
+            )
             .map { $0.map { TweetCellModel(client: self.client, tweet: $0) } }
             .map { [AnimatableSection(items: $0)] }
             .map { State.dataSources($0) }
         
-        let otherActions = Observable<State>
+        let actions = Observable<State>
             .create { (observer) in
-                observer.onCompleted()
-                return action
+                let d1 = action
                     .bind { (action) -> Disposable in
                         let d1 = action
                             .flatMap { $0.close }
@@ -219,16 +215,23 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
                             .flatMap { $0.reply }
                             .map { TweetResource.reply($0) }
                             .bind(to: result)
-                        return Disposables.create(d1, d2)
+                        let d3 = action
+                            .flatMap { $0.tweet }
+                            .bind(to: result)
+                        return Disposables.create(d1, d2, d3)
                     }
+                let d2 = action
+                    .flatMap { _ in Observable.empty() }
+                    .bind(to: observer)
+                return Disposables.create(d1, d2)
             }
         
         return Observable
             .merge(
                 loading,
                 timeline,
-                otherActions
-        )
+                actions
+            )
     }
 }
 
@@ -354,8 +357,11 @@ public class TweetCellViewModel: RxViewModel {
     public func state(action: Observable<TweetCellViewModel.Action>, result: AnyObserver<TweetCellViewModel.Action>) -> Observable<TweetCellViewModel.State> {
         let actions = Observable<State>
             .create { (observer) in
-                observer.onCompleted()
-                return action.bind(to: result)
+                let d1 = action.bind(to: result)
+                let d2 = action
+                    .flatMap { _ in Observable.empty() }
+                    .bind(to: observer)
+                return Disposables.create(d1, d2)
             }
         
         let presentTweet = tweet.retweetedStatus ?? tweet
@@ -405,7 +411,7 @@ public class TweetCellViewModel: RxViewModel {
                                     .flatMap { self.client.request(request: GetProfileImageRequest(url: $0, quality: .mini)) }
                                     .map { UIImage?.some($0) }
                                     .startWith(nil)
-                                    .map { State.profileImage($0) }
+                                    .map { State.retweet(.profileImage($0)) }
                                     .observeOn(MainScheduler.instance)
                             )
                     }
@@ -433,8 +439,7 @@ public class TweetContentImageCellViewModel: RxViewModel {
     public func state(action: Observable<TweetContentImageCellViewModel.Action>, result: AnyObserver<Entities.Action>) -> Observable<UIImage?> {
         let actions = Observable<State>
             .create { (observer) in
-                observer.onCompleted()
-                return action
+                let d1 = action
                     .map { (action) in
                         switch action {
                         case .tap: return Entities.Action.tap(.media(self.media))
@@ -442,6 +447,10 @@ public class TweetContentImageCellViewModel: RxViewModel {
                         }
                     }
                     .bind(to: result)
+                let d2 = action
+                    .flatMap { _ in Observable.empty() }
+                    .bind(to: observer)
+                return Disposables.create(d1, d2)
             }
         
         return Observable
@@ -449,8 +458,8 @@ public class TweetContentImageCellViewModel: RxViewModel {
                 actions,
                 client.request(request: GetEntitiesImageRequest(url: self.media.mediaURL))
                     .map { UIImage?.some($0) }
-                    .observeOn(MainScheduler.instance)
                     .startWith(nil)
+                    .observeOn(MainScheduler.instance)
         )
     }
 }

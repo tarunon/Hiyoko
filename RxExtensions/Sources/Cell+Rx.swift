@@ -40,10 +40,15 @@ public class TableViewCellPresenter {
         self.cell = cell
         return Observable
             .create { (observer) -> Disposable in
-                let (emitter, result) = viewModel.emitter()
-                let d1 = binder(cell)(emitter)
-                let d2 = result.takeUntil(cell.rx.reused).bind(to: observer)
-                return Disposables.create(d1, d2)
+                do {
+                    let (emitter, result) = try viewModel.emitter()
+                    let d1 = binder(cell)(emitter)
+                    let d2 = result.takeUntil(cell.rx.reused).bind(to: observer)
+                    return Disposables.create(d1, d2)
+                } catch {
+                    observer.onError(error)
+                    return Disposables.create()
+                }
             }
     }
     
@@ -120,11 +125,16 @@ public class CollectionViewCellPresenter {
         self.cell = cell
         return Observable
             .create { (observer) -> Disposable in
-                let (emitter, result) = viewModel.emitter()
-                let d1 = binder(cell)(emitter)
-                let d2 = result.takeUntil(cell.rx.reused).bind(to: observer)
-                return Disposables.create(d1, d2)
-        }
+                do {
+                    let (emitter, result) = try viewModel.emitter()
+                    let d1 = binder(cell)(emitter)
+                    let d2 = result.takeUntil(cell.rx.reused).bind(to: observer)
+                    return Disposables.create(d1, d2)
+                } catch {
+                    observer.onError(error)
+                    return Disposables.create()
+                }
+            }
     }
     
     public func present(dequeue: (_ collectionView: UICollectionView, _ indexPath: IndexPath) -> UICollectionViewCell) -> Disposable {

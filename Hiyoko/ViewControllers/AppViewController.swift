@@ -30,7 +30,7 @@ class AppViewController: UIViewController {
                 binder: ListViewController.bind,
                 animated: false
             )
-            .flatMapFirst { (account, credential) -> Observable<Void> in
+            .flatMapFirst { (account, credential) -> Observable<TweetResource> in
                 let realmIdentifier = "home_timeline:\(account.id)"
                 let client = TwitterClient(credential: credential)
                 let timelineRootViewController = NavigationController.instantiate(
@@ -56,9 +56,10 @@ class AppViewController: UIViewController {
                             client: client,
                             initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
                         ),
-                        binder: NavigationController.bind(binder: ListViewController.bind)
+                        binder: NavigationController.bind(binder: ListViewController.bind),
+                        animated: true
                     )
-           }
+            }
             .subscribe { print($0) }
             .addDisposableTo(disposeBag)
     }

@@ -15,12 +15,12 @@ public protocol RxViewModel {
     associatedtype Action
     associatedtype State
 
-    func state(action: Observable<Action>, result: AnyObserver<Result>) -> Observable<State>
+    func state(action: Observable<Action>, result: AnyObserver<Result>) throws -> Observable<State>
 }
 
 internal class RxViewModelSubject<Result, Action> {
     fileprivate let resultSubject = PublishSubject<Result>()
-    fileprivate let actionSubject = ReplaySubject<Action>.create(bufferSize: 1)
+    fileprivate let actionSubject = PublishSubject<Action>()
     
     public init() {}
 }
@@ -37,9 +37,9 @@ public class RxViewModelEmitter<State, Action> {
 extension RxViewModel {
     public typealias Emitter = RxViewModelEmitter<State, Action>
 
-    internal func emitter() -> (Emitter, Observable<Result>) {
+    internal func emitter() throws -> (Emitter, Observable<Result>) {
         let subject = RxViewModelSubject<Result, Action>()
-        let state = self.state(action: subject.actionSubject.asObservable(), result: subject.resultSubject.asObserver())
+        let state = try self.state(action: subject.actionSubject.asObservable(), result: subject.resultSubject.asObserver()).shareReplay(1)
         return (RxViewModelEmitter(state, subject.actionSubject.asObserver()), subject.resultSubject.asObservable())
     }
 }

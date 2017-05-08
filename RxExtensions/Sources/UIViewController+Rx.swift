@@ -112,19 +112,24 @@ extension Reactive where Base: UIViewController {
                     observer.onCompleted()
                     return Disposables.create()
                 }
-                let (emitter, result) = viewModel.emitter()
-                let d1 = binder(viewController)(emitter)
-                present(base, viewController)
-                let d2 = result
-                    .catchError { error in
-                        dismiss.map { throw error }
-                    }
-                    .concat(
-                        dismiss.flatMap { Observable.empty() }
-                    )
-                    .takeUntil(viewController.rx.deallocated)
-                    .bind(to: observer)
-                return Disposables.create(d1, d2)
+                do {
+                    let (emitter, result) = try viewModel.emitter()
+                    let d1 = binder(viewController)(emitter)
+                    present(base, viewController)
+                    let d2 = result
+                        .catchError { error in
+                            dismiss.map { throw error }
+                        }
+                        .concat(
+                            dismiss.flatMap { Observable.empty() }
+                        )
+                        .takeUntil(viewController.rx.deallocated)
+                        .bind(to: observer)
+                    return Disposables.create(d1, d2)
+                } catch {
+                    observer.onError(error)
+                    return Disposables.create()
+                }
             }
     }
     

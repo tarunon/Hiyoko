@@ -88,10 +88,10 @@ public class AccountListViewModel: RxViewModel {
         self.credentialFor = credentialFor
     }
     
-    public func state(action: Observable<AccountListViewModel.Action>, result: AnyObserver<(Account, OAuthSwiftCredential)>) -> Observable<[AnimatableSection<AccountCellModel>]> {
+    public func state(action: Observable<AccountListViewModel.Action>, result: AnyObserver<(Account, OAuthSwiftCredential)>) throws -> Observable<[AnimatableSection<AccountCellModel>]> {
+        let realm = try self.realm()
         let actions = Observable<State>
             .create { (observer) in
-                observer.onCompleted()
                 return action
                     .shareReplay(1)
                     .bind { (action) -> Disposable in
@@ -103,8 +103,8 @@ public class AccountListViewModel: RxViewModel {
                             .flatMapFirst { $0.delete }
                             .do(
                                 onNext: { (account) in
-                                    try account.realm?.write {
-                                        account.realm?.delete(account)
+                                    try realm.write {
+                                        realm.delete(account)
                                     }
                                 }
                             )
@@ -124,38 +124,29 @@ public class AccountListViewModel: RxViewModel {
                                             }
                                         }
                                     )
+                                    .observeOn(MainScheduler.instance)
                                     .bind(to: result)
                                 return Disposables.create(d1, d2)
                         }
-                        return Disposables.create(d1, d2, d3)
+                        let d4 = action
+                            .flatMap { _ in Observable.empty() }
+                            .bind(to: observer)
+                        return Disposables.create(d1, d2, d3, d4)
                 }
         }
         
-        let accounts = Observable<Realm>
-            .create { (observer) -> Disposable in
-                do {
-                    observer.onNext(try self.realm())
-                    observer.onCompleted()
-                } catch {
-                    observer.onError(error)
-                }
-                return Disposables.create()
-            }
-            .subscribeOn(MainScheduler.instance)
-            .shareReplay(1)
-            .flatMap { (realm) in
-                Observable
-                    .array(
-                        from: Account.objects(realm).brl
-                            .sorted { $0.createdAt < $1.createdAt }
-                            .confirm()
-                    )
-            }
+        let accounts = Observable
+            .array(
+                from: Account.objects(realm).brl
+                    .sorted { $0.createdAt < $1.createdAt }
+                    .confirm()
+            )
             .map { try $0.map { try AccountCellModel.account($0, $0.id, self.credentialFor($0).restore()) } + [AccountCellModel.new] }
             .map { [AnimatableSection(items: $0)] }
         
         return Observable
             .merge(actions, accounts)
+            .shareReplay(1)
     }
 }
 
@@ -200,10 +191,13 @@ final public class AccountCellViewModel: RxViewModel {
     public func state(action: Observable<Void>, result: AnyObserver<AccountListViewModel.Action>) -> Observable<AccountCellViewModel.State> {
         let actions = Observable<State>
             .create { (observer) in
-                observer.onCompleted()
-                return action
+                let d1 = action
                     .map { Result.delete(self.account) }
                     .bind(to: result)
+                let d2 = action
+                    .flatMap { _ in Observable.empty() }
+                    .bind(to: observer)
+                return Disposables.create(d1, d2)
             }
         
         return Observable<State>
@@ -219,7 +213,6 @@ final public class AccountCellViewModel: RxViewModel {
                     .map { UIImage?.some($0) }
                     .startWith(nil)
                     .map { State.profileImage($0) }
-                    .observeOn(MainScheduler.instance)
         )
     }
 }

@@ -16,18 +16,18 @@ import OAuthSwift
 import Base
 
 extension ListViewController {
-    func bind(viewModel: AccountListViewModel.ViewBinder) -> Disposable {
+    func bind(viewModel: AccountListViewModel.Emitter) -> Disposable {
         tableView.registerNib(type: AccountCell.self)
         tableView.registerNib(type: NewAccountCell.self)
         
-        let d1 = viewModel.output
+        let d1 = viewModel.state
             .bind(to: tableView.rx.animatedItem()) { [unowned self] (presenter, element) -> Disposable in
                 switch element {
                 case .account(let account, _, let credential):
                     return presenter
                         .present(
                             dequeue: AccountCell.dequeue,
-                            viewModel: AccountCellViewModel(account: account, apiClient: TwitterClient(credential: credential)),
+                            viewModel: AccountCellViewModel(account: account, client: TwitterClient(credential: credential)),
                             binder: AccountCell.bind
                         )
                         .flatMapFirst { (action) -> Observable<AccountCellViewModel.Result> in
@@ -51,7 +51,7 @@ extension ListViewController {
                             }
                         }
                         .concat(Observable.never())
-                        .bind(to: viewModel.input)
+                        .bind(to: viewModel.action)
                 case .new:
                     return presenter.present(dequeue: NewAccountCell.dequeue)
                 }
@@ -62,7 +62,7 @@ extension ListViewController {
                 let result: Observable<AccountListViewModel.Action>
                 switch element {
                 case .account(let account, _, _):
-                    result = Observable.just(.select(account))
+                    result = .just(.select(account))
                 case .new:
                     result = self.rx
                         .present(
@@ -108,7 +108,7 @@ extension ListViewController {
                         }
                     )
             }
-            .bind(to: viewModel.input)
+            .bind(to: viewModel.action)
         
         return Disposables.create(d1, d2)
     }
