@@ -27,7 +27,7 @@ class AppViewController: UIViewController {
                     realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
-                binder: ListViewController.bind,
+                presenter: ListViewController.present,
                 animated: false
             )
             .flatMapFirst { (account, credential) -> Observable<TweetResource> in
@@ -58,7 +58,7 @@ class AppViewController: UIViewController {
                             client: client,
                             initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
                         ),
-                        binder: NavigationController.bind(binder: ListViewController.bind),
+                        presenter: NavigationController.present(binder: ListViewController.present),
                         animated: true
                     )
             }

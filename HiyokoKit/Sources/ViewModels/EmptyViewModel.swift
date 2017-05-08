@@ -19,7 +19,7 @@ public class EmptyViewModel: RxViewModel {
         
     }
     
-    public func state(action: Observable<Never>, result: AnyObserver<Never>) -> Observable<Never> {
-        return Observable.empty()
+    public func process(action: Observable<Never>) throws -> Process<Never, Never> {
+        return .init(state: Observable.empty(), result: Observable.never())
     }
 }

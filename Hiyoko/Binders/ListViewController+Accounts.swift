@@ -16,48 +16,50 @@ import OAuthSwift
 import Base
 
 extension ListViewController {
-    func bind(viewModel: AccountListViewModel.Emitter) -> Disposable {
+    func present(state: Observable<AccountListViewModel.State>) -> Present<AccountListViewModel.Action> {
         tableView.registerNib(type: AccountCell.self)
         tableView.registerNib(type: NewAccountCell.self)
-        
-        let d1 = viewModel.state
-            .bind(to: tableView.rx.animatedItem()) { [unowned self] (presenter, element) -> Disposable in
+        let actions = state
+            .bind(to: self.tableView.rx.animatedItem()) { [unowned self] (presenter, element) -> Observable<AccountListViewModel.Action> in
                 switch element {
                 case .account(let account, _, let credential):
                     return presenter
                         .present(
                             dequeue: AccountCell.dequeue,
                             viewModel: AccountCellViewModel(account: account, client: TwitterClient(credential: credential)),
-                            binder: AccountCell.bind
+                            presenter: AccountCell.present
                         )
-                        .flatMapFirst { (action) -> Observable<AccountCellViewModel.Result> in
-                            switch action {
-                            case .delete(let account):
-                                return self.rx
-                                    .present(
-                                        viewController: UIAlertController(
-                                            title: "Logout",
-                                            message: "Logout account, and remove from this list.",
-                                            preferredStyle: .alert
-                                        ),
-                                        viewModel: ConfirmViewModel(ok: "OK", cancel: "Cancel"),
-                                        binder: UIAlertController.bind,
-                                        animated: true
-                                    )
-                                    .filter { $0 }
-                                    .map { _ in AccountCellViewModel.Result.delete(account) }
-                            default:
-                                return Observable.just(action)
-                            }
+                        .flatMap { (_) -> Observable<Bool> in
+                            return self.rx
+                                .present(
+                                    viewController: UIAlertController(
+                                        title: "Logout",
+                                        message: "Logout account, and remove from this list.",
+                                        preferredStyle: .alert
+                                    ),
+                                    viewModel: ConfirmViewModel(
+                                        ok: UIAlertAction.Config(title: "OK", style: .default),
+                                        cancel: UIAlertAction.Config(title: "Cancel", style: .default)
+                                    ),
+                                    presenter: UIAlertController.present,
+                                    animated: true
+                                )
                         }
-                        .concat(Observable.never())
-                        .bind(to: viewModel.action)
+                        .filter { $0 }
+                        .map { _ in AccountListViewModel.Action.delete(account) }
                 case .new:
-                    return presenter.present(dequeue: NewAccountCell.dequeue)
+                    return presenter
+                        .present(
+                            dequeue: NewAccountCell.dequeue,
+                            viewModel: EmptyViewModel(),
+                            presenter: NewAccountCell.present
+                        )
+                        .flatMap { _ in Observable.empty() }
                 }
             }
-        
-        let d2 = tableView.rx.modelSelected(AccountCellModel.self)
+            .flatMap { $0.result }
+
+        let select = self.tableView.rx.modelSelected(AccountCellModel.self)
             .flatMapFirst { [unowned self] (element) -> Observable<AccountListViewModel.Action> in
                 let result: Observable<AccountListViewModel.Action>
                 switch element {
@@ -71,7 +73,7 @@ extension ListViewController {
                                 consumerKey: TWITTER_CONSUMER_KEY,
                                 consumerSecret: TWITTER_CONSUMER_SECRET
                             ),
-                            binder: ProgressViewController.bind,
+                            presenter: ProgressViewController.present,
                             animated: true
                         )
                         .flatMapFirst { (credential, parameter) -> Observable<(Account, OAuthSwiftCredential)> in
@@ -93,8 +95,8 @@ extension ListViewController {
                             return self.rx
                                 .present(
                                     viewController: UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert),
-                                    viewModel: AlertViewModel(ok: "OK"),
-                                    binder: UIAlertController.bind,
+                                    viewModel: AlertViewModel(ok: UIAlertAction.Config(title: "OK", style: .default)),
+                                    presenter: UIAlertController.present,
                                     animated: true
                                 )
                                 .flatMap { Observable.empty() }
@@ -106,10 +108,9 @@ extension ListViewController {
                         onCompleted: { [weak self] in
                             self?.deselectAll()
                         }
-                    )
+                )
             }
-            .bind(to: viewModel.action)
         
-        return Disposables.create(d1, d2)
+        return .init(action: Observable.merge(actions, select))
     }
 }

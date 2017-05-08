@@ -13,13 +13,16 @@ import RxCocoa
 import RxExtensions
 
 extension ProgressViewController {
-    func bind(viewModel: LoginViewModel.Emitter) -> Disposable {
-        return viewModel.state
-            .subscribe(
-                onNext: { [weak self] (viewController) in
-                    viewController.modalPresentationStyle = .overFullScreen
-                    self?.present(viewController, animated: true)
-            }
+    func present(state: Observable<LoginViewModel.State>) -> Present<LoginViewModel.Action> {
+        return .init(
+            action: Observable.empty(),
+            bind: state
+                .subscribe(
+                    onNext: { [weak self] (viewController) in
+                        viewController.modalPresentationStyle = .overFullScreen
+                        self?.present(viewController, animated: true)
+                    }
+                )
         )
     }
 }

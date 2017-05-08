@@ -12,17 +12,23 @@ import RxExtensions
 import UIKitExtensions
 
 extension NavigationController {
-    static func bind<M>(binder: @escaping (V) -> (M) -> Disposable) -> (NavigationController<V>) -> (M) -> Disposable {
+    static func present<S, A>(binder: @escaping (V) -> (Observable<S>) -> Present<A>) -> (NavigationController<V>) -> (Observable<S>) -> Present<A> {
         return { (navigationController) in
-            return { (viewModel) in
-                return binder(navigationController.rootViewController)(viewModel)
+            return { (state) in
+                return binder(navigationController.rootViewController)(state)
             }
         }
     }
 }
 
 extension UIViewController {
-    func bind<M>(viewModel: M) -> Disposable {
-        return Disposables.create()
+    func present<S, A>(state: Observable<S>) -> Present<A> {
+        return Present(action: Observable.empty())
+    }
+}
+
+extension UIView {
+    func present<S, A>(state: Observable<S>) -> Present<A> {
+        return Present(action: Observable.empty())
     }
 }

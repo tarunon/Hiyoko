@@ -15,31 +15,52 @@ public protocol RxViewModel {
     associatedtype Action
     associatedtype State
 
-    func state(action: Observable<Action>, result: AnyObserver<Result>) throws -> Observable<State>
+    func process(action: Observable<Action>) throws -> Process<State, Result>
 }
 
-internal class RxViewModelSubject<Result, Action> {
-    fileprivate let resultSubject = PublishSubject<Result>()
-    fileprivate let actionSubject = PublishSubject<Action>()
-    
-    public init() {}
-}
-
-public class RxViewModelEmitter<State, Action> {
-    public let state: Observable<State>
-    public let action: AnyObserver<Action>
-    init<S: ObservableType, A: ObserverType>(_ state: S, _ action: A) where S.E == State, A.E == Action {
+public struct Process<State, Result> {
+    fileprivate let state: Observable<State>
+    fileprivate let result: Observable<Result>
+    public init<S: ObservableType, R: ObservableType>(state: S, result: R) where S.E == State, R.E == Result {
         self.state = state.asObservable()
-        self.action = action.asObserver()
+        self.result = result.asObservable()
     }
 }
 
+public struct Present<Action> {
+    fileprivate let action: Observable<Action>
+    fileprivate let bind: Disposable
+    
+    public init<A: ObservableType>(action: A, bind: Disposable = Disposables.create()) where A.E == Action {
+        self.action = action.asObservable()
+        self.bind = bind
+    }
+    
+    public static func merge(_ presents: Present...) -> Present {
+        return .init(
+            action: Observable.merge(presents.map { $0.action }),
+            bind: Disposables.create(presents.map { $0.bind })
+        )
+    }
+    
+    public static func merge(_ presents: [Present]) -> Present {
+        return .init(
+            action: Observable.merge(presents.map { $0.action }),
+            bind: Disposables.create(presents.map { $0.bind })
+        )
+    }
+}
 extension RxViewModel {
-    public typealias Emitter = RxViewModelEmitter<State, Action>
+    public typealias Presenter = (Observable<State>) -> Present<Action>
 
-    internal func emitter() throws -> (Emitter, Observable<Result>) {
-        let subject = RxViewModelSubject<Result, Action>()
-        let state = try self.state(action: subject.actionSubject.asObservable(), result: subject.resultSubject.asObserver()).shareReplay(1)
-        return (RxViewModelEmitter(state, subject.actionSubject.asObserver()), subject.resultSubject.asObservable())
+    internal func emit(presenter: @escaping Presenter) throws -> Observable<Result> {
+        let subject = PublishSubject<Action>()
+        let process = try self.process(action: subject.asObservable())
+        return Observable.create { (observer) -> Disposable in
+            let d1 = process.result.bind(to: observer)
+            let present = presenter(process.state.concat(Observable.never()).shareReplay(1))
+            let d2 = present.action.bind(to: subject)
+            return Disposables.create(d1, d2, present.bind)
+        }
     }
 }

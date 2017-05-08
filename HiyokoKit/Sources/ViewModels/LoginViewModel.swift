@@ -48,16 +48,16 @@ public class LoginViewModel: RxViewModel {
         self.consumerSecret = consumerSecret
     }
     
-    public func state(action: Observable<Never>, result: AnyObserver<(OAuthSwiftCredential, [String : Any])>) -> Observable<UIViewController> {
-        return Observable<UIViewController>
-            .create { (observer) -> Disposable in
-                let oauth = OAuth1Swift(
-                    consumerKey: self.consumerKey,
-                    consumerSecret: self.consumerSecret,
-                    requestTokenUrl: "https://api.twitter.com/oauth/request_token",
-                    authorizeUrl:    "https://api.twitter.com/oauth/authorize",
-                    accessTokenUrl:  "https://api.twitter.com/oauth/access_token"
-                )
+    public func process(action: Observable<Never>) throws -> Process<UIViewController, (OAuthSwiftCredential, [String : Any])> {
+        let oauth = OAuth1Swift(
+            consumerKey: self.consumerKey,
+            consumerSecret: self.consumerSecret,
+            requestTokenUrl: "https://api.twitter.com/oauth/request_token",
+            authorizeUrl:    "https://api.twitter.com/oauth/authorize",
+            accessTokenUrl:  "https://api.twitter.com/oauth/access_token"
+        )
+        let state = Observable<UIViewController>
+            .create { (observer) in
                 let safariURLHandler = SafariURLHandler(
                     present: { (viewController, _) in
                         observer.onNext(viewController)
@@ -66,15 +66,18 @@ public class LoginViewModel: RxViewModel {
                     }, oauthSwift: oauth
                 )
                 oauth.authorizeURLHandler = safariURLHandler
-                let d1 = oauth.rx.authorize(withCallbackURL: URL(string: "hiyokoapp://oauth_callback/twitter")!)
-                    .amb(
-                        safariURLHandler.rx.methodInvoked(#selector(SafariURLHandler.safariViewControllerDidFinish(_:)))
-                            .take(1)
-                            .flatMap { _ in Observable.empty() }
-                    )
-                    .bind(to: result)
-                let d2 = Disposables.create { oauth.authorizeURLHandler = OAuthSwiftOpenURLExternally.sharedInstance }
+                let d1 = Disposables.create { oauth.authorizeURLHandler = OAuthSwiftOpenURLExternally.sharedInstance }
+                let d2 = safariURLHandler.rx.methodInvoked(#selector(SafariURLHandler.safariViewControllerDidFinish(_:)))
+                    .take(1)
+                    .flatMap { _ in Observable.empty() }
+                    .bind(to: observer)
                 return Disposables.create(d1, d2)
             }
+            .shareReplay(1)
+        return .init(
+            state: state,
+            result: oauth.rx.authorize(withCallbackURL: URL(string: "hiyokoapp://oauth_callback/twitter")!)
+                .takeUntil(state.filter { _ in false })
+        )
     }
 }

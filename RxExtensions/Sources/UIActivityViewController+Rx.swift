@@ -19,30 +19,34 @@ public class ActivityViewModel: RxViewModel {
 
     }
 
-    public func state(action: Observable<ActivityViewModel.Result>, result: AnyObserver<(UIActivityType?, Bool, [Any]?)>) -> Observable<Never> {
-        return Observable.create { _ in action.bind(to: result) }
+    public func process(action: Observable<ActivityViewModel.Result>) throws -> Process<Never, (UIActivityType?, Bool, [Any]?)> {
+        return .init(
+            state: Observable.empty(),
+            result: action
+        )
     }
 }
 
 extension UIActivityViewController {
-    public func bind(viewModel: ActivityViewModel.Emitter) -> Disposable {
-        return Observable<ActivityViewModel.Result>
-            .create { [unowned self] (observer) -> Disposable in
-                self.completionWithItemsHandler = { (type, success, parameters, error) in
-                    if let error = error {
-                        if (error as NSError).code != CocoaError.userCancelled.rawValue {
-                            observer.onError(error)
+    public func present(state: Observable<ActivityViewModel.State>) -> Present<ActivityViewModel.Action> {
+        return .init(
+            action: Observable<ActivityViewModel.Action>
+                .create { [unowned self] (observer) -> Disposable in
+                    self.completionWithItemsHandler = { (type, success, parameters, error) in
+                        if let error = error {
+                            if (error as NSError).code != CocoaError.userCancelled.rawValue {
+                                observer.onError(error)
+                            } else {
+                                observer.onCompleted()
+                            }
                         } else {
+                            observer.onNext((type, success, parameters))
                             observer.onCompleted()
                         }
-                    } else {
-                        observer.onNext((type, success, parameters))
-                        observer.onCompleted()
+                        self.completionWithItemsHandler = nil
                     }
-                    self.completionWithItemsHandler = nil
-                }
-                return Disposables.create()
+                    return Disposables.create()
             }
-            .bind(to: viewModel.action)
+        )
     }
 }
