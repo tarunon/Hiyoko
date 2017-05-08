@@ -112,7 +112,7 @@ extension TweetCellViewType {
 extension RetweetCellViewType {
     fileprivate func bind(retweet viewModel: TweetCellViewModel.Emitter) -> Disposable {
         return viewModel.state
-            .flatMap { $0.retweet }
+            .flatMap { $0.retweetBy }
             .shareReplay(1)
             .bind { [imageView=self.retweetUserIconImageView, label=self.retweetUserScreenNameLabel] (retweet) -> Disposable in
                 guard let imageView = imageView, let label = label else {
