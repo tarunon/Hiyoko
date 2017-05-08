@@ -254,23 +254,23 @@ extension TweetCellInteractiveViewType {
             .distinctUntilChanged()
             .shareReplay(1)
         
-        typealias InteractiveState = (action: Tweet.Action, preAction: Tweet.Action, rate: CGFloat)
+        typealias InteractiveState = (action: Tweet.Action, preAction: Tweet.Action, y: CGFloat)
         
         let interactiveState = self.interactiveScrollView.panGestureRecognizer.rx.event
             .map { $0.location(in: self.interactiveScrollView) }
-            .map { $0.y / self.interactiveScrollView.frame.height }
-            .scan((action: Tweet.Action.reply, preAction: Tweet.Action.reply, rate: 0.5)) { (previousStatus: InteractiveState, rate) -> (InteractiveState) in
-                switch (previousStatus.action, rate) {
-                case (.favourite, let x) where x < 0.9:
-                    return (action: .reply, preAction: previousStatus.action, rate: rate)
-                case (.retweet, let x) where x > 0.1:
-                    return (action: .reply, preAction: previousStatus.action, rate: rate)
-                case (.reply, let x) where x > 1.1:
-                    return (action: .favourite, preAction: previousStatus.action, rate: rate)
-                case (.reply, let x) where x < -0.1:
-                    return (action: .retweet, preAction: previousStatus.action, rate: rate)
+            .map { $0.y - (self.interactiveScrollView.frame.height / 2.0) }
+            .scan((action: Tweet.Action.reply, preAction: Tweet.Action.reply, y: 0)) { (previousStatus: InteractiveState, y) -> (InteractiveState) in
+                switch (previousStatus.action, y) {
+                case (.favourite, let y) where y < 100.0:
+                    return (action: .reply, preAction: previousStatus.action, y: y)
+                case (.retweet, let y) where y > -100.0:
+                    return (action: .reply, preAction: previousStatus.action, y: y)
+                case (.reply, let y) where y > 110.0:
+                    return (action: .favourite, preAction: previousStatus.action, y: y)
+                case (.reply, let y) where y < -110.0:
+                    return (action: .retweet, preAction: previousStatus.action, y: y)
                 default:
-                    return (action: previousStatus.action, preAction: previousStatus.action, rate: rate)
+                    return (action: previousStatus.action, preAction: previousStatus.action, y: y)
                 }
             }
             .shareReplay(1)
@@ -285,14 +285,14 @@ extension TweetCellInteractiveViewType {
         
         let d2 = interactiveState
             .subscribe(
-                onNext: { (action, preAction, rate) in
+                onNext: { (action, preAction, y) in
                     let needsToAnimation: Bool
                     switch (action, preAction) {
                     case (.reply, .reply):
-                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 10) * (rate - 0.5)
+                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 10) * (y / 100.0)
                         needsToAnimation = false
                     case (.reply, _):
-                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 10) * (rate - 0.5)
+                        self.tweetActionCenter.constant = (self.interactiveScrollView.frame.height / 10) * (y / 100.0)
                         needsToAnimation = true
                     case (.retweet, .reply):
                         self.tweetActionCenter.constant = -self.interactiveScrollView.frame.height / 5 * 3
