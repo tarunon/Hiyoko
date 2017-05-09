@@ -105,6 +105,7 @@ extension ListViewController {
                                     .flatMap { Observable.empty() }
                             }
                             .map { Action.new($0, $1) }
+                            .observeOn(MainScheduler.instance)
                     }
                     return result
                         .do(

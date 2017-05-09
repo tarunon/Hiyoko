@@ -183,7 +183,6 @@ extension RetweetCellViewType {
                         .bind(to: self.retweetUserIconImageView.rx.image)
                     let d2 = retweet
                         .flatMap { $0.screenName }
-                        .map { "retweeted by \($0)" }
                         .bind(to: self.retweetUserScreenNameLabel.rx.text)
                     return Disposables.create(d1, d2)
                 }
@@ -276,7 +275,7 @@ extension TweetContentQuotedViewType {
                     let d3 = quoted
                         .flatMap { $0.text }
                         .bind { (attributedText) in
-                            self.textView.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+                            self.quotedContentView.textView.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
                     }
                     return Disposables.create(d1, d2, d3)
             }

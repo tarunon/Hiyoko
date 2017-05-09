@@ -76,8 +76,7 @@ public class LoginReactor: Reactor {
             .shareReplay(1)
         return .init(
             state: state,
-            result: oauth.rx.authorize(withCallbackURL: URL(string: "hiyokoapp://oauth_callback/twitter")!)
-                .takeUntil(state.filter { _ in false })
+            result: oauth.rx.authorize(withCallbackURL: URL(string: "hiyokoapp://oauth_callback/twitter")!).shareReplay(1)
         )
     }
 }

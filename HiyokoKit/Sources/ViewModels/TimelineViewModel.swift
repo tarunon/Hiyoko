@@ -358,7 +358,7 @@ public class TweetCellReactor: Reactor {
                 Observable
                     .of(
                         .userName(presentTweet.user.name),
-                        .screenName(presentTweet.user.screenName),
+                        .screenName("@" + presentTweet.user.screenName),
                         .createdAt(presentTweet.createdAt),
                         .text(presentTweet.attributedText),
                         .favorited(presentTweet.favorited.value ?? false),
@@ -378,7 +378,7 @@ public class TweetCellReactor: Reactor {
                         Observable<State>
                             .of(
                                 .quote(.userName(tweet.user.name)),
-                                .quote(.screenName(tweet.user.screenName)),
+                                .quote(.screenName("@" + tweet.user.screenName)),
                                 .quote(.text(tweet.attributedText))
                         )
                     },
@@ -391,7 +391,7 @@ public class TweetCellReactor: Reactor {
                                 Observable
                                     .of(
                                         .retweetBy(.userName(tweet.user.name)),
-                                        .retweetBy(.screenName(tweet.user.screenName))
+                                        .retweetBy(.screenName("retweeted by @" + tweet.user.screenName))
                                     ),
                                 Observable
                                     .from(optional: tweet.user.profileImageURL)
