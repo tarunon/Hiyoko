@@ -18,11 +18,15 @@ import Instantiate
 import SafariServices
 
 extension ListViewController {
-    struct TimelineView<InitialRequest: PaginationRequest>: View where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
+    class TimelineView<InitialRequest: PaginationRequest>: View where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
         typealias State = TimelineReactor<InitialRequest>.State
         typealias Action = TimelineReactor<InitialRequest>.Action
 
-        let view: ListViewController
+        unowned var view: ListViewController
+
+        init(view: ListViewController) {
+            self.view = view
+        }
 
         func present(state: Observable<State>) -> Present<Action> {
             view.tableView.register(type: TweetCell.self)
@@ -222,7 +226,14 @@ extension ListViewController {
     fileprivate func search(query: String, client: TwitterClient) -> Observable<TweetResource> {
         let realmIdentifier = "search_tweet:\(query)"
         return self.rx.push(
-            viewController: ListViewController.instantiate(with: .init(title: query)),
+            viewController: ListViewController.instantiate(
+                with: .init(
+                    title: query,
+                    leftButtonConfig: { (button) in
+                        button.isHidden = false
+                    }
+                )
+            ),
             view: ListViewController.TimelineView.init,
             reactor: TimelineReactor(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
@@ -236,7 +247,14 @@ extension ListViewController {
     fileprivate func profile(screenName: String, client: TwitterClient) -> Observable<TweetResource> {
         let realmIdentifier = "user_timeline:\(screenName)"
         return self.rx.push(
-            viewController: ListViewController.instantiate(with: .init(title: screenName)),
+            viewController: ListViewController.instantiate(
+                with: .init(
+                    title: screenName,
+                    leftButtonConfig: { (button) in
+                        button.isHidden = false
+                    }
+                )
+            ),
             view: ListViewController.TimelineView.init,
             reactor: TimelineReactor(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },

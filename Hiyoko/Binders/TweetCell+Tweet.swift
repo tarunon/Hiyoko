@@ -143,11 +143,11 @@ extension TweetCellViewType {
                 .map { TweetCellReactor.Action.entities(.tap(.mention($0))) },
             bind: state
                 .shareReplay(1)
-                .bind { [unowned self] (output) -> Disposable in
+                .bind { (output) -> Disposable in
                     let d1 = output
                         .flatMap { $0.profileImage }
-                        .bind { [profileImageButton=self.profileImageButton] (image) in
-                            profileImageButton?.setImage(image, for: .normal)
+                        .bind { (image) in
+                            self.profileImageButton?.setImage(image, for: .normal)
                     }
                     let d2 = output
                         .flatMap { $0.userName }
@@ -177,17 +177,14 @@ extension RetweetCellViewType {
             bind: state
                 .flatMap { $0.retweetBy }
                 .shareReplay(1)
-                .bind { [imageView=self.retweetUserIconImageView, label=self.retweetUserScreenNameLabel] (retweet) -> Disposable in
-                    guard let imageView = imageView, let label = label else {
-                        return Disposables.create()
-                    }
+                .bind { (retweet) -> Disposable in
                     let d1 = retweet
                         .flatMap { $0.profileImage }
-                        .bind(to: imageView.rx.image)
+                        .bind(to: self.retweetUserIconImageView.rx.image)
                     let d2 = retweet
                         .flatMap { $0.screenName }
                         .map { "retweeted by \($0)" }
-                        .bind(to: label.rx.text)
+                        .bind(to: self.retweetUserScreenNameLabel.rx.text)
                     return Disposables.create(d1, d2)
                 }
         )
@@ -210,8 +207,8 @@ extension TweetContentViewType {
                 ),
             bind: state
                 .flatMap { $0.text }
-                .bind { [textView=self.textView] (attributedText) in
-                    textView?.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+                .bind { (attributedText) in
+                    self.textView.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
             }
         )
     }
@@ -229,9 +226,9 @@ extension TweetContentImageViewType {
         
         let d2 = medias.map { $0.count }
             .subscribe(
-                onNext: { [collectionView=self.imageCollectionView] (count) in
+                onNext: { (count) in
                     layout.numberOfItems = count
-                    collectionView?.collectionViewLayout.invalidateLayout()
+                    self.imageCollectionView.collectionViewLayout.invalidateLayout()
             }
         )
 
@@ -269,7 +266,7 @@ extension TweetContentQuotedViewType {
             bind: state
                 .flatMap { $0.quote }
                 .shareReplay(1)
-                .bind { [unowned self] (quoted) -> Disposable in
+                .bind { (quoted) -> Disposable in
                     let d1 = quoted
                         .flatMap { $0.userName }
                         .bind(to: self.quotedUserNameLabel.rx.text)
@@ -278,8 +275,8 @@ extension TweetContentQuotedViewType {
                         .bind(to: self.quotedScreenNameLabel.rx.text)
                     let d3 = quoted
                         .flatMap { $0.text }
-                        .bind { [textView=self.quotedContentView.view.textView] (attributedText) in
-                            textView?.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+                        .bind { (attributedText) in
+                            self.textView.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
                     }
                     return Disposables.create(d1, d2, d3)
             }
@@ -324,8 +321,8 @@ extension TweetCellInteractiveViewType {
         typealias InteractiveState = (action: Tweet.Action, preAction: Tweet.Action, y: CGFloat)
         
         let interactiveState = self.interactiveScrollView.panGestureRecognizer.rx.event
-            .map { [unowned self] in $0.location(in: self.interactiveScrollView) }
-            .map { [unowned self] in $0.y - (self.interactiveScrollView.frame.height / 2.0) }
+            .map { $0.location(in: self.interactiveScrollView) }
+            .map { $0.y - (self.interactiveScrollView.frame.height / 2.0) }
             .scan((action: Tweet.Action.reply, preAction: Tweet.Action.reply, y: 0)) { (previousStatus: InteractiveState, y) -> (InteractiveState) in
                 switch (previousStatus.action, y) {
                 case (.favourite, let y) where y < 100.0:
@@ -345,14 +342,14 @@ extension TweetCellInteractiveViewType {
         
         let d1 = tweetActionEnabled
             .subscribe(
-                onNext: { [unowned self] (flag) in
+                onNext: { (flag) in
                     self.tweetActionView.setEnabled(flag, animated: true)
             }
         )
         
         let d2 = interactiveState
             .subscribe(
-                onNext: { [unowned self] (action, preAction, y) in
+                onNext: { (action, preAction, y) in
                     let needsToAnimation: Bool
                     switch (action, preAction) {
                     case (.reply, .reply):
@@ -387,16 +384,13 @@ extension TweetCellInteractiveViewType {
         
         let d3 = state
             .shareReplay(1)
-            .bind { [actionView=self.tweetActionView] (tweet) -> Disposable in
-                guard let actionView = actionView else {
-                    return Disposables.create()
-                }
+            .bind { (tweet) -> Disposable in
                 let d1 = tweet
                     .flatMap { $0.retweeted }
-                    .bind(to: actionView.retweetButton.rx.isSelected)
+                    .bind(to: self.tweetActionView.retweetButton.rx.isSelected)
                 let d2 = tweet
                     .flatMap { $0.favorited }
-                    .bind(to: actionView.favouriteButton.rx.isSelected)
+                    .bind(to: self.tweetActionView.favouriteButton.rx.isSelected)
                 return Disposables.create(d1, d2)
         }
         

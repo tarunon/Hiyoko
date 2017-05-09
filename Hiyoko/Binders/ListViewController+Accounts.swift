@@ -63,13 +63,13 @@ extension ListViewController {
                 }
 
             let select = view.tableView.rx.modelSelected(AccountCellModel.self)
-                .flatMapFirst { [unowned view] (element) -> Observable<AccountListReactor.Action> in
+                .flatMapFirst { (element) -> Observable<AccountListReactor.Action> in
                     let result: Observable<Action>
                     switch element {
                     case .account(let account, _, _):
                         result = .just(.select(account))
                     case .new:
-                        result = view.rx
+                        result = self.view.rx
                             .present(
                                 viewController: ProgressViewController.instantiate(),
                                 view: ProgressViewController.LoginView.init,
@@ -95,7 +95,7 @@ extension ListViewController {
                                 if error is OAuthSwiftError {
                                     return Observable.empty()
                                 }
-                                return view.rx
+                                return self.view.rx
                                     .present(
                                         viewController: UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert),
                                         view: UIAlertController.AlertView.init,
@@ -109,7 +109,7 @@ extension ListViewController {
                     return result
                         .do(
                             onCompleted: {
-                                view.deselectAll()
+                                self.view.deselectAll()
                             }
                     )
             }

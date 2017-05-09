@@ -24,9 +24,9 @@ extension ProgressViewController {
                 action: Observable.never(),
                 bind: state
                     .subscribe(
-                        onNext: { [weak view] (viewController) in
+                        onNext: { (viewController) in
                             viewController.modalPresentationStyle = .overFullScreen
-                            view?.present(viewController, animated: true)
+                            self.view.present(viewController, animated: true)
                         }
                 )
             )
