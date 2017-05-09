@@ -48,7 +48,7 @@ extension AccountCellModel: IdentifiableType {
     }
 }
 
-public class AccountListViewModel: RxViewModel {
+public class AccountListReactor: Reactor {
     public enum Action {
         case select(Account)
         case delete(Account)
@@ -88,7 +88,7 @@ public class AccountListViewModel: RxViewModel {
         self.credentialFor = credentialFor
     }
     
-    public func process(action: Observable<AccountListViewModel.Action>) throws -> Process<[AnimatableSection<AccountCellModel>], (Account, OAuthSwiftCredential)> {
+    public func process(action: Observable<Action>) throws -> Process<State, Result> {
         let realm = try self.realm()
         
         let result = action
@@ -123,8 +123,8 @@ public class AccountListViewModel: RxViewModel {
     }
 }
 
-final public class AccountCellViewModel: RxViewModel {
-    public typealias Result = AccountListViewModel.Action
+final public class AccountCellReactor: Reactor {
+    public typealias Result = AccountListReactor.Action
     public typealias Action = Void
     public enum State {
         case userName(String)
@@ -161,7 +161,7 @@ final public class AccountCellViewModel: RxViewModel {
         self.client = client
     }
     
-    public func process(action: Observable<Void>) throws -> Process<AccountCellViewModel.State, AccountListViewModel.Action> {
+    public func process(action: Observable<Void>) throws -> Process<State, Result> {
         return .init(
             state: Observable<State>
                 .merge(

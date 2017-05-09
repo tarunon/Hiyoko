@@ -16,101 +16,105 @@ import OAuthSwift
 import Base
 
 extension ListViewController {
-    func present(state: Observable<AccountListViewModel.State>) -> Present<AccountListViewModel.Action> {
-        tableView.registerNib(type: AccountCell.self)
-        tableView.registerNib(type: NewAccountCell.self)
-        let actions = state
-            .bind(to: self.tableView.rx.animatedItem()) { [unowned self] (presenter, element) -> Observable<AccountListViewModel.Action> in
-                switch element {
-                case .account(let account, _, let credential):
-                    return presenter
-                        .present(
-                            dequeue: AccountCell.dequeue,
-                            viewModel: AccountCellViewModel(account: account, client: TwitterClient(credential: credential)),
-                            presenter: AccountCell.present
-                        )
-                        .flatMap { (_) -> Observable<Bool> in
-                            return self.rx
-                                .present(
-                                    viewController: UIAlertController(
-                                        title: "Logout",
-                                        message: "Logout account, and remove from this list.",
-                                        preferredStyle: .alert
-                                    ),
-                                    viewModel: ConfirmViewModel(
-                                        ok: UIAlertAction.Config(title: "OK", style: .default),
-                                        cancel: UIAlertAction.Config(title: "Cancel", style: .default)
-                                    ),
-                                    presenter: UIAlertController.present,
-                                    animated: true
-                                )
-                        }
-                        .filter { $0 }
-                        .map { _ in AccountListViewModel.Action.delete(account) }
-                case .new:
-                    return presenter
-                        .present(
-                            dequeue: NewAccountCell.dequeue,
-                            viewModel: EmptyViewModel(),
-                            presenter: NewAccountCell.present
-                        )
-                        .flatMap { _ in Observable.empty() }
-                }
-            }
-            .flatMap { $0.result }
+    struct AccountListView: View {
+        typealias State = AccountListReactor.State
+        typealias Action = AccountListReactor.Action
+        let view: ListViewController
 
-        let select = self.tableView.rx.modelSelected(AccountCellModel.self)
-            .flatMapFirst { [unowned self] (element) -> Observable<AccountListViewModel.Action> in
-                let result: Observable<AccountListViewModel.Action>
-                switch element {
-                case .account(let account, _, _):
-                    result = .just(.select(account))
-                case .new:
-                    result = self.rx
-                        .present(
-                            viewController: ProgressViewController.instantiate(),
-                            viewModel: LoginViewModel(
-                                consumerKey: TWITTER_CONSUMER_KEY,
-                                consumerSecret: TWITTER_CONSUMER_SECRET
-                            ),
-                            presenter: ProgressViewController.present,
-                            animated: true
-                        )
-                        .flatMapFirst { (credential, parameter) -> Observable<(Account, OAuthSwiftCredential)> in
-                            TwitterClient(credential: credential).request(request: ShowUserRequest(parameter["screen_name"] as! String))
-                                .map { (user) in
-                                    let account = Account()
-                                    account.id = user.id
-                                    account.profileImageURL = user.profileImageURL
-                                    account.screenName = user.screenName
-                                    account.userName = user.name
-                                    return account
-                                }
-                                .map { ($0, credential) }
-                        }
-                        .catchError { (error) in
-                            if error is OAuthSwiftError {
-                                return Observable.empty()
-                            }
-                            return self.rx
-                                .present(
-                                    viewController: UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert),
-                                    viewModel: AlertViewModel(ok: UIAlertAction.Config(title: "OK", style: .default)),
-                                    presenter: UIAlertController.present,
-                                    animated: true
+        func present(state: Observable<State>) -> Present<Action> {
+            view.tableView.registerNib(type: AccountCell.self)
+            view.tableView.registerNib(type: NewAccountCell.self)
+            let actions = state
+                .bind(to: view.tableView.rx.animatedItem()) { [unowned view] (queue, element) -> Observable<AccountListReactor.Action> in
+                    switch element {
+                    case .account(let account, _, let credential):
+                        return queue
+                            .dequeue(
+                                dequeue: AccountCell.dequeue,
+                                reactor: AccountCellReactor(account: account, client: TwitterClient(credential: credential))
+                            )
+                            .flatMap { (_) -> Observable<Bool> in
+                                return view.rx
+                                    .present(
+                                        viewController: UIAlertController(
+                                            title: "Logout",
+                                            message: "Logout account, and remove from this list.",
+                                            preferredStyle: .alert
+                                        ),
+                                        view: UIAlertController.ConfirmView.init,
+                                        reactor: ConfirmReactor(
+                                            ok: UIAlertAction.Config(title: "OK", style: .default),
+                                            cancel: UIAlertAction.Config(title: "Cancel", style: .default)
+                                        ),
+                                        animated: true
                                 )
-                                .flatMap { Observable.empty() }
-                        }
-                        .map { AccountListViewModel.Action.new($0, $1) }
+                            }
+                            .filter { $0 }
+                            .map { _ in AccountListReactor.Action.delete(account) }
+                    case .new:
+                        return queue
+                            .dequeue(
+                                dequeue: NewAccountCell.dequeue,
+                                view: EmptyView.init,
+                                reactor: EmptyReactor()
+                            )
+                            .flatMap { _ in Observable.empty() }
+                    }
                 }
-                return result
-                    .do(
-                        onCompleted: { [weak self] in
-                            self?.deselectAll()
-                        }
-                )
+
+            let select = view.tableView.rx.modelSelected(AccountCellModel.self)
+                .flatMapFirst { [unowned view] (element) -> Observable<AccountListReactor.Action> in
+                    let result: Observable<Action>
+                    switch element {
+                    case .account(let account, _, _):
+                        result = .just(.select(account))
+                    case .new:
+                        result = view.rx
+                            .present(
+                                viewController: ProgressViewController.instantiate(),
+                                view: ProgressViewController.LoginView.init,
+                                reactor: LoginReactor(
+                                    consumerKey: TWITTER_CONSUMER_KEY,
+                                    consumerSecret: TWITTER_CONSUMER_SECRET
+                                ),
+                                animated: true
+                            )
+                            .flatMapFirst { (credential, parameter) -> Observable<(Account, OAuthSwiftCredential)> in
+                                TwitterClient(credential: credential).request(request: ShowUserRequest(parameter["screen_name"] as! String))
+                                    .map { (user) in
+                                        let account = Account()
+                                        account.id = user.id
+                                        account.profileImageURL = user.profileImageURL
+                                        account.screenName = user.screenName
+                                        account.userName = user.name
+                                        return account
+                                    }
+                                    .map { ($0, credential) }
+                            }
+                            .catchError { (error) in
+                                if error is OAuthSwiftError {
+                                    return Observable.empty()
+                                }
+                                return view.rx
+                                    .present(
+                                        viewController: UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert),
+                                        view: UIAlertController.AlertView.init,
+                                        reactor: AlertReactor(ok: UIAlertAction.Config(title: "OK", style: .default)),
+                                        animated: true
+                                    )
+                                    .flatMap { Observable.empty() }
+                            }
+                            .map { Action.new($0, $1) }
+                    }
+                    return result
+                        .do(
+                            onCompleted: {
+                                view.deselectAll()
+                            }
+                    )
             }
-        
-        return .init(action: Observable.merge(actions, select))
+            
+            return .init(action: Observable.merge(actions, select))
+        }
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-public class ActivityViewModel: RxViewModel {
+public class ActivityReactor: Reactor {
     public typealias Result = (UIActivityType?, Bool, [Any]?)
     public typealias Action = Result
     public typealias State = Never
@@ -19,18 +19,21 @@ public class ActivityViewModel: RxViewModel {
 
     }
 
-    public func process(action: Observable<ActivityViewModel.Result>) throws -> Process<Never, (UIActivityType?, Bool, [Any]?)> {
+    public func process(action: Observable<ActivityReactor.Result>) throws -> Process<Never, (UIActivityType?, Bool, [Any]?)> {
         return .init(
-            state: Observable.empty(),
+            state: Observable.never(),
             result: action
         )
     }
 }
 
-extension UIActivityViewController {
-    public func present(state: Observable<ActivityViewModel.State>) -> Present<ActivityViewModel.Action> {
+extension UIActivityViewController: View {
+    public typealias Action = ActivityReactor.Result
+    public typealias State = Never
+
+    public func present(state: Observable<Never>) -> Present<ActivityReactor.Action> {
         return .init(
-            action: Observable<ActivityViewModel.Action>
+            action: Observable<ActivityReactor.Action>
                 .create { [unowned self] (observer) -> Disposable in
                     self.completionWithItemsHandler = { (type, success, parameters, error) in
                         if let error = error {

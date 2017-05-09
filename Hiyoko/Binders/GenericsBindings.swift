@@ -12,23 +12,9 @@ import RxExtensions
 import UIKitExtensions
 
 extension NavigationController {
-    static func present<S, A>(binder: @escaping (V) -> (Observable<S>) -> Present<A>) -> (NavigationController<V>) -> (Observable<S>) -> Present<A> {
+    static func view<A>(view: @escaping (V) -> (A)) -> (NavigationController<V>) -> A {
         return { (navigationController) in
-            return { (state) in
-                return binder(navigationController.rootViewController)(state)
-            }
+            return view(navigationController.rootViewController)
         }
-    }
-}
-
-extension UIViewController {
-    func present<S, A>(state: Observable<S>) -> Present<A> {
-        return Present(action: Observable.empty())
-    }
-}
-
-extension UIView {
-    func present<S, A>(state: Observable<S>) -> Present<A> {
-        return Present(action: Observable.empty())
     }
 }

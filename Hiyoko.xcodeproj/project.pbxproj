@@ -76,7 +76,7 @@
 		D27305E31EAE3BB10020C710 /* RxExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D27305DA1EAE3BB10020C710 /* RxExtensions.framework */; };
 		D27305EA1EAE3BB10020C710 /* RxExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305E91EAE3BB10020C710 /* RxExtensionsTests.swift */; };
 		D27305EC1EAE3BB10020C710 /* RxExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = D27305DC1EAE3BB10020C710 /* RxExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D27305FC1EAE3C170020C710 /* RxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305F81EAE3C170020C710 /* RxViewModel.swift */; };
+		D27305FC1EAE3C170020C710 /* Reactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305F81EAE3C170020C710 /* Reactor.swift */; };
 		D27305FD1EAE3C170020C710 /* UIAlertController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */; };
 		D27305FE1EAE3C170020C710 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */; };
 		D27305FF1EAE3C170020C710 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */; };
@@ -188,6 +188,8 @@
 		D2F5DFD71EB5B73F004CEBD1 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
 		D2FCAAE71EBDBA48001B312B /* TweetContentImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */; };
 		D2FCAAEA1EBDBA6A001B312B /* TweetContentQuotedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FCAAE91EBDBA6A001B312B /* TweetContentQuotedView.xib */; };
+		EB7CDD861EC177D000B47BDF /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7CDD851EC177D000B47BDF /* View.swift */; };
+		EB7CDD9B1EC17CEE00B47BDF /* Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7CDD9A1EC17CEE00B47BDF /* Bind.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -499,7 +501,7 @@
 		D27305E21EAE3BB10020C710 /* RxExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D27305E91EAE3BB10020C710 /* RxExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxExtensionsTests.swift; sourceTree = "<group>"; };
 		D27305EB1EAE3BB10020C710 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D27305F81EAE3C170020C710 /* RxViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RxViewModel.swift; path = RxExtensions/Sources/RxViewModel.swift; sourceTree = SOURCE_ROOT; };
+		D27305F81EAE3C170020C710 /* Reactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reactor.swift; path = RxExtensions/Sources/Reactor.swift; sourceTree = SOURCE_ROOT; };
 		D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIAlertController+Rx.swift"; path = "RxExtensions/Sources/UIAlertController+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITextField+Rx.swift"; path = "RxExtensions/Sources/UITextField+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Rx.swift"; path = "RxExtensions/Sources/UIViewController+Rx.swift"; sourceTree = SOURCE_ROOT; };
@@ -586,6 +588,8 @@
 		D2F5DFB81EB5AEDD004CEBD1 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		D2FCAAE51EBDBA41001B312B /* TweetContentImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentImageView.xib; sourceTree = "<group>"; };
 		D2FCAAE91EBDBA6A001B312B /* TweetContentQuotedView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetContentQuotedView.xib; sourceTree = "<group>"; };
+		EB7CDD851EC177D000B47BDF /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		EB7CDD9A1EC17CEE00B47BDF /* Bind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bind.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -935,7 +939,9 @@
 			isa = PBXGroup;
 			children = (
 				D27305DC1EAE3BB10020C710 /* RxExtensions.h */,
-				D27305F81EAE3C170020C710 /* RxViewModel.swift */,
+				D27305F81EAE3C170020C710 /* Reactor.swift */,
+				EB7CDD851EC177D000B47BDF /* View.swift */,
+				EB7CDD9A1EC17CEE00B47BDF /* Bind.swift */,
 				D27305F91EAE3C170020C710 /* UIAlertController+Rx.swift */,
 				D27305FA1EAE3C170020C710 /* UITextField+Rx.swift */,
 				D27305FB1EAE3C170020C710 /* UIViewController+Rx.swift */,
@@ -2034,10 +2040,12 @@
 			files = (
 				D27305FD1EAE3C170020C710 /* UIAlertController+Rx.swift in Sources */,
 				D269F8241EBC896B0098AD9E /* UIActivityViewController+Rx.swift in Sources */,
+				EB7CDD9B1EC17CEE00B47BDF /* Bind.swift in Sources */,
 				D27305FE1EAE3C170020C710 /* UITextField+Rx.swift in Sources */,
 				D27305FF1EAE3C170020C710 /* UIViewController+Rx.swift in Sources */,
 				D273060F1EAE42560020C710 /* Cell+Rx.swift in Sources */,
-				D27305FC1EAE3C170020C710 /* RxViewModel.swift in Sources */,
+				EB7CDD861EC177D000B47BDF /* View.swift in Sources */,
+				D27305FC1EAE3C170020C710 /* Reactor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

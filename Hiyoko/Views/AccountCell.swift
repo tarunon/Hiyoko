@@ -39,8 +39,11 @@ extension AccountCell: Reusable {
     
 }
 
-extension AccountCell {
-    func present(state: Observable<AccountCellViewModel.State>) -> Present<AccountCellViewModel.Action> {
+extension AccountCell: View {
+    typealias State = AccountCellReactor.State
+    typealias Action = AccountCellReactor.Action
+
+    func present(state: Observable<State>) -> Present<Action> {
         let d1 = state
             .flatMapFirst { $0.userName }
             .bind(to: self.nameLabel.rx.text)

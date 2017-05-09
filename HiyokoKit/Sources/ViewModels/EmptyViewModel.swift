@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxExtensions
 
-public class EmptyViewModel: RxViewModel {
+public class EmptyReactor: Reactor {
     public typealias Result = Never
     public typealias Action = Never
     public typealias State = Never
@@ -20,6 +20,19 @@ public class EmptyViewModel: RxViewModel {
     }
     
     public func process(action: Observable<Never>) throws -> Process<Never, Never> {
-        return .init(state: Observable.empty(), result: Observable.never())
+        return .init(state: Observable.never(), result: Observable.never())
+    }
+}
+
+public class EmptyView: View {
+    public typealias State = Never
+    public typealias Action = Never
+
+    public init<X>(_ x: X) {
+
+    }
+
+    public func present(state: Observable<Never>) -> Present<Never> {
+        return .init(action: Observable.never())
     }
 }

@@ -67,7 +67,7 @@ extension TweetCellModel: IdentifiableType {
     }
 }
 
-public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
+public class TimelineReactor<InitialRequest: PaginationRequest>: Reactor where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
     public typealias Result = TweetResource
     public enum Action {
         case reload
@@ -131,7 +131,7 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
         self.initialRequest = initialRequest
     }
     
-    public func process(action: Observable<TimelineViewModel<InitialRequest>.Action>) throws -> Process<TimelineViewModel<InitialRequest>.State, TweetResource> {
+    public func process(action: Observable<Action>) throws -> Process<State, Result> {
         var nextRequest: AnyRequest<InitialRequest.Response, InitialRequest.Error>? = nil
         
         let initialLoad = self.client.request(request: self.initialRequest)
@@ -230,7 +230,7 @@ public class TimelineViewModel<InitialRequest: PaginationRequest>: RxViewModel w
     }
 }
 
-public class TweetCellViewModel: RxViewModel {
+public class TweetCellReactor: Reactor {
     public enum Action {
         case tweet(Tweet.Action)
         case user(User.Action)
@@ -264,7 +264,7 @@ public class TweetCellViewModel: RxViewModel {
         case screenName(String)
         case createdAt(Date)
         case text(NSAttributedString)
-        case media([TweetContentImageCellViewModel])
+        case media([TweetContentImageCellReactor])
         case quote(State)
         case retweetBy(State)
         case favorited(Bool)
@@ -305,7 +305,7 @@ public class TweetCellViewModel: RxViewModel {
             }
         }
         
-        public var media: Observable<[TweetContentImageCellViewModel]> {
+        public var media: Observable<[TweetContentImageCellReactor]> {
             switch self {
             case .media(let media): return .just(media)
             default: return .empty()
@@ -349,7 +349,7 @@ public class TweetCellViewModel: RxViewModel {
         self.tweet = tweet
     }
     
-    public func process(action: Observable<TweetCellViewModel.Action>) throws -> Process<TweetCellViewModel.State, TweetCellViewModel.Action> {
+    public func process(action: Observable<Action>) throws -> Process<State, Result> {
         
         let presentTweet = tweet.retweetedStatus ?? tweet
         
@@ -363,7 +363,7 @@ public class TweetCellViewModel: RxViewModel {
                         .text(presentTweet.attributedText),
                         .favorited(presentTweet.favorited.value ?? false),
                         .retweeted(presentTweet.retweeted.value ?? false),
-                        .media(presentTweet.entities.media.map { TweetContentImageCellViewModel(client: client, media: $0) })
+                        .media(presentTweet.entities.media.map { TweetContentImageCellReactor(client: client, media: $0) })
                     ),
                 Observable
                     .from(optional: presentTweet.user.profileImageURL)
@@ -408,7 +408,7 @@ public class TweetCellViewModel: RxViewModel {
     }
 }
 
-public class TweetContentImageCellViewModel: RxViewModel {
+public class TweetContentImageCellReactor: Reactor {
     public enum Action {
         case tap
         case longPress
@@ -425,7 +425,7 @@ public class TweetContentImageCellViewModel: RxViewModel {
         self.media = media
     }
     
-    public func process(action: Observable<TweetContentImageCellViewModel.Action>) throws -> Process<UIImage?, Entities.Action> {
+    public func process(action: Observable<Action>) throws -> Process<State, Result> {
         return .init(
             state: client.request(request: GetEntitiesImageRequest(url: self.media.mediaURL))
                 .map { UIImage?.some($0) }

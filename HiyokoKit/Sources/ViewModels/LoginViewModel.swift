@@ -35,7 +35,7 @@ extension LoginAccount: ActionSheetElement {
     }
 }
 
-public class LoginViewModel: RxViewModel {
+public class LoginReactor: Reactor {
     public typealias Result = (OAuthSwiftCredential, [String : Any])
     public typealias Action = Never
     public typealias State = UIViewController

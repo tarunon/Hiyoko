@@ -23,11 +23,11 @@ class AppViewController: UIViewController {
         self.rx
             .present(
                 viewController: list,
-                viewModel: AccountListViewModel(
+                view: ListViewController.AccountListView.init,
+                reactor: AccountListReactor(
                     realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
-                presenter: ListViewController.present,
                 animated: false
             )
             .flatMapFirst { (account, credential) -> Observable<TweetResource> in
@@ -51,14 +51,14 @@ class AppViewController: UIViewController {
                 return list.rx
                     .present(
                         viewController: timelineRootViewController,
-                        viewModel: TimelineViewModel(
+                        view: NavigationController.view(view: ListViewController.TimelineView.init),
+                        reactor: TimelineReactor(
                             realm: {
                                 try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier))
                             },
                             client: client,
                             initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
                         ),
-                        presenter: NavigationController.present(binder: ListViewController.present),
                         animated: true
                     )
             }

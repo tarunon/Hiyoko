@@ -13,73 +13,134 @@ import RxCocoa
 import RxExtensions
 import BonMot
 
-extension TweetCell {
-    func present(state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+extension TweetCell: View {
+    typealias State = TweetCellReactor.State
+    typealias Action = TweetCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         let p1 = present(tweet: state)
         let p2 = present(content: state)
         let p3 = present(interactive: state)
-        return Present.merge(p1, p2, p3)
+        return Present(
+            action: Observable
+                .merge(
+                    p1.action,
+                    p2.action,
+                    p3.action
+            )
+        )
     }
 }
 
-extension TweetImageCell {
-    func present(state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+extension TweetImageCell: View {
+    typealias State = TweetCellReactor.State
+    typealias Action = TweetCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         let p1 = present(tweet: state)
         let p2 = present(content: state)
         let p3 = present(image: state)
         let p4 = present(interactive: state)
-        return Present.merge(p1, p2, p3, p4)
+        return Present(
+            action: Observable
+                .merge(
+                    p1.action,
+                    p2.action,
+                    p3.action,
+                    p4.action
+            )
+        )
     }
 }
 
-extension TweetQuotedCell {
-    func present(state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+extension TweetQuotedCell: View {
+    typealias State = TweetCellReactor.State
+    typealias Action = TweetCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         let p1 = present(tweet: state)
         let p2 = present(content: state)
         let p3 = present(quoted: state)
         let p4 = present(interactive: state)
-        return Present.merge(p1, p2, p3, p4)
+        return Present(
+            action: Observable
+                .merge(
+                    p1.action,
+                    p2.action,
+                    p3.action,
+                    p4.action
+            )
+        )
     }
 }
 
-extension RetweetCell {
-    func present(state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+extension RetweetCell: View {
+    typealias State = TweetCellReactor.State
+    typealias Action = TweetCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         let p1 = present(tweet: state)
         let p2 = present(content: state)
         let p3 = present(retweet: state)
         let p4 = present(interactive: state)
-        return Present.merge(p1, p2, p3, p4)
+        return Present(
+            action: Observable
+                .merge(
+                    p1.action,
+                    p2.action,
+                    p3.action,
+                    p4.action
+            )
+        )
     }
 }
 
-extension RetweetImageCell {
-    func present(state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+extension RetweetImageCell: View {
+    typealias State = TweetCellReactor.State
+    typealias Action = TweetCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         let p1 = present(tweet: state)
         let p2 = present(content: state)
         let p3 = present(image: state)
         let p4 = present(retweet: state)
         let p5 = present(interactive: state)
-        return Present.merge(p1, p2, p3, p4, p5)
+        return Present(
+            action: Observable
+                .merge(
+                    p1.action,
+                    p2.action,
+                    p3.action,
+                    p4.action,
+                    p5.action
+            )
+        )
     }
 }
 
-extension RetweetQuotedCell {
-    func present(state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+extension RetweetQuotedCell: View {
+    typealias State = TweetCellReactor.State
+    typealias Action = TweetCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         let p1 = present(tweet: state)
         let p2 = present(content: state)
         let p3 = present(quoted: state)
         let p4 = present(retweet: state)
         let p5 = present(interactive: state)
-        return Present.merge(p1, p2, p3, p4, p5)
+        return Present(
+            action: Observable
+                .merge(
+                    p1.action,
+                    p2.action,
+                    p3.action,
+                    p4.action,
+                    p5.action
+            )
+        )
     }
 }
 
 extension TweetCellViewType {
-    fileprivate func present(tweet state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+    fileprivate func present(tweet state: Observable<TweetCellReactor.State>) -> Present<TweetCellReactor.Action> {
         return .init(
             action: profileImageButton.rx.tap
                 .withLatestFrom(state.flatMap { $0.screenName })
-                .map { TweetCellViewModel.Action.entities(.tap(.mention($0))) },
+                .map { TweetCellReactor.Action.entities(.tap(.mention($0))) },
             bind: state
                 .shareReplay(1)
                 .bind { [unowned self] (output) -> Disposable in
@@ -110,9 +171,9 @@ extension TweetCellViewType {
 }
 
 extension RetweetCellViewType {
-    fileprivate func present(retweet state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+    fileprivate func present(retweet state: Observable<TweetCellReactor.State>) -> Present<TweetCellReactor.Action> {
         return .init(
-            action: Observable.empty(),
+            action: Observable.never(),
             bind: state
                 .flatMap { $0.retweetBy }
                 .shareReplay(1)
@@ -134,17 +195,17 @@ extension RetweetCellViewType {
 }
 
 extension TweetContentViewType {
-    fileprivate func present(content state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+    fileprivate func present(content state: Observable<TweetCellReactor.State>) -> Present<TweetCellReactor.Action> {
         return .init(
             action: Observable
                 .merge(
                     self.textView.rx.linkTap
                         .map { (url) in
-                            TweetCellViewModel.Action.entities(.tap(.init(url)))
+                            TweetCellReactor.Action.entities(.tap(.init(url)))
                     },
                     self.textView.rx.linkLongPress
                         .map { (url) in
-                            TweetCellViewModel.Action.entities(.longpress(.init(url)))
+                            TweetCellReactor.Action.entities(.longpress(.init(url)))
                     }
                 ),
             bind: state
@@ -157,7 +218,7 @@ extension TweetContentViewType {
 }
 
 extension TweetContentImageViewType {
-    fileprivate func present(image state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+    fileprivate func present(image state: Observable<TweetCellReactor.State>) -> Present<TweetCellReactor.Action> {
         let layout = TweetContentImageFlowLayout(numberOfItems: 0)
         
         let d1 = self.imageCollectionView.rx.setDelegate(layout)
@@ -168,23 +229,21 @@ extension TweetContentImageViewType {
         
         let d2 = medias.map { $0.count }
             .subscribe(
-                onNext: { (count) in
+                onNext: { [collectionView=self.imageCollectionView] (count) in
                     layout.numberOfItems = count
-                    self.imageCollectionView.collectionViewLayout.invalidateLayout()
+                    collectionView?.collectionViewLayout.invalidateLayout()
             }
         )
 
         let mediaActions = medias.map { [Section(items: $0)] }
-            .bind(to: self.imageCollectionView.rx.reloadItem()) { (presenter, element) -> Observable<Entities.Action> in
-                presenter
-                    .present(
+            .bind(to: self.imageCollectionView.rx.reloadItem()) { (queue, element) -> Observable<Entities.Action> in
+                queue
+                    .dequeue(
                         dequeue: TweetContentImageCell.dequeue,
-                        viewModel: element,
-                        presenter: TweetContentImageCell.present
+                        reactor: element
                     )
             }
-            .flatMap { $0.result }
-            .map { TweetCellViewModel.Action.entities($0) }
+            .map { TweetCellReactor.Action.entities($0) }
         
         return .init(
             action: mediaActions,
@@ -194,17 +253,17 @@ extension TweetContentImageViewType {
 }
 
 extension TweetContentQuotedViewType {
-    fileprivate func present(quoted state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+    fileprivate func present(quoted state: Observable<TweetCellReactor.State>) -> Present<TweetCellReactor.Action> {
         return .init(
             action: Observable
                 .merge(
                     self.quotedContentView.view.textView.rx.linkTap
                         .map { (url) in
-                            TweetCellViewModel.Action.entities(.tap(.init(url)))
+                            TweetCellReactor.Action.entities(.tap(.init(url)))
                     },
                     self.quotedContentView.view.textView.rx.linkLongPress
                         .map { (url) in
-                            TweetCellViewModel.Action.entities(.longpress(.init(url)))
+                            TweetCellReactor.Action.entities(.longpress(.init(url)))
                     }
                 ),
             bind: state
@@ -228,16 +287,18 @@ extension TweetContentQuotedViewType {
     }
 }
 
-extension TweetContentImageCell {
-    func present(state: Observable<TweetContentImageCellViewModel.State>) -> Present<TweetContentImageCellViewModel.Action> {
+extension TweetContentImageCell: View {
+    typealias State = TweetContentImageCellReactor.State
+    typealias Action = TweetContentImageCellReactor.Action
+    func present(state: Observable<State>) -> Present<Action> {
         return .init(
             action: Observable
                 .merge(
                     self.longPressGestureRecognizer.rx.event
                         .filter { $0.state == .began }
-                        .map { _ in TweetContentImageCellViewModel.Action.longPress },
+                        .map { _ in Action.longPress },
                     self.tapGestureRecognizer.rx.event
-                        .map { _ in TweetContentImageCellViewModel.Action.tap }
+                        .map { _ in Action.tap }
             ),
             bind: state
                 .bind(to: self.imageView.rx.image)
@@ -246,7 +307,7 @@ extension TweetContentImageCell {
 }
 
 extension TweetCellInteractiveViewType {
-    fileprivate func present(interactive state: Observable<TweetCellViewModel.State>) -> Present<TweetCellViewModel.Action> {
+    fileprivate func present(interactive state: Observable<TweetCellReactor.State>) -> Present<TweetCellReactor.Action> {
         let tweetActionEnabled = self.interactiveScrollView.rx.contentOffset
             .map { $0.x }
             .scan(false) { (flag, x) -> (Bool) in
@@ -350,7 +411,7 @@ extension TweetCellInteractiveViewType {
                         .map { (enabled: $0, action: $1.action) }
                 )
                 .filter { $0.enabled }
-                .map { TweetCellViewModel.Action.tweet($0.action) },
+                .map { TweetCellReactor.Action.tweet($0.action) },
             bind: Disposables.create(d1, d2, d3)
         )
     }
