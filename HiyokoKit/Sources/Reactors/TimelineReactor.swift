@@ -1,5 +1,5 @@
 //
-//  TimelineViewModel.swift
+//  TimelineReactor.swift
 //  Hiyoko
 //
 //  Created by tarunon on 2017/05/04.

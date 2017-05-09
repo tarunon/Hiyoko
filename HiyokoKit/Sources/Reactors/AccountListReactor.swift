@@ -1,5 +1,5 @@
 //
-//  AccountListViewModel.swift
+//  AccountListReactor.swift
 //  Hiyoko
 //
 //  Created by tarunon on 2017/05/01.

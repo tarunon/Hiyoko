@@ -1,5 +1,5 @@
 //
-//  RxViewModel.swift
+//  RxReactor.swift
 //  mstdn
 //
 //  Created by tarunon on 2017/04/23.

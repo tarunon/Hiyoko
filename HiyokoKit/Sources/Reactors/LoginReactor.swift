@@ -1,5 +1,5 @@
 //
-//  LoginViewModel.swift
+//  LoginReactor.swift
 //  Hiyoko
 //
 //  Created by tarunon on 2017/04/30.

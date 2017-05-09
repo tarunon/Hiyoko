@@ -1,5 +1,5 @@
 //
-//  EmptyViewModel.swift
+//  EmptyReactor.swift
 //  Hiyoko
 //
 //  Created by tarunon on 2017/05/05.
