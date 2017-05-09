@@ -113,6 +113,8 @@ final class TweetContentQuotedView: TweetContentViewBase {
         didSet {
             quotedContainerView.layer.cornerRadius = 5.0
             quotedContainerView.layer.masksToBounds = true
+            quotedContainerView.layer.shouldRasterize = true
+            quotedContainerView.layer.rasterizationScale = UIScreen.main.scale
         }
     }
 }
