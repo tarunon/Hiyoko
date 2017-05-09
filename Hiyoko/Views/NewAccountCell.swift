@@ -28,3 +28,7 @@ extension NewAccountCell: NibInstantiatable {
 extension NewAccountCell: Reusable {
     
 }
+
+extension NewAccountCell: EmptyView {
+    
+}

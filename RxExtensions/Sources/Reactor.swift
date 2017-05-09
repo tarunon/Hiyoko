@@ -47,7 +47,7 @@ public struct Process<State, Result> {
         }
     }
 
-    fileprivate let observable: Observable<Either>
+    public let observable: Observable<Either>
 
     public init<S: ObservableConvertibleType, R: ObservableConvertibleType>(state: S, result: R) where S.E == State, R.E == Result {
         self.init(
@@ -59,7 +59,7 @@ public struct Process<State, Result> {
         )
     }
 
-    fileprivate init(observable: Observable<Either>) {
+    public init(observable: Observable<Either>) {
         self.observable = observable
     }
 

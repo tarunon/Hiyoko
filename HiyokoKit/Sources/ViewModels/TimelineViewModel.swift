@@ -21,6 +21,58 @@ public enum TweetResource {
     case reply(Tweet)
 }
 
+public enum TimelineAction {
+    case reload
+    case next
+    case close
+    case retweet(Tweet)
+    case favorite(Tweet)
+    case reply(Tweet)
+    case tweet(TweetResource)
+    
+    var close: Observable<Void> {
+        switch self {
+        case .close:
+            return .just()
+        default:
+            return .empty()
+        }
+    }
+    
+    var reply: Observable<Tweet> {
+        switch self {
+        case .reply(let reply): return .just(reply)
+        default: return .empty()
+        }
+    }
+    
+    var tweet: Observable<TweetResource> {
+        switch self {
+        case .tweet(let tweet): return .just(tweet)
+        default: return .empty()
+        }
+    }
+}
+
+public enum TimelineState {
+    case dataSources([AnimatableSection<TweetCellModel>])
+    case isLoading(Bool)
+    
+    public var dataSources: Observable<[AnimatableSection<TweetCellModel>]> {
+        switch self {
+        case .dataSources(let dataSources): return .just(dataSources)
+        default: return .empty()
+        }
+    }
+    
+    public var isLoading: Observable<Bool> {
+        switch self {
+        case .isLoading(let isLoading): return .just(isLoading)
+        default: return .empty()
+        }
+    }
+}
+
 public struct TweetCellModel {
     public let client: TwitterClient
     public let tweet: Tweet
@@ -69,57 +121,8 @@ extension TweetCellModel: IdentifiableType {
 
 public class TimelineReactor<InitialRequest: PaginationRequest>: Reactor where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
     public typealias Result = TweetResource
-    public enum Action {
-        case reload
-        case next
-        case close
-        case retweet(Tweet)
-        case favorite(Tweet)
-        case reply(Tweet)
-        case tweet(TweetResource)
-        
-        var close: Observable<Void> {
-            switch self {
-            case .close:
-                return .just()
-            default:
-                return .empty()
-            }
-        }
-        
-        var reply: Observable<Tweet> {
-            switch self {
-            case .reply(let reply): return .just(reply)
-            default: return .empty()
-            }
-        }
-        
-        var tweet: Observable<TweetResource> {
-            switch self {
-            case .tweet(let tweet): return .just(tweet)
-            default: return .empty()
-            }
-        }
-    }
-    
-    public enum State {
-        case dataSources([AnimatableSection<TweetCellModel>])
-        case isLoading(Bool)
-        
-        public var dataSources: Observable<[AnimatableSection<TweetCellModel>]> {
-            switch self {
-            case .dataSources(let dataSources): return .just(dataSources)
-            default: return .empty()
-            }
-        }
-        
-        public var isLoading: Observable<Bool> {
-            switch self {
-            case .isLoading(let isLoading): return .just(isLoading)
-            default: return .empty()
-            }
-        }
-    }
+    public typealias Action = TimelineAction
+    public typealias State = TimelineState
     
     var realm: () throws -> Realm
     var client: TwitterClient

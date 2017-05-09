@@ -23,8 +23,7 @@ class AppViewController: UIViewController {
         self.rx
             .present(
                 viewController: list,
-                view: ListViewController.AccountListView.init,
-                reactor: AccountListReactor(
+                reactor: ListViewController.AccountListReactor(
                     realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
@@ -33,7 +32,7 @@ class AppViewController: UIViewController {
             .flatMapFirst { (account, credential) -> Observable<TweetResource> in
                 let realmIdentifier = "home_timeline:\(account.id)"
                 let client = TwitterClient(credential: credential)
-                let timelineRootViewController = NavigationController.instantiate(
+                let timelineRootViewController = NavigationController(
                     rootViewController: ListViewController.instantiate(
                         with: .init(
                             title: "Timeline",
@@ -51,8 +50,7 @@ class AppViewController: UIViewController {
                 return list.rx
                     .present(
                         viewController: timelineRootViewController,
-                        view: NavigationController.view(view: ListViewController.TimelineView.init),
-                        reactor: TimelineReactor(
+                        reactor: ListViewController.TimelineReactor(
                             realm: {
                                 try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier))
                             },

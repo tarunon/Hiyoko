@@ -18,9 +18,9 @@ import Instantiate
 import SafariServices
 
 extension ListViewController {
-    class TimelineView<InitialRequest: PaginationRequest>: View where InitialRequest.Base.Response: RangeReplaceableCollection & RandomAccessCollection, InitialRequest.Base.Response.Iterator.Element: Tweet, InitialRequest.Response == PaginatedResponse<InitialRequest.Base.Response, InitialRequest.Base.Error>, InitialRequest.Error == InitialRequest.Base.Error {
-        typealias State = TimelineReactor<InitialRequest>.State
-        typealias Action = TimelineReactor<InitialRequest>.Action
+    class TimelineView: View {
+        typealias State = TimelineState
+        typealias Action = TimelineAction
 
         unowned var view: ListViewController
 
@@ -40,9 +40,6 @@ extension ListViewController {
 
             let refreshControl = UIRefreshControl()
             view.tableView.insertSubview(refreshControl, at: 0)
-
-            typealias Action = TimelineReactor<InitialRequest>.Action
-
 
             let dataSource = state
                 .flatMap { $0.dataSources }
@@ -222,6 +219,8 @@ extension ListViewController {
     }
 }
 
+extension SFSafariViewController: EmptyView {}
+
 extension ListViewController {
     fileprivate func search(query: String, client: TwitterClient) -> Observable<TweetResource> {
         let realmIdentifier = "search_tweet:\(query)"
@@ -234,8 +233,7 @@ extension ListViewController {
                     }
                 )
             ),
-            view: ListViewController.TimelineView.init,
-            reactor: TimelineReactor(
+            reactor: ListViewController.TimelineReactor(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
                 client: client,
                 initialRequest: SinceMaxPaginationRequest(request: SearchTimeLineRequest(query: query))
@@ -255,8 +253,7 @@ extension ListViewController {
                     }
                 )
             ),
-            view: ListViewController.TimelineView.init,
-            reactor: TimelineReactor(
+            reactor: ListViewController.TimelineReactor(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
                 client: client,
                 initialRequest: SinceMaxPaginationRequest(request: UserTimeLineRequest(screenName: screenName))
@@ -268,7 +265,6 @@ extension ListViewController {
     fileprivate func safari(url: URL) -> Observable<Never> {
         return self.rx.present(
             viewController: SFSafariViewController(url: url),
-            view: EmptyView.init,
             reactor: EmptyReactor(),
             animated: true
         )

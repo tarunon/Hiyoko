@@ -35,13 +35,13 @@ public class TableViewCellQueue {
         self.tableView = tableView
     }
 
-    public func dequeue<C: UITableViewCell, V: View, R: Reactor>(dequeue: (_ tableView: UITableView, _ indexPath: IndexPath) -> C, view: @escaping (C) -> V, reactor: R) -> Observable<R.Result> where V.Action == R.Action, V.State == R.State {
+    public func dequeue<V: View, R: Reactor>(dequeue: (_ tableView: UITableView, _ indexPath: IndexPath) -> V, reactor: R) -> Observable<R.Result> where V: UITableViewCell, V.Action == R.Action, V.State == R.State {
         let cell = dequeue(tableView, indexPath)
         self.cell = cell
         return Observable
             .create { (observer) -> Disposable in
                 do {
-                    return try bind(view(cell), reactor)
+                    return try bind(cell, reactor)
                         .takeUntil(cell.rx.reused)
                         .concat(Observable.never())
                         .takeUntil(cell.rx.deallocated)
@@ -51,10 +51,6 @@ public class TableViewCellQueue {
                     return Disposables.create()
                 }
         }
-    }
-
-    public func dequeue<V: View, R: Reactor>(dequeue: (_ tableView: UITableView, _ indexPath: IndexPath) -> V, reactor: R) -> Observable<R.Result> where V: UITableViewCell, V.Action == R.Action, V.State == R.State {
-        return self.dequeue(dequeue: dequeue, view: { $0 }, reactor: reactor)
     }
 }
 
@@ -128,13 +124,13 @@ public class CollectionViewCellQueue {
         self.collectionView = collectionView
     }
     
-    public func dequeue<C: UICollectionViewCell, V: View, R: Reactor>(dequeue: (_ collectionView: UICollectionView, _ indexPath: IndexPath) -> C, view: @escaping (C) -> V, reactor: R) -> Observable<R.Result> where V.Action == R.Action, V.State == R.State {
+    public func dequeue<V: View, R: Reactor>(dequeue: (_ collectionView: UICollectionView, _ indexPath: IndexPath) -> V, reactor: R) -> Observable<R.Result> where V: UICollectionViewCell, V.Action == R.Action, V.State == R.State {
         let cell = dequeue(collectionView, indexPath)
         self.cell = cell
         return Observable
             .create { (observer) -> Disposable in
                 do {
-                    return try bind(view(cell), reactor)
+                    return try bind(cell, reactor)
                         .takeUntil(cell.rx.reused)
                         .concat(Observable.never())
                         .takeUntil(cell.rx.deallocated)
@@ -144,10 +140,6 @@ public class CollectionViewCellQueue {
                     return Disposables.create()
                 }
         }
-    }
-
-    public func dequeue<V: View, R: Reactor>(dequeue: (_ collectionView: UICollectionView, _ indexPath: IndexPath) -> V, reactor: R) -> Observable<R.Result> where V: UICollectionViewCell, V.Action == R.Action, V.State == R.State {
-        return self.dequeue(dequeue: dequeue, view: { $0 } , reactor: reactor)
     }
 }
 

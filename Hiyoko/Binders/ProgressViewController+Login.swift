@@ -12,24 +12,20 @@ import RxSwift
 import RxCocoa
 import RxExtensions
 
-extension ProgressViewController {
-    struct LoginView: View {
-        typealias State = LoginReactor.State
-        typealias Action = LoginReactor.Action
+extension ProgressViewController: View {
+    typealias State = LoginReactor.State
+    typealias Action = LoginReactor.Action
 
-        let view: ProgressViewController
-
-        func present(state: Observable<State>) -> Present<Action> {
-            return .init(
-                action: Observable.never(),
-                bind: state
-                    .subscribe(
-                        onNext: { (viewController) in
-                            viewController.modalPresentationStyle = .overFullScreen
-                            self.view.present(viewController, animated: true)
-                        }
-                )
+    func present(state: Observable<State>) -> Present<Action> {
+        return .init(
+            action: Observable.never(),
+            bind: state
+                .subscribe(
+                    onNext: { (viewController) in
+                        viewController.modalPresentationStyle = .overFullScreen
+                        self.present(viewController, animated: true)
+                    }
             )
-        }
+        )
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Base
 
 public extension UIAlertAction {
     public struct Config {
@@ -134,20 +135,15 @@ extension UIAlertController {
 final public class PromptReactor<ButtonConfig>: Reactor {
     public typealias Result = String?
     public typealias Action = String?
-    public struct State {
-        let ok: ButtonConfig
-        let cancel: ButtonConfig
-        let defaultText: String?
-        let placeholder: String?
-    }
+    public typealias State = (ok: ButtonConfig, cancel: ButtonConfig, defaultText: String?, placeholder: String?)
 
     let initialState: State
 
     public init(ok: ButtonConfig, cancel: ButtonConfig, defaultText: String?=nil, placeholder: String?=nil) {
-        self.initialState = State(ok: ok, cancel: cancel, defaultText: defaultText, placeholder: placeholder)
+        self.initialState = (ok: ok, cancel: cancel, defaultText: defaultText, placeholder: placeholder)
     }
 
-    public func process(action: Observable<String?>) throws -> Process<PromptReactor<ButtonConfig>.State, String?> {
+    public func process(action: Observable<String?>) throws -> Process<State, String?> {
         return .init(
             state: Observable.just(initialState),
             result: action
@@ -157,7 +153,7 @@ final public class PromptReactor<ButtonConfig>: Reactor {
 
 extension UIAlertController {
     public struct PromptView: View {
-        public typealias State = PromptReactor<UIAlertAction.Config>.State
+        public typealias State = (ok: UIAlertAction.Config, cancel: UIAlertAction.Config, defaultText: String?, placeholder: String?)
         public typealias Action = String?
 
         let view: UIAlertController
@@ -166,7 +162,7 @@ extension UIAlertController {
             self.view = view
         }
 
-        public func present(state: Observable<PromptReactor<UIAlertAction.Config>.State>) -> Present<String?> {
+        public func present(state: Observable<(ok: UIAlertAction.Config, cancel: UIAlertAction.Config, defaultText: String?, placeholder: String?)>) -> Present<String?> {
             return .init(
                 action: state
                     .flatMap { [view=self.view] (state) -> Observable<String?> in
@@ -187,15 +183,17 @@ extension UIAlertController {
     }
 }
 
-public protocol ActionSheetElement: CustomStringConvertible {
+public protocol ActionSheetElement {
     associatedtype E
+    associatedtype ButtonConfig
     var element: E { get }
+    var buttonConfig: ButtonConfig { get }
 }
 
-final public class ActionSheetReactor<ButtonConfig, E: ActionSheetElement>: Reactor {
+final public class ActionSheetReactor<ButtonConfig, E: ActionSheetElement>: Reactor where E.ButtonConfig == ButtonConfig {
     public typealias Result = E.E
-    public typealias Action = E.E
-    public typealias State = (elements: [E], cancel: ButtonConfig)
+    public typealias Action = Int
+    public typealias State = (selects: [ButtonConfig], cancel: ButtonConfig)
 
     let elements: [E]
     let cancel: ButtonConfig
@@ -205,18 +203,18 @@ final public class ActionSheetReactor<ButtonConfig, E: ActionSheetElement>: Reac
         self.cancel = cancel
     }
 
-    public func process(action: Observable<E.E>) throws -> Process<(elements: [E], cancel: ButtonConfig), E.E> {
+    public func process(action: Observable<Int>) throws -> Process<(selects: [ButtonConfig], cancel: ButtonConfig), E.E> {
         return .init(
-            state: Observable.just((elements: elements, cancel: cancel)),
-            result: action
+            state: Observable.just((selects: elements.map { $0.buttonConfig }, cancel: cancel)),
+            result: action.map { self.elements[$0].element }
         )
     }
 }
 
 extension UIAlertController {
-    public struct ActionSheetView<E: ActionSheetElement>: View {
-        public typealias State = ActionSheetReactor<UIAlertAction.Config, E>.State
-        public typealias Action = E.E
+    public struct ActionSheetView: View {
+        public typealias State = (selects: [UIAlertAction.Config], cancel: UIAlertAction.Config)
+        public typealias Action = Int
 
         let view: UIAlertController
 
@@ -224,23 +222,124 @@ extension UIAlertController {
             self.view = view
         }
 
-        public func present(state: Observable<(elements: [E], cancel: UIAlertAction.Config)>) -> Present<E.E> {
+        public func present(state: Observable<(selects: [UIAlertAction.Config], cancel: UIAlertAction.Config)>) -> Present<Int> {
             return .init(
-                action: state
-                    .flatMapFirst { [view=self.view] (elements, cancel) in
-                        Observable
-                            .merge(
-                                elements
-                                    .map { element in
-                                        view.rx.addAction(config: .init(title: "\(element)", style: .default))
-                                            .map { _ in element.element }
-                                    } + [
-                                        view.rx.addAction(config: cancel)
-                                            .flatMap { _ in Observable.empty() }
-                                ]
+                action: state.flatMap { (selects, cancel) -> Observable<Int> in
+                    Observable
+                        .merge(
+                            selects.enumerated()
+                                .map { (offset, element) in
+                                    self.view.rx.addAction(config: element)
+                                        .map { _ in offset }
+                            } + [
+                                self.view.rx.addAction(config: cancel)
+                                    .flatMap { _ in
+                                        Observable.empty()
+                                }
+                            ]
                         )
                 }
             )
+        }
+    }
+}
+
+extension UIAlertController: Either4View {
+    public typealias View1 = AlertView
+    public typealias View2 = ConfirmView
+    public typealias View3 = PromptView
+    public typealias View4 = ActionSheetView
+    
+    public var view1: UIAlertController.AlertView {
+        return .init(view: self)
+    }
+    
+    public var view2: UIAlertController.ConfirmView {
+        return .init(view: self)
+    }
+    
+    public var view3: UIAlertController.PromptView {
+        return .init(view: self)
+    }
+    
+    public var view4: UIAlertController.ActionSheetView {
+        return .init(view: self)
+    }
+    
+    public struct ActionSheetElement: RxExtensions.ActionSheetElement {
+        public var element: String
+        public var buttonConfig: UIAlertAction.Config
+    }
+    
+    public class AlertReactor: Either4Reactor {
+        public typealias Reactor1 = RxExtensions.AlertReactor<UIAlertAction.Config>
+        public typealias Reactor2 = RxExtensions.ConfirmReactor<UIAlertAction.Config>
+        public typealias Reactor3 = RxExtensions.PromptReactor<UIAlertAction.Config>
+        public typealias Reactor4 = RxExtensions.ActionSheetReactor<UIAlertAction.Config, ActionSheetElement>
+        
+        public typealias Result = Reactor1.Result
+        
+        public lazy var reactor1: Reactor1 = undefined()
+        public lazy var reactor2: Reactor2 = undefined()
+        public lazy var reactor3: Reactor3 = undefined()
+        public lazy var reactor4: Reactor4 = undefined()
+        
+        public init(ok: UIAlertAction.Config) {
+            self.reactor1 = Reactor1(ok: ok)
+        }
+    }
+    
+    public class ConfirmReactor: Either4Reactor {
+        public typealias Reactor1 = RxExtensions.AlertReactor<UIAlertAction.Config>
+        public typealias Reactor2 = RxExtensions.ConfirmReactor<UIAlertAction.Config>
+        public typealias Reactor3 = RxExtensions.PromptReactor<UIAlertAction.Config>
+        public typealias Reactor4 = RxExtensions.ActionSheetReactor<UIAlertAction.Config, ActionSheetElement>
+        
+        public typealias Result = Reactor2.Result
+        
+        public lazy var reactor1: Reactor1 = undefined()
+        public lazy var reactor2: Reactor2 = undefined()
+        public lazy var reactor3: Reactor3 = undefined()
+        public lazy var reactor4: Reactor4 = undefined()
+        
+        public init(ok: UIAlertAction.Config, cancel: UIAlertAction.Config) {
+            self.reactor2 = Reactor2(ok: ok, cancel: cancel)
+        }
+    }
+    
+    public class PromptReactor: Either4Reactor {
+        public typealias Reactor1 = RxExtensions.AlertReactor<UIAlertAction.Config>
+        public typealias Reactor2 = RxExtensions.ConfirmReactor<UIAlertAction.Config>
+        public typealias Reactor3 = RxExtensions.PromptReactor<UIAlertAction.Config>
+        public typealias Reactor4 = RxExtensions.ActionSheetReactor<UIAlertAction.Config, ActionSheetElement>
+        
+        public typealias Result = Reactor3.Result
+        
+        public lazy var reactor1: Reactor1 = undefined()
+        public lazy var reactor2: Reactor2 = undefined()
+        public lazy var reactor3: Reactor3 = undefined()
+        public lazy var reactor4: Reactor4 = undefined()
+        
+        public init(ok: UIAlertAction.Config, cancel: UIAlertAction.Config, defaultText: String?=nil, placeholder: String?=nil) {
+            reactor3 = Reactor3(ok: ok, cancel: cancel, defaultText: defaultText, placeholder: placeholder)
+        }
+    }
+    
+    public class ActionSheetReactor<E: RxExtensions.ActionSheetElement>: Either4Reactor where E.ButtonConfig == UIAlertAction.Config {
+        public typealias Reactor1 = RxExtensions.AlertReactor<UIAlertAction.Config>
+        public typealias Reactor2 = RxExtensions.ConfirmReactor<UIAlertAction.Config>
+        public typealias Reactor3 = RxExtensions.PromptReactor<UIAlertAction.Config>
+        public typealias Reactor4 = RxExtensions.ActionSheetReactor<UIAlertAction.Config, E>
+        
+        public typealias Result = Reactor4.Result
+        
+        public lazy var reactor1: Reactor1 = undefined()
+        public lazy var reactor2: Reactor2 = undefined()
+        public lazy var reactor3: Reactor3 = undefined()
+        public lazy var reactor4: Reactor4 = undefined()
+        
+        public init(elements: [E], cancel: UIAlertAction.Config) {
+            reactor4 = Reactor4(elements: elements, cancel: cancel)
         }
     }
 }

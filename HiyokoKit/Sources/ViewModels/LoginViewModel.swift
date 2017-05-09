@@ -25,12 +25,12 @@ extension LoginAccount: ActionSheetElement {
         return self
     }
     
-    public var description: String {
+    public var buttonConfig: UIAlertAction.Config {
         switch self {
         case .system(let account):
-            return "@" + account.username
+            return .init(title: "@" + account.username, style: .default)
         case .web:
-            return "Other"
+            return .init(title: "Other...", style: .default)
         }
     }
 }

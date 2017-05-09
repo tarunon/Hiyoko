@@ -8,7 +8,7 @@
 
 import Foundation
 
-final public class NavigationController<V: UIViewController>: UINavigationController {
+open class NavigationController<V: UIViewController>: UINavigationController {
     class InteractivePopGestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
         weak var parent: UINavigationController?
         init(parent: UINavigationController?) {
@@ -22,18 +22,25 @@ final public class NavigationController<V: UIViewController>: UINavigationContro
     public private(set) var rootViewController: V!
     var interactivePopGestureRecognizerDelegate: InteractivePopGestureRecognizerDelegate?
     
-    public static func instantiate(rootViewController: V) -> NavigationController {
-        let navigationController = NavigationController(rootViewController: rootViewController)
-        navigationController.rootViewController = rootViewController
-        navigationController.setNavigationBarHidden(true, animated: false)
-        navigationController.interactivePopGestureRecognizerDelegate = InteractivePopGestureRecognizerDelegate(parent: navigationController)
-        navigationController.interactivePopGestureRecognizer?.delegate = navigationController.interactivePopGestureRecognizerDelegate
-        navigationController.modalPresentationStyle = rootViewController.modalPresentationStyle
-        navigationController.modalTransitionStyle = rootViewController.modalTransitionStyle
-        return navigationController
+    public required init(rootViewController: V) {
+        super.init(rootViewController: rootViewController)
+        self.rootViewController = rootViewController
+        self.setNavigationBarHidden(true, animated: false)
+        self.interactivePopGestureRecognizerDelegate = InteractivePopGestureRecognizerDelegate(parent: navigationController)
+        self.interactivePopGestureRecognizer?.delegate = self.interactivePopGestureRecognizerDelegate
+        self.modalPresentationStyle = rootViewController.modalPresentationStyle
+        self.modalTransitionStyle = rootViewController.modalTransitionStyle
     }
     
-    public override func viewDidLoad() {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    open override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .clear
     }

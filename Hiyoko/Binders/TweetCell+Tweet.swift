@@ -207,7 +207,7 @@ extension TweetContentViewType {
             bind: state
                 .flatMap { $0.text }
                 .bind { (attributedText) in
-                    self.textView.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+                    self.textView.attributedText = attributedText
             }
         )
     }
@@ -275,7 +275,7 @@ extension TweetContentQuotedViewType {
                     let d3 = quoted
                         .flatMap { $0.text }
                         .bind { (attributedText) in
-                            self.quotedContentView.textView.attributedText = attributedText.styled(with: .font(.systemFont(ofSize: 14.0)))
+                            self.quotedContentView.textView.attributedText = attributedText
                     }
                     return Disposables.create(d1, d2, d3)
             }

@@ -24,14 +24,12 @@ public class EmptyReactor: Reactor {
     }
 }
 
-public class EmptyView: View {
-    public typealias State = Never
-    public typealias Action = Never
+public protocol EmptyView: View {
+    associatedtype State = Never
+    associatedtype Action = Never
+}
 
-    public init<X>(_ x: X) {
-
-    }
-
+extension EmptyView where State == Never, Action == Never {
     public func present(state: Observable<Never>) -> Present<Never> {
         return .init(action: Observable.never())
     }

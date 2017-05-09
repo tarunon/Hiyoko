@@ -11,10 +11,11 @@ import RxSwift
 import RxExtensions
 import UIKitExtensions
 
-extension NavigationController {
-    static func view<A>(view: @escaping (V) -> (A)) -> (NavigationController<V>) -> A {
-        return { (navigationController) in
-            return view(navigationController.rootViewController)
-        }
+class NavigationController<V: UIViewController>: UIKitExtensions.NavigationController<V>, View where V: View {
+    typealias State = V.State
+    typealias Action = V.Action
+    
+    func present(state: Observable<V.State>) -> Present<V.Action> {
+        return rootViewController.present(state: state)
     }
 }

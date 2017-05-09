@@ -16,16 +16,20 @@ import OAuthSwift
 import Base
 
 extension ListViewController {
-    struct AccountListView: View {
-        typealias State = AccountListReactor.State
-        typealias Action = AccountListReactor.Action
+    class AccountListView: View {
+        typealias State = HiyokoKit.AccountListReactor.State
+        typealias Action = HiyokoKit.AccountListReactor.Action
         let view: ListViewController
+        
+        init(view: ListViewController) {
+            self.view = view
+        }
 
         func present(state: Observable<State>) -> Present<Action> {
             view.tableView.registerNib(type: AccountCell.self)
             view.tableView.registerNib(type: NewAccountCell.self)
             let actions = state
-                .bind(to: view.tableView.rx.animatedItem()) { [unowned view] (queue, element) -> Observable<AccountListReactor.Action> in
+                .bind(to: view.tableView.rx.animatedItem()) { [unowned view] (queue, element) -> Observable<Action> in
                     switch element {
                     case .account(let account, _, let credential):
                         return queue
@@ -33,7 +37,7 @@ extension ListViewController {
                                 dequeue: AccountCell.dequeue,
                                 reactor: AccountCellReactor(account: account, client: TwitterClient(credential: credential))
                             )
-                            .flatMap { (_) -> Observable<Bool> in
+                            .flatMap { _ -> Observable<Bool> in
                                 return view.rx
                                     .present(
                                         viewController: UIAlertController(
@@ -41,8 +45,7 @@ extension ListViewController {
                                             message: "Logout account, and remove from this list.",
                                             preferredStyle: .alert
                                         ),
-                                        view: UIAlertController.ConfirmView.init,
-                                        reactor: ConfirmReactor(
+                                        reactor: UIAlertController.ConfirmReactor(
                                             ok: UIAlertAction.Config(title: "OK", style: .default),
                                             cancel: UIAlertAction.Config(title: "Cancel", style: .default)
                                         ),
@@ -50,12 +53,11 @@ extension ListViewController {
                                 )
                             }
                             .filter { $0 }
-                            .map { _ in AccountListReactor.Action.delete(account) }
+                            .map { _ in Action.delete(account) }
                     case .new:
                         return queue
                             .dequeue(
                                 dequeue: NewAccountCell.dequeue,
-                                view: EmptyView.init,
                                 reactor: EmptyReactor()
                             )
                             .flatMap { _ in Observable.empty() }
@@ -63,7 +65,7 @@ extension ListViewController {
                 }
 
             let select = view.tableView.rx.modelSelected(AccountCellModel.self)
-                .flatMapFirst { (element) -> Observable<AccountListReactor.Action> in
+                .flatMapFirst { (element) -> Observable<Action> in
                     let result: Observable<Action>
                     switch element {
                     case .account(let account, _, _):
@@ -72,7 +74,6 @@ extension ListViewController {
                         result = self.view.rx
                             .present(
                                 viewController: ProgressViewController.instantiate(),
-                                view: ProgressViewController.LoginView.init,
                                 reactor: LoginReactor(
                                     consumerKey: TWITTER_CONSUMER_KEY,
                                     consumerSecret: TWITTER_CONSUMER_SECRET
@@ -98,8 +99,7 @@ extension ListViewController {
                                 return self.view.rx
                                     .present(
                                         viewController: UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert),
-                                        view: UIAlertController.AlertView.init,
-                                        reactor: AlertReactor(ok: UIAlertAction.Config(title: "OK", style: .default)),
+                                        reactor: UIAlertController.AlertReactor(ok: UIAlertAction.Config(title: "OK", style: .default)),
                                         animated: true
                                     )
                                     .flatMap { Observable.empty() }
