@@ -102,6 +102,14 @@
 		D29CCA0B1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0A1EAB9B6D0082CA72 /* PresentDismissTransitioningDelegate.swift */; };
 		D29CCA0D1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA0C1EAB9DF10082CA72 /* PushPopTransitioningDelegate.swift */; };
 		D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D29CCA121EABA60A0082CA72 /* NavigationController.swift */; };
+		D2C0FCA61EC35D3E00E88616 /* RxBlocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45C1EAA64AF004B13D7 /* RxBlocking.framework */; };
+		D2C0FCA71EC35D3E00E88616 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; };
+		D2C0FCA81EC35D3E00E88616 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; };
+		D2C0FCA91EC35D3E00E88616 /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24EC4611EAA64AF004B13D7 /* RxTest.framework */; };
+		D2C0FCAB1EC35DD000E88616 /* RxBlocking.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D24EC45C1EAA64AF004B13D7 /* RxBlocking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2C0FCAC1EC35DD000E88616 /* RxCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D24EC45D1EAA64AF004B13D7 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2C0FCAD1EC35DD600E88616 /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D24EC4601EAA64AF004B13D7 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D2C0FCAE1EC35DD600E88616 /* RxTest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D24EC4611EAA64AF004B13D7 /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2DEB0331EB62434003F27B4 /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0321EB62434003F27B4 /* Client.swift */; };
 		D2DEB0361EB6E01D003F27B4 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2DEB0351EB6E01D003F27B4 /* OAuthSwift.framework */; };
 		D2DEB0391EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2DEB0381EB6E0FC003F27B4 /* OAuthSwift+Extensions.swift */; };
@@ -432,6 +440,19 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2C0FCAA1EC35DC500E88616 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D2C0FCAD1EC35DD600E88616 /* RxSwift.framework in CopyFiles */,
+				D2C0FCAE1EC35DD600E88616 /* RxTest.framework in CopyFiles */,
+				D2C0FCAB1EC35DD000E88616 /* RxBlocking.framework in CopyFiles */,
+				D2C0FCAC1EC35DD000E88616 /* RxCocoa.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -684,6 +705,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D27305E31EAE3BB10020C710 /* Reactor.framework in Frameworks */,
+				D2C0FCA61EC35D3E00E88616 /* RxBlocking.framework in Frameworks */,
+				D2C0FCA71EC35D3E00E88616 /* RxCocoa.framework in Frameworks */,
+				D2C0FCA81EC35D3E00E88616 /* RxSwift.framework in Frameworks */,
+				D2C0FCA91EC35D3E00E88616 /* RxTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1424,6 +1449,7 @@
 				D27305DE1EAE3BB10020C710 /* Sources */,
 				D27305DF1EAE3BB10020C710 /* Frameworks */,
 				D27305E01EAE3BB10020C710 /* Resources */,
+				D2C0FCAA1EC35DC500E88616 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -2638,6 +2664,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Reactor/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.ReactorTests;
@@ -2651,6 +2681,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Reactor/Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tarunon.ReactorTests;

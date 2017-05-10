@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D27305E11EAE3BB10020C710"
+               BuildableName = "ReactorTests.xctest"
+               BlueprintName = "ReactorTests"
+               ReferencedContainer = "container:Hiyoko.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "D27305D91EAE3BB10020C710"
+            BuildableName = "Reactor.framework"
+            BlueprintName = "Reactor"
+            ReferencedContainer = "container:Hiyoko.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
