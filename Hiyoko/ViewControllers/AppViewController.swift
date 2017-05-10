@@ -23,7 +23,7 @@ class AppViewController: UIViewController {
         self.rx
             .present(
                 viewController: list,
-                reactor: ListViewController.AccountListReactor(
+                reactor: ~AccountListReactor(
                     realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
@@ -50,7 +50,7 @@ class AppViewController: UIViewController {
                 return list.rx
                     .present(
                         viewController: timelineRootViewController,
-                        reactor: ListViewController.TimelineReactor(
+                        reactor: ~TimelineReactor(
                             realm: {
                                 try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier))
                             },

@@ -233,7 +233,7 @@ extension ListViewController {
                     }
                 )
             ),
-            reactor: ListViewController.TimelineReactor(
+            reactor: ~TimelineReactor(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
                 client: client,
                 initialRequest: SinceMaxPaginationRequest(request: SearchTimeLineRequest(query: query))
@@ -253,7 +253,7 @@ extension ListViewController {
                     }
                 )
             ),
-            reactor: ListViewController.TimelineReactor(
+            reactor: ~TimelineReactor(
                 realm: { try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier)) },
                 client: client,
                 initialRequest: SinceMaxPaginationRequest(request: UserTimeLineRequest(screenName: screenName))

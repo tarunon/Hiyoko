@@ -45,7 +45,7 @@ extension ListViewController {
                                             message: "Logout account, and remove from this list.",
                                             preferredStyle: .alert
                                         ),
-                                        reactor: UIAlertController.ConfirmReactor(
+                                        reactor: ~ConfirmReactor(
                                             ok: UIAlertAction.Config(title: "OK", style: .default),
                                             cancel: UIAlertAction.Config(title: "Cancel", style: .default)
                                         ),
@@ -99,7 +99,7 @@ extension ListViewController {
                                 return self.view.rx
                                     .present(
                                         viewController: UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert),
-                                        reactor: UIAlertController.AlertReactor(ok: UIAlertAction.Config(title: "OK", style: .default)),
+                                        reactor: ~AlertReactor(ok: UIAlertAction.Config(title: "OK", style: .default)),
                                         animated: true
                                     )
                                     .flatMap { Observable.empty() }

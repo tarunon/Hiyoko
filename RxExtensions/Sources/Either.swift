@@ -335,198 +335,347 @@ extension Either5View where State == Either5<View1.State, View2.State, View3.Sta
     }
 }
 
-public protocol Either2Reactor: Reactor {
-    associatedtype Reactor1: Reactor
-    associatedtype Reactor2: Reactor
-    associatedtype State = Either2<Reactor1.State, Reactor2.State>
-    associatedtype Action = Either2<Reactor1.Action, Reactor2.Action>
-    associatedtype Result = Reactor1.Result
-    
-    var reactor1: Reactor1 { get }
-    var reactor2: Reactor2 { get }
-}
+public struct ReactorConverter2<Base: RxExtensions.Reactor, Action1, State1> {
+    public struct Reactor1: Reactor {
+        public typealias Action = Either2<Base.Action, Action1>
+        public typealias State = Either2<Base.State, State1>
+        public typealias Result = Base.Result
 
-extension Either2Reactor where State == Either2<Reactor1.State, Reactor2.State>, Action == Either2<Reactor1.Action, Reactor2.Action>, Result == Reactor1.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor1.process(action: action.flatMap { $0.a })
-                .observable
-                .map { $0.transform({ State.a($0) }, { $0 }) }
-        )
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.a })
+                    .observable
+                    .map { $0.transform({ State.a($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor2: Reactor {
+        public typealias Action = Either2<Action1, Base.Action>
+        public typealias State = Either2<State1, Base.State>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.b })
+                    .observable
+                    .map { $0.transform({ State.b($0) }, { $0 }) }
+            )
+        }
     }
 }
 
-extension Either2Reactor where State == Either2<Reactor1.State, Reactor2.State>, Action == Either2<Reactor1.Action, Reactor2.Action>, Result == Reactor2.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor2.process(action: action.flatMap { $0.b })
-                .observable
-                .map { $0.transform({ State.b($0) }, { $0 }) }
-        )
+public struct ReactorConverter3<Base: RxExtensions.Reactor, Action1, State1, Action2, State2> {
+    public struct Reactor1: Reactor {
+        public typealias Action = Either3<Base.Action, Action1, Action2>
+        public typealias State = Either3<Base.State, State1, State2>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.a })
+                    .observable
+                    .map { $0.transform({ State.a($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor2: Reactor {
+        public typealias Action = Either3<Action1, Base.Action, Action2>
+        public typealias State = Either3<State1, Base.State, State2>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.b })
+                    .observable
+                    .map { $0.transform({ State.b($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor3: Reactor {
+        public typealias Action = Either3<Action1, Action2, Base.Action>
+        public typealias State = Either3<State1, State2, Base.State>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.c })
+                    .observable
+                    .map { $0.transform({ State.c($0) }, { $0 }) }
+            )
+        }
     }
 }
 
-public protocol Either3Reactor: Reactor {
-    associatedtype Reactor1: Reactor
-    associatedtype Reactor2: Reactor
-    associatedtype Reactor3: Reactor
-    associatedtype State = Either3<Reactor1.State, Reactor2.State, Reactor3.State>
-    associatedtype Action = Either3<Reactor1.Action, Reactor2.Action, Reactor3.Action>
-    associatedtype Result = Reactor1.Result
-    
-    var reactor1: Reactor1 { get }
-    var reactor2: Reactor2 { get }
-    var reactor3: Reactor3 { get }
-}
+public struct ReactorConverter4<Base: RxExtensions.Reactor, Action1, State1, Action2, State2, Action3, State3> {
+    public struct Reactor1: Reactor {
+        public typealias Action = Either4<Base.Action, Action1, Action2, Action3>
+        public typealias State = Either4<Base.State, State1, State2, State3>
+        public typealias Result = Base.Result
 
-extension Either3Reactor where State == Either3<Reactor1.State, Reactor2.State, Reactor3.State>, Action == Either3<Reactor1.Action, Reactor2.Action, Reactor3.Action>, Result == Reactor1.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor1.process(action: action.flatMap { $0.a })
-                .observable
-                .map { $0.transform({ State.a($0) }, { $0 }) }
-        )
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.a })
+                    .observable
+                    .map { $0.transform({ State.a($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor2: Reactor {
+        public typealias Action = Either4<Action1, Base.Action, Action2, Action3>
+        public typealias State = Either4<State1, Base.State, State2, State3>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.b })
+                    .observable
+                    .map { $0.transform({ State.b($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor3: Reactor {
+        public typealias Action = Either4<Action1, Action2, Base.Action, Action3>
+        public typealias State = Either4<State1, State2, Base.State, Action3>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.c })
+                    .observable
+                    .map { $0.transform({ State.c($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor4: Reactor {
+        public typealias Action = Either4<Action1, Action2, Action3, Base.Action>
+        public typealias State = Either4<State1, State2, State3, Base.State>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.d })
+                    .observable
+                    .map { $0.transform({ State.d($0) }, { $0 }) }
+            )
+        }
     }
 }
 
-extension Either3Reactor where State == Either3<Reactor1.State, Reactor2.State, Reactor3.State>, Action == Either3<Reactor1.Action, Reactor2.Action, Reactor3.Action>, Result == Reactor2.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor2.process(action: action.flatMap { $0.b })
-                .observable
-                .map { $0.transform({ State.b($0) }, { $0 }) }
-        )
+public struct ReactorConverter5<Base: RxExtensions.Reactor, Action1, State1, Action2, State2, Action3, State3, Action4, State4> {
+    public struct Reactor1: Reactor {
+        public typealias Action = Either5<Base.Action, Action1, Action2, Action3, Action4>
+        public typealias State = Either5<Base.State, State1, State2, State3, State4>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.a })
+                    .observable
+                    .map { $0.transform({ State.a($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor2: Reactor {
+        public typealias Action = Either5<Action1, Base.Action, Action2, Action3, Action4>
+        public typealias State = Either5<State1, Base.State, State2, State3, State4>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.b })
+                    .observable
+                    .map { $0.transform({ State.b($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor3: Reactor {
+        public typealias Action = Either5<Action1, Action2, Base.Action, Action3, Action4>
+        public typealias State = Either5<State1, State2, Base.State, State4, State4>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.c })
+                    .observable
+                    .map { $0.transform({ State.c($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor4: Reactor {
+        public typealias Action = Either5<Action1, Action2, Action3, Base.Action, Action4>
+        public typealias State = Either5<State1, State2, Action3, Base.State, Action4>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.d })
+                    .observable
+                    .map { $0.transform({ State.d($0) }, { $0 }) }
+            )
+        }
+    }
+
+    public struct Reactor5: Reactor {
+        public typealias Action = Either5<Action1, Action2, Action3, Action4, Base.Action>
+        public typealias State = Either5<State1, State2, Action3, Action4, Base.State>
+        public typealias Result = Base.Result
+
+        let base: Base
+
+        init(_ reactor: Base) {
+            self.base = reactor
+        }
+
+        public func process(action: Observable<Action>) throws -> Process<State, Result> {
+            return .init(
+                observable: try base.process(action: action.flatMap { $0.e })
+                    .observable
+                    .map { $0.transform({ State.e($0) }, { $0 }) }
+            )
+        }
     }
 }
 
-extension Either3Reactor where State == Either3<Reactor1.State, Reactor2.State, Reactor3.State>, Action == Either3<Reactor1.Action, Reactor2.Action, Reactor3.Action>, Result == Reactor3.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor3.process(action: action.flatMap { $0.c })
-                .observable
-                .map { $0.transform({ State.c($0) }, { $0 }) }
-        )
-    }
+prefix operator ~
+public prefix func ~<R: Reactor, A, S>(_ reactor: R) -> ReactorConverter2<R, A, S>.Reactor1 {
+    return .init(reactor)
 }
 
-public protocol Either4Reactor: Reactor {
-    associatedtype Reactor1: Reactor
-    associatedtype Reactor2: Reactor
-    associatedtype Reactor3: Reactor
-    associatedtype Reactor4: Reactor
-    associatedtype State = Either4<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State>
-    associatedtype Action = Either4<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action>
-    associatedtype Result = Reactor1.Result
-    
-    var reactor1: Reactor1 { get }
-    var reactor2: Reactor2 { get }
-    var reactor3: Reactor3 { get }
-    var reactor4: Reactor4 { get }
+public prefix func ~<R: Reactor, A, S>(_ reactor: R) -> ReactorConverter2<R, A, S>.Reactor2 {
+    return .init(reactor)
 }
 
-extension Either4Reactor where State == Either4<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State>, Action == Either4<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action>, Result == Reactor1.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor1.process(action: action.flatMap { $0.a })
-                .observable
-                .map { $0.transform({ State.a($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2>(_ reactor: R) -> ReactorConverter3<R, A1, S1, A2, S2>.Reactor1 {
+    return .init(reactor)
 }
 
-extension Either4Reactor where State == Either4<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State>, Action == Either4<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action>, Result == Reactor2.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor2.process(action: action.flatMap { $0.b })
-                .observable
-                .map { $0.transform({ State.b($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2>(_ reactor: R) -> ReactorConverter3<R, A1, S1, A2, S2>.Reactor2 {
+    return .init(reactor)
 }
 
-extension Either4Reactor where State == Either4<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State>, Action == Either4<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action>, Result == Reactor3.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor3.process(action: action.flatMap { $0.c })
-                .observable
-                .map { $0.transform({ State.c($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2>(_ reactor: R) -> ReactorConverter3<R, A1, S1, A2, S2>.Reactor3 {
+    return .init(reactor)
 }
 
-extension Either4Reactor where State == Either4<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State>, Action == Either4<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action>, Result == Reactor4.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor4.process(action: action.flatMap { $0.d })
-                .observable
-                .map { $0.transform({ State.d($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3>(_ reactor: R) -> ReactorConverter4<R, A1, S1, A2, S2, A3, S3>.Reactor1 {
+    return .init(reactor)
 }
 
-public protocol Either5Reactor: Reactor {
-    associatedtype Reactor1: Reactor
-    associatedtype Reactor2: Reactor
-    associatedtype Reactor3: Reactor
-    associatedtype Reactor4: Reactor
-    associatedtype Reactor5: Reactor
-    associatedtype State = Either5<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State, Reactor5.State>
-    associatedtype Action = Either5<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action, Reactor5.Action>
-    associatedtype Result = Reactor1.Result
-    
-    var reactor1: Reactor1 { get }
-    var reactor2: Reactor2 { get }
-    var reactor3: Reactor3 { get }
-    var reactor4: Reactor4 { get }
-    var reactor5: Reactor5 { get }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3>(_ reactor: R) -> ReactorConverter4<R, A1, S1, A2, S2, A3, S3>.Reactor2 {
+    return .init(reactor)
 }
 
-extension Either5Reactor where State == Either5<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State, Reactor5.State>, Action == Either5<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action, Reactor5.Action>, Result == Reactor1.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor1.process(action: action.flatMap { $0.a })
-                .observable
-                .map { $0.transform({ State.a($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3>(_ reactor: R) -> ReactorConverter4<R, A1, S1, A2, S2, A3, S3>.Reactor3 {
+    return .init(reactor)
 }
 
-extension Either5Reactor where State == Either5<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State, Reactor5.State>, Action == Either5<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action, Reactor5.Action>, Result == Reactor2.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor2.process(action: action.flatMap { $0.b })
-                .observable
-                .map { $0.transform({ State.b($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3>(_ reactor: R) -> ReactorConverter4<R, A1, S1, A2, S2, A3, S3>.Reactor4 {
+    return .init(reactor)
 }
 
-extension Either5Reactor where State == Either5<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State, Reactor5.State>, Action == Either5<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action, Reactor5.Action>, Result == Reactor3.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor3.process(action: action.flatMap { $0.c })
-                .observable
-                .map { $0.transform({ State.c($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3, A4, S4>(_ reactor: R) -> ReactorConverter5<R, A1, S1, A2, S2, A3, S3, A4, S4>.Reactor1 {
+    return .init(reactor)
 }
 
-extension Either5Reactor where State == Either5<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State, Reactor5.State>, Action == Either5<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action, Reactor5.Action>, Result == Reactor4.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor4.process(action: action.flatMap { $0.d })
-                .observable
-                .map { $0.transform({ State.d($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3, A4, S4>(_ reactor: R) -> ReactorConverter5<R, A1, S1, A2, S2, A3, S3, A4, S4>.Reactor2 {
+    return .init(reactor)
 }
 
-extension Either5Reactor where State == Either5<Reactor1.State, Reactor2.State, Reactor3.State, Reactor4.State, Reactor5.State>, Action == Either5<Reactor1.Action, Reactor2.Action, Reactor3.Action, Reactor4.Action, Reactor5.Action>, Result == Reactor5.Result {
-    public func process(action: Observable<Action>) throws -> Process<State, Result> {
-        return .init(
-            observable: try reactor5.process(action: action.flatMap { $0.e })
-                .observable
-                .map { $0.transform({ State.e($0) }, { $0 }) }
-        )
-    }
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3, A4, S4>(_ reactor: R) -> ReactorConverter5<R, A1, S1, A2, S2, A3, S3, A4, S4>.Reactor3 {
+    return .init(reactor)
+}
+
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3, A4, S4>(_ reactor: R) -> ReactorConverter5<R, A1, S1, A2, S2, A3, S3, A4, S4>.Reactor4 {
+    return .init(reactor)
+}
+
+public prefix func ~<R: Reactor, A1, S1, A2, S2, A3, S3, A4, S4>(_ reactor: R) -> ReactorConverter5<R, A1, S1, A2, S2, A3, S3, A4, S4>.Reactor5 {
+    return .init(reactor)
 }
