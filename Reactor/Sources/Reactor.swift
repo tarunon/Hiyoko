@@ -53,8 +53,8 @@ public struct Process<State, Result> {
         self.init(
             observable: Observable
                 .merge(
-                    state.asObservable().materialize().map { Either.state($0) },
-                    result.asObservable().materialize().map { Either.result($0) }
+                    state.asObservable().shareReplay(1).materialize().map { Either.state($0) },
+                    result.asObservable().shareReplay(1).materialize().map { Either.result($0) }
                 )
         )
     }

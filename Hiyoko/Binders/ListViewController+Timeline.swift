@@ -57,7 +57,7 @@ extension ListViewController {
                 }
                 .shareReplay(1)
 
-            let cellResults = dataSource
+            let cellActions = dataSource
                 .map { $0.1 }
                 .bind(to: self.view.tableView.rx.animatedItem(configureDataSource: { $0.animationConfiguration = AnimationConfiguration.init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none) })) { (queue, element) -> Observable<(TweetCellReactor.Result, TweetCellModel)> in
                     let reactor = TweetCellReactor(client: element.client, tweet: element.tweet)
@@ -102,9 +102,6 @@ extension ListViewController {
                     }
                     return result.map { ($0, element) }
                 }
-                .shareReplay(1)
-
-            let cellActions = cellResults
                 .flatMap { (result, element) -> Observable<Action> in
                     let o1 = result.entities
                         .flatMap { (entities) -> Observable<TweetResource> in

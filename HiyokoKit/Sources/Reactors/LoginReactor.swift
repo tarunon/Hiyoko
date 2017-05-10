@@ -59,27 +59,24 @@ public class LoginReactor: Reactor {
             authorizeUrl:    "https://api.twitter.com/oauth/authorize",
             accessTokenUrl:  "https://api.twitter.com/oauth/access_token"
         )
-        let state = Observable<UIViewController>
-            .create { (observer) in
-                let safariURLHandler = SafariURLHandler(
-                    present: { (viewController, _) in
-                        observer.onNext(viewController)
-                    }, dismiss: { (viewController, _) in
-                        viewController.dismiss(animated: true)
-                    }, oauthSwift: oauth
+        
+        let safariViewControllerSubject = PublishSubject<UIViewController>()
+        
+        let safariURLHandler = SafariURLHandler(
+            present: { (viewController, _) in
+                safariViewControllerSubject.onNext(viewController)
+            }, dismiss: { (viewController, _) in
+                viewController.dismiss(animated: true)
+            }, oauthSwift: oauth
+        )
+        
+        oauth.authorizeURLHandler = safariURLHandler
+        return Process(
+            state: safariViewControllerSubject,
+            result: oauth.rx.authorize(withCallbackURL: URL(string: "hiyokoapp://oauth_callback/twitter")!)
+                .takeUntil(
+                    safariURLHandler.rx.methodInvoked(#selector(SafariURLHandler.safariViewControllerDidFinish(_:)))
                 )
-                oauth.authorizeURLHandler = safariURLHandler
-                let d1 = Disposables.create { oauth.authorizeURLHandler = OAuthSwiftOpenURLExternally.sharedInstance }
-                let d2 = safariURLHandler.rx.methodInvoked(#selector(SafariURLHandler.safariViewControllerDidFinish(_:)))
-                    .take(1)
-                    .flatMap { _ in Observable.empty() }
-                    .bind(to: observer)
-                return Disposables.create(d1, d2)
-            }
-            .shareReplay(1)
-        return .init(
-            state: state,
-            result: oauth.rx.authorize(withCallbackURL: URL(string: "hiyokoapp://oauth_callback/twitter")!).shareReplay(1)
         )
     }
 }

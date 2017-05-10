@@ -185,7 +185,7 @@
 		EB2436BD1EC2CE9E00913A47 /* Cell+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436B21EC2CE9E00913A47 /* Cell+Rx.swift */; };
 		EB2436BE1EC2CE9E00913A47 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436B31EC2CE9E00913A47 /* Either.swift */; };
 		EB2436C01EC2CE9E00913A47 /* Reactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436B51EC2CE9E00913A47 /* Reactor.swift */; };
-		EB2436C11EC2CE9E00913A47 /* Reactor.h in Headers */ = {isa = PBXBuildFile; fileRef = EB2436B61EC2CE9E00913A47 /* Reactor.h */; };
+		EB2436C11EC2CE9E00913A47 /* Reactor.h in Headers */ = {isa = PBXBuildFile; fileRef = EB2436B61EC2CE9E00913A47 /* Reactor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB2436C21EC2CE9E00913A47 /* UIActivityViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436B71EC2CE9E00913A47 /* UIActivityViewController+Rx.swift */; };
 		EB2436C31EC2CE9E00913A47 /* UIAlertController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436B81EC2CE9E00913A47 /* UIAlertController+Rx.swift */; };
 		EB2436C41EC2CE9E00913A47 /* UITextField+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436B91EC2CE9E00913A47 /* UITextField+Rx.swift */; };

@@ -25,7 +25,7 @@ internal class Result<V: View, R: Reactor>: ObservableConvertibleType where V.Ac
                 let view = self.view()
                 let reactor = self.reactor()
                 let process = try reactor.process(action: actionSubject.asObservable())
-                let present = view.present(state: process.state.concat(Observable.never()).shareReplay(1))
+                let present = view.present(state: process.state.concat(Observable.never()))
                 let result = Observable<R.Result>
                     .create { (observer) in
                         let d1 = present.action.bind(to: actionSubject)
