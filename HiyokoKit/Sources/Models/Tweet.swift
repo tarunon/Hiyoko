@@ -42,8 +42,10 @@ public final class Tweet: Object {
     }
     
     public override class func ignoredProperties() -> [String] {
-        return ["_entities", "entities", "user"]
+        return ["_entities", "entities", "user", "attributedText"]
     }
+    
+    fileprivate var _attributedText: NSAttributedString? = nil
 }
 
 extension Tweet {
@@ -154,7 +156,11 @@ extension AttributeType where ValueType: Tweet {
 
 extension Tweet {
     public var attributedText: NSAttributedString {
-        return entities.attributed(text: text)
+        if let attributedText = _attributedText {
+            return attributedText
+        }
+        _attributedText = entities.attributed(text: text).styled(with: .font(.systemFont(ofSize: 14.0)))
+        return _attributedText!
     }
     
     public var url: URL {

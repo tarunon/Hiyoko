@@ -13,7 +13,7 @@ import InstantiateStandard
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxExtensions
+import Reactor
 import SafariServices
 import Base
 
@@ -26,5 +26,9 @@ extension NewAccountCell: NibInstantiatable {
 }
 
 extension NewAccountCell: Reusable {
+    
+}
+
+extension NewAccountCell: EmptyView {
     
 }

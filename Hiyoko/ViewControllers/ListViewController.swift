@@ -10,6 +10,13 @@ import Foundation
 import Instantiate
 import InstantiateStandard
 import UIKitExtensions
+import Reactor
+import HiyokoKit
+import APIClient
+import Base
+import RealmSwift
+import Persistents
+import OAuthSwift
 
 final class ListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView! {
@@ -53,3 +60,17 @@ extension ListViewController: StoryboardInstantiatable {
         dependency.rightButtonConfig(self.rightButton)
     }
 }
+
+extension ListViewController: Either2View {
+    typealias View1 = TimelineView
+    typealias View2 = AccountListView
+    
+    var view1: ListViewController.TimelineView {
+        return TimelineView(view: self)
+    }
+    
+    var view2: ListViewController.AccountListView {
+        return AccountListView(view: self)
+    }
+}
+

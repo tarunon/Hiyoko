@@ -9,9 +9,6 @@
 import UIKit
 import OAuthSwift
 
-let TWITTER_CONSUMER_KEY = ""
-let TWITTER_CONSUMER_SECRET = ""
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

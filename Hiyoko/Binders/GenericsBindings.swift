@@ -8,21 +8,14 @@
 
 import Foundation
 import RxSwift
-import RxExtensions
+import Reactor
 import UIKitExtensions
 
-extension NavigationController {
-    static func bind<M>(binder: @escaping (V) -> (M) -> Disposable) -> (NavigationController<V>) -> (M) -> Disposable {
-        return { (navigationController) in
-            return { (viewModel) in
-                return binder(navigationController.rootViewController)(viewModel)
-            }
-        }
-    }
-}
-
-extension UIViewController {
-    func bind<M>(viewModel: M) -> Disposable {
-        return Disposables.create()
+class NavigationController<V: UIViewController>: UIKitExtensions.NavigationController<V>, View where V: View {
+    typealias State = V.State
+    typealias Action = V.Action
+    
+    func present(state: Observable<V.State>) -> Present<V.Action> {
+        return rootViewController.present(state: state)
     }
 }

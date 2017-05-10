@@ -10,16 +10,22 @@ import Foundation
 import HiyokoKit
 import RxSwift
 import RxCocoa
-import RxExtensions
+import Reactor
 
-extension ProgressViewController {
-    func bind(viewModel: LoginViewModel.Emitter) -> Disposable {
-        return viewModel.state
-            .subscribe(
-                onNext: { [weak self] (viewController) in
-                    viewController.modalPresentationStyle = .overFullScreen
-                    self?.present(viewController, animated: true)
-            }
+extension ProgressViewController: View {
+    typealias State = LoginReactor.State
+    typealias Action = LoginReactor.Action
+
+    func present(state: Observable<State>) -> Present<Action> {
+        return .init(
+            action: Observable.never(),
+            bind: state
+                .subscribe(
+                    onNext: { (viewController) in
+                        viewController.modalPresentationStyle = .overFullScreen
+                        self.present(viewController, animated: true)
+                    }
+            )
         )
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import RxExtensions
+import Reactor
 import UIKitExtensions
 import HiyokoKit
 import RealmSwift
@@ -23,23 +23,24 @@ class AppViewController: UIViewController {
         self.rx
             .present(
                 viewController: list,
-                viewModel: AccountListViewModel(
+                reactor: ~AccountListReactor(
                     realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
-                binder: ListViewController.bind,
                 animated: false
             )
             .flatMapFirst { (account, credential) -> Observable<TweetResource> in
                 let realmIdentifier = "home_timeline:\(account.id)"
                 let client = TwitterClient(credential: credential)
-                let timelineRootViewController = NavigationController.instantiate(
+                let timelineRootViewController = NavigationController(
                     rootViewController: ListViewController.instantiate(
                         with: .init(
                             title: "Timeline",
                             leftButtonConfig: { (button) in
                                 button.layer.cornerRadius = 20.0
                                 button.layer.masksToBounds = true
+                                button.layer.shouldRasterize = true
+                                button.layer.rasterizationScale = UIScreen.main.scale
                                 button.imageView?.contentMode = .scaleToFill
                             }
                         )
@@ -49,14 +50,13 @@ class AppViewController: UIViewController {
                 return list.rx
                     .present(
                         viewController: timelineRootViewController,
-                        viewModel: TimelineViewModel(
+                        reactor: ~TimelineReactor(
                             realm: {
                                 try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier))
                             },
                             client: client,
                             initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
                         ),
-                        binder: NavigationController.bind(binder: ListViewController.bind),
                         animated: true
                     )
             }

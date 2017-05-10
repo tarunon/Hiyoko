@@ -66,6 +66,8 @@ final class TweetContentImageView: TweetContentViewBase {
         didSet {
             imageCollectionView.registerNib(type: TweetContentImageCell.self)
             imageCollectionView.layer.cornerRadius = 5.0
+            imageCollectionView.layer.shouldRasterize = true
+            imageCollectionView.layer.rasterizationScale = UIScreen.main.scale
             imageCollectionView.layer.masksToBounds = true
         }
     }
@@ -111,6 +113,8 @@ final class TweetContentQuotedView: TweetContentViewBase {
         didSet {
             quotedContainerView.layer.cornerRadius = 5.0
             quotedContainerView.layer.masksToBounds = true
+            quotedContainerView.layer.shouldRasterize = true
+            quotedContainerView.layer.rasterizationScale = UIScreen.main.scale
         }
     }
 }
