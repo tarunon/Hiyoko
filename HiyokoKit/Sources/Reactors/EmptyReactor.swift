@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-import RxExtensions
+import Reactor
 
 public class EmptyReactor: Reactor {
     public typealias Result = Never

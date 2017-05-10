@@ -12,7 +12,7 @@ import RealmSwift
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxExtensions
+import Reactor
 import Barrel
 import Barrel_Realm
 import Base

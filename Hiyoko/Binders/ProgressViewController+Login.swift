@@ -10,7 +10,7 @@ import Foundation
 import HiyokoKit
 import RxSwift
 import RxCocoa
-import RxExtensions
+import Reactor
 
 extension ProgressViewController: View {
     typealias State = LoginReactor.State

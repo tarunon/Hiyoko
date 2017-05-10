@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
-import RxExtensions
+import Reactor
 import UIKitExtensions
 import HiyokoKit
 import RealmSwift

@@ -11,7 +11,7 @@ import HiyokoKit
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxExtensions
+import Reactor
 import OAuthSwift
 import Base
 

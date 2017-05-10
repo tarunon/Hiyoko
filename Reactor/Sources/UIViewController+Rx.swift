@@ -107,66 +107,45 @@ extension Reactive where Base: UIViewController {
     }
 
     private func presentWithReactor<V: View, R: Reactor>(viewController: V, reactor: R, present: @escaping (Base, V) -> (), dismiss: Observable<Void>) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
-        return Observable<R.Result>
-            .create { [weak base] (observer) -> Disposable in
-                guard let base=base else {
-                    observer.onCompleted()
-                    return Disposables.create()
-                }
-                do {
-                    return try bind(viewController, reactor)
-                        .do(
-                            onSubscribe: { present(base, viewController) }
-                        )
-                        .catchError { error in
-                            dismiss.map { throw error }
-                        }
-                        .concat(
-                            dismiss.flatMap { Observable.empty() }
-                        )
-                        .takeUntil(viewController.rx.deallocated)
-                        .bind(to: observer)
-                } catch {
-                    observer.onError(error)
-                    return Disposables.create()
-                }
-        }
+        return Result(view: viewController, reactor: reactor)
+            .asObservable()
+            .do(
+                onSubscribe: { present(self.base, viewController) }
+            )
+            .catchError { error in
+                dismiss.map { throw error }
+            }
+            .concat(
+                dismiss.flatMap { Observable.empty() }
+            )
+            .takeUntil(viewController.rx.deallocated)
     }
 
     private func pushWithReactor<V: View, R: Reactor>(viewController: V,  reactor: R, push: @escaping (Base, V) -> (), pop: Observable<Void>) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
-        return Observable<R.Result>
-            .create { [weak base] (observer) -> Disposable in
-                guard let base=base, let navigationController=base.navigationController else {
-                    observer.onCompleted()
-                    return Disposables.create()
-                }
-                do {
-                    return try bind(viewController, reactor)
-                        .do(
-                            onSubscribe: { push(base, viewController) }
-                        )
-                        .catchError { error in
-                            pop.map { throw error }
-                        }
-                        .concat(
-                            pop.flatMap { Observable.empty() }
-                        )
-                        .takeUntil(viewController.rx.deallocated)
-                        .takeUntil(
-                            navigationController.rx.didShow
-                                .filter { [weak navigationController, weak viewController] _ in
-                                    guard let navigationController = navigationController, let viewController = viewController else {
-                                        return true
-                                    }
-                                    return !navigationController.viewControllers.contains(viewController)
-                                }
-                        )
-                        .bind(to: observer)
-                } catch {
-                    observer.onError(error)
-                    return Disposables.create()
-                }
+        guard let navigationController = base.navigationController else {
+            fatalError("Should implement \(base) as UINavigationController children.")
         }
+        return Result(view: viewController, reactor: reactor)
+            .asObservable()
+            .do(
+                onSubscribe: { push(self.base, viewController) }
+            )
+            .catchError { error in
+                pop.map { throw error }
+            }
+            .concat(
+                pop.flatMap { Observable.empty() }
+            )
+            .takeUntil(viewController.rx.deallocated)
+            .takeUntil(
+                navigationController.rx.didShow
+                    .filter { [weak navigationController, weak viewController] _ in
+                        guard let navigationController = navigationController, let viewController = viewController else {
+                            return true
+                        }
+                        return !navigationController.viewControllers.contains(viewController)
+                    }
+            )
     }
 
     public func present<V: View, R: Reactor>(viewController: V, reactor: R, animated: Bool) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {

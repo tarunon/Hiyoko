@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-import RxExtensions
+import Reactor
 import UIKitExtensions
 
 class NavigationController<V: UIViewController>: UIKitExtensions.NavigationController<V>, View where V: View {

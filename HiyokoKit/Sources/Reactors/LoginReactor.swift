@@ -10,7 +10,7 @@ import Foundation
 import Accounts
 import RxSwift
 import RxCocoa
-import RxExtensions
+import Reactor
 import SafariServices
 import Social
 import OAuthSwift

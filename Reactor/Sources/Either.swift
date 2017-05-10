@@ -335,7 +335,7 @@ extension Either5View where State == Either5<View1.State, View2.State, View3.Sta
     }
 }
 
-public struct ReactorConverter2<Base: RxExtensions.Reactor, Action1, State1> {
+public struct ReactorConverter2<Base: Reactor, Action1, State1> {
     public struct Reactor1: Reactor {
         public typealias Action = Either2<Base.Action, Action1>
         public typealias State = Either2<Base.State, State1>
@@ -377,7 +377,7 @@ public struct ReactorConverter2<Base: RxExtensions.Reactor, Action1, State1> {
     }
 }
 
-public struct ReactorConverter3<Base: RxExtensions.Reactor, Action1, State1, Action2, State2> {
+public struct ReactorConverter3<Base: Reactor, Action1, State1, Action2, State2> {
     public struct Reactor1: Reactor {
         public typealias Action = Either3<Base.Action, Action1, Action2>
         public typealias State = Either3<Base.State, State1, State2>
@@ -439,7 +439,7 @@ public struct ReactorConverter3<Base: RxExtensions.Reactor, Action1, State1, Act
     }
 }
 
-public struct ReactorConverter4<Base: RxExtensions.Reactor, Action1, State1, Action2, State2, Action3, State3> {
+public struct ReactorConverter4<Base: Reactor, Action1, State1, Action2, State2, Action3, State3> {
     public struct Reactor1: Reactor {
         public typealias Action = Either4<Base.Action, Action1, Action2, Action3>
         public typealias State = Either4<Base.State, State1, State2, State3>
@@ -521,7 +521,7 @@ public struct ReactorConverter4<Base: RxExtensions.Reactor, Action1, State1, Act
     }
 }
 
-public struct ReactorConverter5<Base: RxExtensions.Reactor, Action1, State1, Action2, State2, Action3, State3, Action4, State4> {
+public struct ReactorConverter5<Base: Reactor, Action1, State1, Action2, State2, Action3, State3, Action4, State4> {
     public struct Reactor1: Reactor {
         public typealias Action = Either5<Base.Action, Action1, Action2, Action3, Action4>
         public typealias State = Either5<Base.State, State1, State2, State3, State4>

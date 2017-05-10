@@ -1,15 +1,15 @@
 //
-//  RxExtensionsTests.swift
-//  RxExtensionsTests
+//  ReactorTests.swift
+//  ReactorTests
 //
 //  Created by tarunon on 2017/04/24.
 //  Copyright © 2017年 tarunon. All rights reserved.
 //
 
 import XCTest
-@testable import RxExtensions
+@testable import Reactor
 
-class RxExtensionsTests: XCTestCase {
+class ReactorTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -13,7 +13,7 @@ import InstantiateStandard
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxExtensions
+import Reactor
 import SafariServices
 import Base
 

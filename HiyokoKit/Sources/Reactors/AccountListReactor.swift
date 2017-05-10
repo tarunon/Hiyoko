@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxExtensions
+import Reactor
 import Persistents
 import OAuthSwift
 import RealmSwift

@@ -10,7 +10,7 @@ import Foundation
 import Instantiate
 import InstantiateStandard
 import UIKitExtensions
-import RxExtensions
+import Reactor
 import HiyokoKit
 import APIClient
 import Base

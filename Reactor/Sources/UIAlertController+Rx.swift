@@ -265,9 +265,4 @@ extension UIAlertController: Either4View {
     public var view4: UIAlertController.ActionSheetView {
         return .init(view: self)
     }
-    
-    public struct ActionSheetElement: RxExtensions.ActionSheetElement {
-        public var element: String
-        public var buttonConfig: UIAlertAction.Config
-    }
 }

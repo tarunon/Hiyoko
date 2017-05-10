@@ -38,19 +38,11 @@ public class TableViewCellQueue {
     public func dequeue<V: View, R: Reactor>(dequeue: (_ tableView: UITableView, _ indexPath: IndexPath) -> V, reactor: R) -> Observable<R.Result> where V: UITableViewCell, V.Action == R.Action, V.State == R.State {
         let cell = dequeue(tableView, indexPath)
         self.cell = cell
-        return Observable
-            .create { (observer) -> Disposable in
-                do {
-                    return try bind(cell, reactor)
-                        .takeUntil(cell.rx.reused)
-                        .concat(Observable.never())
-                        .takeUntil(cell.rx.deallocated)
-                        .bind(to: observer)
-                } catch {
-                    observer.onError(error)
-                    return Disposables.create()
-                }
-        }
+        return Result(view: cell, reactor: reactor)
+            .asObservable()
+            .takeUntil(cell.rx.reused)
+            .concat(Observable.never())
+            .takeUntil(cell.rx.deallocated)
     }
 }
 
@@ -127,19 +119,11 @@ public class CollectionViewCellQueue {
     public func dequeue<V: View, R: Reactor>(dequeue: (_ collectionView: UICollectionView, _ indexPath: IndexPath) -> V, reactor: R) -> Observable<R.Result> where V: UICollectionViewCell, V.Action == R.Action, V.State == R.State {
         let cell = dequeue(collectionView, indexPath)
         self.cell = cell
-        return Observable
-            .create { (observer) -> Disposable in
-                do {
-                    return try bind(cell, reactor)
-                        .takeUntil(cell.rx.reused)
-                        .concat(Observable.never())
-                        .takeUntil(cell.rx.deallocated)
-                        .bind(to: observer)
-                } catch {
-                    observer.onError(error)
-                    return Disposables.create()
-                }
-        }
+        return Result(view: cell, reactor: reactor)
+            .asObservable()
+            .takeUntil(cell.rx.reused)
+            .concat(Observable.never())
+            .takeUntil(cell.rx.deallocated)
     }
 }
 

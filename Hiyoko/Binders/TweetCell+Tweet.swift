@@ -10,7 +10,7 @@ import Foundation
 import HiyokoKit
 import RxSwift
 import RxCocoa
-import RxExtensions
+import Reactor
 import BonMot
 
 extension TweetCell: View {
