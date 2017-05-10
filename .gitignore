@@ -67,4 +67,4 @@ fastlane/screenshots
 fastlane/test_output
 
 # Consumer Key, Consumer Secret
-Hiyoko/Consumer.swift
+Hiyoko/ConsumerPrivate.swift

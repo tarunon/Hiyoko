@@ -75,8 +75,7 @@ extension ListViewController {
                             .present(
                                 viewController: ProgressViewController.instantiate(),
                                 reactor: LoginReactor(
-                                    consumerKey: Consumer.key,
-                                    consumerSecret: Consumer.secret
+                                    consumer: Consumer()
                                 ),
                                 animated: true
                             )

@@ -192,6 +192,7 @@
 		EB2436C51EC2CE9E00913A47 /* UIViewController+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436BA1EC2CE9E00913A47 /* UIViewController+Rx.swift */; };
 		EB2436C61EC2CE9E00913A47 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436BB1EC2CE9E00913A47 /* View.swift */; };
 		EB2436C81EC2E7D100913A47 /* Consumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436C71EC2E7D100913A47 /* Consumer.swift */; };
+		EB2436CA1EC3078300913A47 /* ConsumerPrivate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436C91EC3078300913A47 /* ConsumerPrivate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -594,6 +595,7 @@
 		EB2436BA1EC2CE9E00913A47 /* UIViewController+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Rx.swift"; path = "Reactor/Sources/UIViewController+Rx.swift"; sourceTree = SOURCE_ROOT; };
 		EB2436BB1EC2CE9E00913A47 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = View.swift; path = Reactor/Sources/View.swift; sourceTree = SOURCE_ROOT; };
 		EB2436C71EC2E7D100913A47 /* Consumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consumer.swift; sourceTree = "<group>"; };
+		EB2436C91EC3078300913A47 /* ConsumerPrivate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumerPrivate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -851,6 +853,7 @@
 			isa = PBXGroup;
 			children = (
 				EB2436C71EC2E7D100913A47 /* Consumer.swift */,
+				EB2436C91EC3078300913A47 /* ConsumerPrivate.swift */,
 				D2136C091EB38DBA00237E84 /* AppDelegate.swift */,
 				D29A9FAC1EBA393A0047CCC8 /* Views */,
 				D29A9FA31EBA38FC0047CCC8 /* ViewControllers */,
@@ -2032,6 +2035,7 @@
 				D29A9FAB1EBA39300047CCC8 /* ListViewController.swift in Sources */,
 				EB2436C81EC2E7D100913A47 /* Consumer.swift in Sources */,
 				D29A9FB51EBA3B250047CCC8 /* ProgressViewController+Login.swift in Sources */,
+				EB2436CA1EC3078300913A47 /* ConsumerPrivate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

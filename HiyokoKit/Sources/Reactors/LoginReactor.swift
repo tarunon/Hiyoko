@@ -20,6 +20,11 @@ public enum LoginAccount {
     case web
 }
 
+public protocol ConsumerProtocol {
+    var key: String { get }
+    var secret: String { get }
+}
+
 extension LoginAccount: ActionSheetElement {
     public var element: LoginAccount {
         return self
@@ -40,18 +45,16 @@ public class LoginReactor: Reactor {
     public typealias Action = Never
     public typealias State = UIViewController
     
-    let consumerKey: String
-    let consumerSecret: String
+    let consumer: ConsumerProtocol
     
-    public init(consumerKey: String, consumerSecret: String) {
-        self.consumerKey = consumerKey
-        self.consumerSecret = consumerSecret
+    public init(consumer: ConsumerProtocol) {
+        self.consumer = consumer
     }
     
     public func process(action: Observable<Never>) throws -> Process<UIViewController, (OAuthSwiftCredential, [String : Any])> {
         let oauth = OAuth1Swift(
-            consumerKey: self.consumerKey,
-            consumerSecret: self.consumerSecret,
+            consumerKey: self.consumer.key,
+            consumerSecret: self.consumer.secret,
             requestTokenUrl: "https://api.twitter.com/oauth/request_token",
             authorizeUrl:    "https://api.twitter.com/oauth/authorize",
             accessTokenUrl:  "https://api.twitter.com/oauth/access_token"
