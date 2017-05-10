@@ -190,6 +190,7 @@ public class TimelineReactor<InitialRequest: PaginationRequest>: Reactor where I
                     }
                 }
             )
+            .observeOn(MainScheduler.instance)
             .map { _ in State.isLoading(false) }
         
         let realm = try self.realm()

@@ -9,28 +9,36 @@
 import Foundation
 import RxSwift
 
-internal class Result<T>: ObservableConvertibleType {
-    private let _observable: () -> Observable<T>
+internal class Result<V: View, R: Reactor>: ObservableConvertibleType where V.Action == R.Action, V.State == R.State {
+    let view: () -> V
+    let reactor: () -> R
 
-    init<V: View, R: Reactor>(view: V, reactor: R) where V.Action == R.Action, V.State == R.State, R.Result == T {
-        _observable = {
-            let actionSubject = PublishSubject<V.Action>()
-            return Observable.create { (observer) -> Disposable in
-                do {
-                    let process = try reactor.process(action: actionSubject.asObservable())
-                    let d1 = process.result.bind(to: observer)
-                    let present = view.present(state: process.state.concat(Observable.never()).shareReplay(1))
-                    let d2 = present.action.bind(to: actionSubject)
-                    return Disposables.create(d1, d2)
-                } catch {
-                    observer.onError(error)
-                    return Disposables.create()
-                }
-            }
-        }
+    init(view: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R) {
+        self.view = view
+        self.reactor = reactor
     }
 
-    func asObservable() -> Observable<T> {
-        return _observable()
+    func asObservable() -> Observable<(result: Observable<R.Result>, view: V)> {
+        return Observable.create { (observer) -> Disposable in
+            do {
+                let actionSubject = PublishSubject<V.Action>()
+                let view = self.view()
+                let reactor = self.reactor()
+                let process = try reactor.process(action: actionSubject.asObservable())
+                let present = view.present(state: process.state.concat(Observable.never()).shareReplay(1))
+                let result = Observable<R.Result>
+                    .create { (observer) in
+                        let d1 = present.action.bind(to: actionSubject)
+                        let d2 = process.result.bind(to: observer)
+                        return Disposables.create(d1, d2)
+                }
+                observer.onNext((result: result, view: view))
+                observer.onCompleted()
+                return Disposables.create()
+            } catch {
+                observer.onError(error)
+                return Disposables.create()
+            }
+        }
     }
 }

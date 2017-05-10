@@ -75,8 +75,8 @@ extension ListViewController {
                             .present(
                                 viewController: ProgressViewController.instantiate(),
                                 reactor: LoginReactor(
-                                    consumerKey: TWITTER_CONSUMER_KEY,
-                                    consumerSecret: TWITTER_CONSUMER_SECRET
+                                    consumerKey: Consumer.key,
+                                    consumerSecret: Consumer.secret
                                 ),
                                 animated: true
                             )

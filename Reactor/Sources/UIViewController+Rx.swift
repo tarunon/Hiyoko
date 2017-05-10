@@ -106,49 +106,57 @@ extension Reactive where Base: UIViewController {
             }
     }
 
-    private func presentWithReactor<V: View, R: Reactor>(viewController: V, reactor: R, present: @escaping (Base, V) -> (), dismiss: Observable<Void>) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
+    private func presentWithReactor<V: View, R: Reactor>(viewController: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R, present: @escaping (Base, V) -> (), dismiss: @escaping (V) -> Observable<Void>) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
         return Result(view: viewController, reactor: reactor)
             .asObservable()
             .do(
-                onSubscribe: { present(self.base, viewController) }
+                onNext: { present(self.base, $0.view) }
             )
-            .catchError { error in
-                dismiss.map { throw error }
+            .flatMap { (result: Observable<R.Result>, view: V) -> Observable<R.Result> in
+                let dismiss = dismiss(view)
+                return result
+                    .catchError { error in
+                        dismiss.map { throw error }
+                    }
+                    .concat(
+                        dismiss.flatMap { Observable.empty() }
+                    )
+                    .takeUntil(view.rx.deallocated)
             }
-            .concat(
-                dismiss.flatMap { Observable.empty() }
-            )
-            .takeUntil(viewController.rx.deallocated)
     }
 
-    private func pushWithReactor<V: View, R: Reactor>(viewController: V,  reactor: R, push: @escaping (Base, V) -> (), pop: Observable<Void>) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
+    private func pushWithReactor<V: View, R: Reactor>(viewController: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R, push: @escaping (Base, V) -> (), pop: @escaping (V) -> Observable<Void>) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
         guard let navigationController = base.navigationController else {
             fatalError("Should implement \(base) as UINavigationController children.")
         }
         return Result(view: viewController, reactor: reactor)
             .asObservable()
             .do(
-                onSubscribe: { push(self.base, viewController) }
+                onNext: { push(self.base, $0.view) }
             )
-            .catchError { error in
-                pop.map { throw error }
-            }
-            .concat(
-                pop.flatMap { Observable.empty() }
-            )
-            .takeUntil(viewController.rx.deallocated)
-            .takeUntil(
-                navigationController.rx.didShow
-                    .filter { [weak navigationController, weak viewController] _ in
-                        guard let navigationController = navigationController, let viewController = viewController else {
-                            return true
-                        }
-                        return !navigationController.viewControllers.contains(viewController)
+            .flatMap { [unowned navigationController] (result: Observable<R.Result>, view: V) -> Observable<R.Result> in
+                let pop = pop(view)
+                return result
+                    .catchError { error in
+                        pop.map { throw error }
                     }
-            )
+                    .concat(
+                        pop.flatMap { Observable.empty() }
+                    )
+                    .takeUntil(view.rx.deallocated)
+                    .takeUntil(
+                        navigationController.rx.didShow
+                            .filter { [weak navigationController, weak viewController=view] _ in
+                                guard let navigationController = navigationController, let viewController = viewController else {
+                                    return true
+                                }
+                                return !navigationController.viewControllers.contains(viewController)
+                        }
+                    )
+            }
     }
 
-    public func present<V: View, R: Reactor>(viewController: V, reactor: R, animated: Bool) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
+    public func present<V: View, R: Reactor>(viewController: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R, animated: Bool) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
         return base.rx
             .presentWithReactor(
                 viewController: viewController,
@@ -156,11 +164,13 @@ extension Reactive where Base: UIViewController {
                 present: { (base, viewController) in
                     base.present(viewController, animated: animated)
                 },
-                dismiss: viewController.rx.dismiss(animated: animated)
+                dismiss: { (viewController) in
+                    viewController.rx.dismiss(animated: animated)
+                }
             )
     }
 
-    public func push<V: View, R: Reactor>(viewController: V, reactor: R, animated: Bool) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
+    public func push<V: View, R: Reactor>(viewController: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R, animated: Bool) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
         return base.rx
             .pushWithReactor(
                 viewController: viewController,
@@ -168,11 +178,13 @@ extension Reactive where Base: UIViewController {
                 push: { (base, viewController) in
                     base.navigationController?.pushViewController(viewController, animated: animated)
                 },
-                pop: viewController.rx.pop(animated: animated)
+                pop: { (viewController) in
+                    viewController.rx.pop(animated: animated)
+                }
             )
     }
 
-    public func present<V: View, R: Reactor>(viewController: V, reactor: R, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
+    public func present<V: View, R: Reactor>(viewController: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R, presentAnimation: AnimatingTransitioning<Base, V>?=nil, dismissAnimation: AnimatingTransitioning<V, Base>?=nil) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
         return base.rx
             .presentWithReactor(
                 viewController: viewController,
@@ -180,11 +192,13 @@ extension Reactive where Base: UIViewController {
                 present: { (base, viewController) in
                     base.present(viewController, presentAnimation: presentAnimation, dismissAnimation: dismissAnimation)
                 },
-                dismiss: viewController.rx.dismiss(animated: true)
+                dismiss: { (viewController) in
+                    viewController.rx.dismiss(animated: true)
+                }
             )
     }
 
-    public func push<V: View, R: Reactor>(viewController: V, reactor: R, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
+    public func push<V: View, R: Reactor>(viewController: @autoclosure @escaping () -> V, reactor: @autoclosure @escaping () -> R, pushAnimation: AnimatingTransitioning<Base, V>?=nil, popAnimation: AnimatingTransitioning<V, Base>?=nil) -> Observable<R.Result> where V: UIViewController, V.Action == R.Action, V.State == R.State {
         return base.rx
             .pushWithReactor(
                 viewController: viewController,
@@ -192,7 +206,9 @@ extension Reactive where Base: UIViewController {
                 push: { (base, viewController) in
                     base.push(viewController, pushAnimation: pushAnimation, popAnimation: popAnimation)
                 },
-                pop: viewController.rx.pop(animated: true)
+                pop: { (viewController) in
+                    viewController.rx.pop(animated: true)
+                }
             )
     }
 }
