@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Base
 
 open class NavigationController<V: UIViewController>: UINavigationController {
     class InteractivePopGestureRecognizerDelegate: NSObject, UIGestureRecognizerDelegate {
@@ -19,7 +20,7 @@ open class NavigationController<V: UIViewController>: UINavigationController {
         }
     }
     
-    public private(set) var rootViewController: V!
+    public private(set) lazy var rootViewController: V = undefined()
     var interactivePopGestureRecognizerDelegate: InteractivePopGestureRecognizerDelegate?
     
     public required init(rootViewController: V) {

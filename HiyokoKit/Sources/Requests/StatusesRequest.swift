@@ -34,9 +34,27 @@ public struct UserTimeLineRequest: APIClient.Request {
     public var queryParameters: [String : Any]?
     
     public init(id: Int64) {
-        queryParameters = ["user_id": id]
+        queryParameters = ["user_id": id, "count": 200]
     }
     
+    public init(screenName: String) {
+        queryParameters = ["screen_name": screenName]
+    }
+}
+
+public struct MentionTimeLineRequest: APIClient.Request {
+    public typealias Response = [Tweet]
+    public typealias Error = TwitterError
+
+    public var path: String = "statuses/mentions_timeline.json"
+    public var method: HTTPMethod = .get
+
+    public var queryParameters: [String : Any]?
+
+    public init() {
+        queryParameters = ["count": 200]
+    }
+
     public init(screenName: String) {
         queryParameters = ["screen_name": screenName]
     }
@@ -52,7 +70,7 @@ public struct SearchTimeLineRequest: APIClient.Request {
     public var queryParameters: [String : Any]?
     
     public init(query: String) {
-        queryParameters = ["q": query]
+        queryParameters = ["q": query, "count": 200]
     }
     
     public func response(from object: Any, urlResponse: HTTPURLResponse) throws -> [Tweet] {

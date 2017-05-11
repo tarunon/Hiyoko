@@ -19,43 +19,92 @@ class AppViewController: UIViewController {
     let disposeBag = DisposeBag()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let list = ListViewController.instantiate(with: .init(title: "Accounts"))
+        let accounts = ListViewController.instantiate(with: .init(title: "Accounts"))
         self.rx
             .present(
-                viewController: list,
+                viewController: accounts,
                 reactor: ~AccountListReactor(
                     realm: { try Realm(configuration: .init(schemaVersion: 1, migrationBlock: { _ in })) },
                     credentialFor: { KeychainStore.shared.typed("credential:\($0.id)") }
                 ),
                 animated: false
             )
-            .flatMapFirst { (account, credential) -> Observable<TweetResource> in
-                let realmIdentifier = "home_timeline:\(account.id)"
-                let client = TwitterClient(credential: credential)
-                let timelineRootViewController = NavigationController(
-                    rootViewController: ListViewController.instantiate(
-                        with: .init(
-                            title: "Timeline",
-                            leftButtonConfig: { (button) in
-                                button.layer.cornerRadius = 20.0
-                                button.layer.masksToBounds = true
-                                button.layer.shouldRasterize = true
-                                button.layer.rasterizationScale = UIScreen.main.scale
-                                button.imageView?.contentMode = .scaleToFill
-                            }
+            .flatMapFirst { (account, credential) -> Observable<Either5<TweetResource, TweetResource, Never, Never, Never>> in
+                let home: () -> NavigationController<ListViewController> = {
+                    return NavigationController(
+                        rootViewController: ListViewController.instantiate(
+                            with: .init(
+                                title: "Timeline",
+                                leftButtonConfig: { (button) in
+                                    button.layer.cornerRadius = 20.0
+                                    button.layer.masksToBounds = true
+                                    button.layer.shouldRasterize = true
+                                    button.layer.rasterizationScale = UIScreen.main.scale
+                                    button.imageView?.contentMode = .scaleToFill
+                                }
+                            )
                         )
                     )
-                )
-                timelineRootViewController.modalTransitionStyle = .flipHorizontal
-                return list.rx
+                }
+                let mention: () -> NavigationController<ListViewController> = {
+                    return NavigationController(
+                        rootViewController: ListViewController.instantiate(
+                            with: .init(
+                                title: "Mentions",
+                                leftButtonConfig: { (button) in
+                                    button.layer.cornerRadius = 20.0
+                                    button.layer.masksToBounds = true
+                                    button.layer.shouldRasterize = true
+                                    button.layer.rasterizationScale = UIScreen.main.scale
+                                    button.imageView?.contentMode = .scaleToFill
+                            }
+                            )
+                        )
+                    )
+                }
+                let post: () -> NavigationController<EmptyViewController> = {
+                    return NavigationController(rootViewController: EmptyViewController())
+                }
+                let search: () -> NavigationController<EmptyViewController> = {
+                    return NavigationController(rootViewController: EmptyViewController())
+                }
+                let list: () -> NavigationController<EmptyViewController> = {
+                    return NavigationController(rootViewController: EmptyViewController())
+                }
+                let client = TwitterClient(credential: credential)
+                let homeRealmIdentifier = "home_timeline:\(account.id)"
+                let mentionRealmIdentifier = "mention_timeline:\(account.id)"
+                return accounts.rx
                     .present(
-                        viewController: timelineRootViewController,
-                        reactor: ~TimelineReactor(
-                            realm: {
-                                try Realm(configuration: .init(inMemoryIdentifier: realmIdentifier))
-                            },
-                            client: client,
-                            initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
+                        viewController: { () -> TabBarController<
+                            NavigationController<ListViewController>,
+                            NavigationController<ListViewController>,
+                            NavigationController<EmptyViewController>,
+                            NavigationController<EmptyViewController>,
+                            NavigationController<EmptyViewController>
+                            > in
+                            let tab = TabBarController(childViewControllers: (home(), mention(), post(), search(), list()))
+                            tab.modalTransitionStyle = .flipHorizontal
+                            return tab
+                        }(),
+                        reactor: Either5Reactor(
+                            ~TimelineReactor(
+                                realm: {
+                                    try Realm(configuration: .init(inMemoryIdentifier: homeRealmIdentifier))
+                                },
+                                client: client,
+                                initialRequest: SinceMaxPaginationRequest(request: HomeTimeLineRequest())
+                            ),
+                            ~TimelineReactor(
+                                realm: {
+                                    try Realm(configuration: .init(inMemoryIdentifier: mentionRealmIdentifier))
+                                },
+                                client: client,
+                                initialRequest: SinceMaxPaginationRequest(request: MentionTimeLineRequest())
+                            ),
+                            EmptyReactor(),
+                            EmptyReactor(),
+                            EmptyReactor()
                         ),
                         animated: true
                     )

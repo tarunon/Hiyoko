@@ -201,6 +201,7 @@
 		EB2436C61EC2CE9E00913A47 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436BB1EC2CE9E00913A47 /* View.swift */; };
 		EB2436C81EC2E7D100913A47 /* Consumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436C71EC2E7D100913A47 /* Consumer.swift */; };
 		EB2436CA1EC3078300913A47 /* ConsumerPrivate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436C91EC3078300913A47 /* ConsumerPrivate.swift */; };
+		EB2436CD1EC4305C00913A47 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2436CB1EC42C6700913A47 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -617,6 +618,7 @@
 		EB2436BB1EC2CE9E00913A47 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = View.swift; path = Reactor/Sources/View.swift; sourceTree = SOURCE_ROOT; };
 		EB2436C71EC2E7D100913A47 /* Consumer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Consumer.swift; sourceTree = "<group>"; };
 		EB2436C91EC3078300913A47 /* ConsumerPrivate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConsumerPrivate.swift; sourceTree = "<group>"; };
+		EB2436CB1EC42C6700913A47 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -972,11 +974,11 @@
 		D27305F71EAE3BDD0020C710 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				EB2436B31EC2CE9E00913A47 /* Either.swift */,
 				EB2436B51EC2CE9E00913A47 /* Reactor.swift */,
 				EB2436BB1EC2CE9E00913A47 /* View.swift */,
 				EB2436B11EC2CE9E00913A47 /* Result.swift */,
 				EB2436B21EC2CE9E00913A47 /* Cell+Rx.swift */,
-				EB2436B31EC2CE9E00913A47 /* Either.swift */,
 				EB2436B71EC2CE9E00913A47 /* UIActivityViewController+Rx.swift */,
 				EB2436B81EC2CE9E00913A47 /* UIAlertController+Rx.swift */,
 				EB2436B91EC2CE9E00913A47 /* UITextField+Rx.swift */,
@@ -1208,6 +1210,7 @@
 			children = (
 				D2EFD5F41EAB6D850013CD80 /* UIKitExtensions.h */,
 				D29CCA121EABA60A0082CA72 /* NavigationController.swift */,
+				EB2436CB1EC42C6700913A47 /* TabBarController.swift */,
 				D2E186231EBA1ACD003F8295 /* BorderView.swift */,
 				D2019B191EBCABD500594AE5 /* LinkActionTextView.swift */,
 				D2EFD5F51EAB6D850013CD80 /* Info.plist */,
@@ -2157,6 +2160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2019B1B1EBCABD600594AE5 /* LinkActionTextView.swift in Sources */,
+				EB2436CD1EC4305C00913A47 /* TabBarController.swift in Sources */,
 				D2E186241EBA1ACD003F8295 /* BorderView.swift in Sources */,
 				D29CCA131EABA60A0082CA72 /* NavigationController.swift in Sources */,
 			);
